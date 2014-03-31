@@ -34,13 +34,13 @@ Humanoid.prototype = {
   },
 
   turnToZombie: function(){
-    this.type = 'zombie'
+    this.humanType = 'zombie'
     // this.__proto__ = Zombie.prototype
     this.speed = 5
   },
 
   isAbleToBite: function(){
-    return this.type === 'zombie';
+    return this.humanType === 'zombie';
     // return this instanceOf Zombie
   },
 

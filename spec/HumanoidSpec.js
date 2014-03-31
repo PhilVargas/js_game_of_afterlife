@@ -88,33 +88,82 @@ describe("Humanoid", function(){
     describe("#bite", function(){
       describe("a human", function(){
         beforeEach(function(){
+          spyOn(human,'getBitten')
           zombie.bite(human)
         })
-        it("should change the humantype to an infectedHuman", function(){
-          expect(human.humanType).toEqual('infectedHuman')
-        })
-
-        it("should set the speed of the humanoid to 0", function(){
-          expect(human.speed).toEqual(0)
+        it("should call #getBitten", function(){
+          expect(human.getBitten).toHaveBeenCalled()
         })
       })
 
       describe("a zombie", function(){
         beforeEach(function(){
           anotherZombie = new Humanoid({'speed': 5, 'humanType': 'zombie'});
+          spyOn(anotherZombie, 'getBitten')
           zombie.bite(anotherZombie)
         })
-        it("should not change the humantype to an infectedHuman", function(){
-          expect(anotherZombie.humanType).toEqual('zombie')
-        })
-
-        it("should not set the speed of the humanoid to 0", function(){
-          expect(anotherZombie.speed).not.toEqual(0)
+        it("should call #getBitten", function(){
+          expect(anotherZombie.getBitten).not.toHaveBeenCalled()
         })
       })
     })
 
-    
+    describe("#turnToZombie", function(){
+      beforeEach(function(){
+        human.turnToZombie()
+      })
+      it("should change the humanoid type to zombie", function(){
+        expect(human.humanType).toEqual('zombie')
+      })
+
+      it("should change the speed to 5", function(){
+        expect(human.speed).toEqual(5)
+      })
+    })
+
+    describe("#isAbleToBite", function(){
+      it("should return true if the humanoid is a zombie", function(){
+        expect(zombie.isAbleToBite()).toEqual(true)
+      })
+
+      it("should return false if the humanoid is a human", function(){
+        expect(human.isAbleToBite()).toEqual(false)
+      })
+
+      it("should return false if the humanoid is an infectedHuman", function(){
+        expect(infected.isAbleToBite()).toEqual(false)
+      })
+    })
+
+    describe("#incrementTimeSinceInfection",function(){
+      it("should increase the timeSinceInfection", function(){
+        infected.incrementTimeSinceInfection()
+        expect(infected.timeSinceInfection).toEqual(1)
+      })
+
+      it("should not call turnToZombie if timeSinceInfection is not 4", function(){
+        spyOn(infected, 'turnToZombie')
+        infected.timeSinceInfection = 0
+        infected.incrementTimeSinceInfection()
+        expect(infected.turnToZombie).not.toHaveBeenCalled()
+      })
+
+      it("should call turnToZombie if timeSinceInfection is 4", function(){
+        spyOn(infected, 'turnToZombie')
+        infected.timeSinceInfection = 4
+        infected.incrementTimeSinceInfection()
+        expect(infected.turnToZombie).toHaveBeenCalled()
+      })
+    })
+
+    describe("#moveNearest", function(){
+      describe("is attracted to the nearest", function(){
+        beforeEach(function(){
+          spyOn(human, 'isAttractedTo').andReturn(true)
+        })
+
+      })
+    })
 
   });
 });
