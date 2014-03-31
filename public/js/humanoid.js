@@ -53,16 +53,16 @@ Humanoid.prototype = {
 
   moveNearest: function(nearestObject){
     if (this.isAttractedTo()){
-      var potentialMove = this.moveTowards(nearestObject.position, this.speed)
+      var potentialMove = Pathfinder.moveTowards(nearestObject.position, this.speed)
     } else {
-      var potentialMove = this.moveAwayFrom(nearestObject.position, this.speed)
+      var potentialMove = Pathfinder.moveAwayFrom(nearestObject.position, this.speed)
     }
-
+    debugger
     this.storeLastPosition();
-    if (this.lastPosition === this.position){
-      moveRandomly();
-    } else if (isLastMoveRepeated(potentialMove)){
-      movePerpendicularTo(nearestObject.position, this.speed)
+    if (this.lastPosition.x === this.position.x && this.lastPosition.y === this.position.y){
+      Pathfinder.moveRandomly();
+    } else if (this.isLastMoveRepeated(potentialMove)){
+      Pathfinder.movePerpendicularTo(nearestObject.position, this.speed)
     } else {
       return potentialMove
     }

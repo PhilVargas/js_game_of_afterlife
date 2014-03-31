@@ -6,7 +6,7 @@ describe("Humanoid", function(){
 
     beforeEach(function(){
       human = new Humanoid({'speed': 10, 'humanType': 'human', 'position': {'x': 20, 'y': 20}});
-      zombie = new Humanoid({'speed': 5, 'humanType': 'zombie'});
+      zombie = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 25, 'y': 25}});
       infected = new Humanoid({'speed': 5, 'humanType': 'infectedHuman'});
     });
 
@@ -159,9 +159,25 @@ describe("Humanoid", function(){
     describe("#moveNearest", function(){
       describe("is attracted to the nearest", function(){
         beforeEach(function(){
-          spyOn(human, 'isAttractedTo').andReturn(true)
+          spyOn(zombie, 'isAttractedTo').and.returnValue(true)
+          spyOn(Pathfinder, 'moveTowards').and.returnValue({'x': 20, 'y': 20})
+          zombie.moveNearest(human)
         })
 
+        describe("and last position is the current position", function(){
+          beforeEach(function(){
+            zombie.lastPosition = zombie.position
+            spyOn(Pathfinder, 'moveRandomly')
+          })
+
+          it("should call Pathfinder.moveTowards", function(){
+            expect(Pathfinder.moveTowards).toHaveBeenCalled()
+          })
+
+          it("should call Pathfinder.moveRandomly", function(){
+            expect(Pathfinder.moveRandomly).toHaveBeenCalled()
+          })
+        })
       })
     })
 
