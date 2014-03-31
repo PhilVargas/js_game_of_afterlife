@@ -17,7 +17,7 @@ Humanoid.prototype = {
   },
 
   isLastMoveRepeated: function(potentialMove){
-    return (Math.abs(potentialMove.x - this.lastPosition.x) && Math.abs(potentialMove.y - this.lastPosition.y));
+    return ((Math.abs(potentialMove.x - this.lastPosition.x) < 5) && (Math.abs(potentialMove.y - this.lastPosition.y)) < 5);
   },
 
   getBitten: function(){
@@ -44,7 +44,7 @@ Humanoid.prototype = {
     // return this instanceOf Zombie
   },
 
-  incrementTimeSinzeInfection: function(){
+  incrementTimeSinceInfection: function(){
     this.timeSinceInfection ++;
     if (this.timeSinceInfection === 5){
       this.turnToZombie();
