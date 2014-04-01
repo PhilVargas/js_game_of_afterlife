@@ -24,7 +24,7 @@ class Board
     other_humanoids.min_by do |dude|
       (( x - dude.position[:x] ) ** 2 ) + (( y - dude.position[:y] ) ** 2 )
     end
-  end 
+  end
 
   def next_turn
     humanoids.each do |humanoid|
@@ -37,7 +37,7 @@ class Board
       if nearest_human == nil
         destination = humanoid.move_nearest( nearest_zombie )
       elsif humanoid.type == :zombie
-        if humanoid.distance_to(nearest_human.position) < humanoid.distance_to(nearest_zombie.position) * 6 
+        if humanoid.distance_to(nearest_human.position) < humanoid.distance_to(nearest_zombie.position) * 6
           destination = humanoid.move_nearest(nearest_human)
         else
           destination = humanoid.move_nearest(nearest_zombie)
@@ -57,5 +57,5 @@ class Board
       humanoid.position = destination if valid_destination?(destination)
     end
     humanoids.any? {|humanoid| humanoid.type == :human} ? humanoids : nil
-  end
+end
 end
