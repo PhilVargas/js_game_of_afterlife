@@ -19,23 +19,19 @@ Board.prototype = {
 
     var otherHumanoids = this.findSelfHumanoid(humanoid)
     var otherHumanoids = this.findSimilarHumanoids(otherHumanoids, humanoid)
-    //find distance from pos
-    var closestPos = []
-    for(i=0; i< otherHumanoids.length; i++){
-      var dist = Pathfinder.distanceTo(otherHumanoids[i].position, humanoid.position)
-      closestPos.push(dist);
-    }
-    //find closest humanoid
-    var closestHumanoidValue = Math.min.apply(null, closestPos)
-    for(i=0; i < closestPos.length; i++){
-      if(closestPos[i] == closestHumanoidValue){ var closestHumanoid = otherHumanoids[i]}
-    }
+    var closestPos = this.findClosestPos()
+    var closestHumanoid = this.findClosestHumanoid(closetsPos, otherHumanoids)
     return closestHumanoid
-},
+  },
 
   next_turn: function(){
-
+    for(i=0; i< humanoids.length; i++){
+      if(humanoids[i].humanType == "infectedHuman"){
+        //
+      }
+    }
   },
+
   findSelfHumanoid: function(humanoid){
     var otherHumanoids = []
     for(i=0; i < this.humanoids.length; i++){
@@ -47,11 +43,24 @@ Board.prototype = {
     return otherHumanoids
   },
   findSimilarHumanoids: function(otherHumanoids, humanoid){
-    //find humanoids that are similar to the humanoid
     for(i=0; i< otherHumanoids.length; i++){
       if(otherHumanoids[i].humanType != humanoid.humanType){ otherHumanoids.splice(i, 1)}
     }
     return otherHumanoids
+  },
+  findClosestPos: function(){
+    var closestPos = []
+    for(i=0; i< otherHumanoids.length; i++){
+      var dist = Pathfinder.distanceTo(otherHumanoids[i].position, humanoid.position)
+      closestPos.push(dist);
+    }
+    return closestPos
+  },
+  findClosestHumanoid: function(closestPos, otherHumanoids ){
+    var closestHumanoidValue = Math.min.apply(null, closestPos)
+    for(i=0; i < closestPos.length; i++){
+      if(closestPos[i] == closestHumanoidValue){ var closestHumanoid = otherHumanoids[i]}
+    }
+   return closestHumanoid
   }
-
 }

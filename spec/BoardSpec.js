@@ -21,15 +21,21 @@ describe("Board", function(){
       expect(board.humanoids[1]).toEqual(zombie)
     });
 
-    it("should have a method valid destination that returns true", function(){
+  });
+
+  describe("#isValidDestination", function(){
+    it("should have a method #valid destination that returns true", function(){
       var target_position = {'x': 10, 'y': 20}
       expect(board.isValidDestination(target_position)).toEqual(true)
     });
+  });
 
-    it("should have a method nearest_humanoid method that returns ",function(){
+  describe("#nearestHumanoid", function(){
+    it("should have a method #nearest_humanoid method that returns ",function(){
       expect(board.nearest_humanoid(human)).toEqual(human2)
     });
-
   });
+
+
 
 });

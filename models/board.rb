@@ -57,5 +57,5 @@ class Board
       humanoid.position = destination if valid_destination?(destination)
     end
     humanoids.any? {|humanoid| humanoid.type == :human} ? humanoids : nil
-  end
+end
 end
