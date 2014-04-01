@@ -161,21 +161,38 @@ describe("Humanoid", function(){
         beforeEach(function(){
           spyOn(zombie, 'isAttractedTo').and.returnValue(true)
           spyOn(Pathfinder, 'moveTowards').and.returnValue({'x': 20, 'y': 20})
+          spyOn(Pathfinder, 'moveRandomly')
+        })
+
+        it("should call Pathfinder.moveTowards", function(){
           zombie.moveNearest(human)
+          expect(Pathfinder.moveTowards).toHaveBeenCalled()
         })
 
         describe("and last position is the current position", function(){
           beforeEach(function(){
             zombie.lastPosition = zombie.position
-            spyOn(Pathfinder, 'moveRandomly')
-          })
-
-          it("should call Pathfinder.moveTowards", function(){
-            expect(Pathfinder.moveTowards).toHaveBeenCalled()
+            zombie.moveNearest(human)
           })
 
           it("should call Pathfinder.moveRandomly", function(){
             expect(Pathfinder.moveRandomly).toHaveBeenCalled()
+          })
+        })
+
+        describe("and the last move has been repeated", function(){
+          beforeEach(function(){
+            spyOn(Pathfinder, 'movePerpendicularTo')
+            spyOn(zombie, 'isLastMoveRepeated').and.returnValue(true)
+            zombie.moveNearest(human)
+          })
+
+          it("should not call Pathfinder.moveRandomly", function(){
+            expect(Pathfinder.moveRandomly).not.toHaveBeenCalled()
+          })
+
+          it("should call Pathfinder.movePerpendicularTo", function(){
+            expect(Pathfinder.movePerpendicularTo).toHaveBeenCalled()
           })
         })
       })

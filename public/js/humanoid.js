@@ -3,7 +3,7 @@ var Humanoid = function(attributes){
   this.speed = attributes.speed;
   this.humanType = attributes.humanType; //may be removed in favor of class inheritence
   this.timeSinceInfection = 0 // time since infection may be moved to infected zombie class 
-  this.lastPosition = this.position;
+  this.lastPosition = {'x': this.position.x, 'y': this.position.y}
 }
 
 Humanoid.prototype = {
@@ -53,16 +53,16 @@ Humanoid.prototype = {
 
   moveNearest: function(nearestObject){
     if (this.isAttractedTo()){
-      var potentialMove = Pathfinder.moveTowards(nearestObject.position, this.speed)
+      var potentialMove = Pathfinder.moveTowards(this.position, nearestObject.position, this.speed)
     } else {
-      var potentialMove = Pathfinder.moveAwayFrom(nearestObject.position, this.speed)
+      var potentialMove = Pathfinder.moveAwayFrom(this.position, nearestObject.position, this.speed)
     }
-    debugger
+
     this.storeLastPosition();
     if (this.lastPosition.x === this.position.x && this.lastPosition.y === this.position.y){
-      Pathfinder.moveRandomly();
+      Pathfinder.moveRandomly(this.position, this.speed);
     } else if (this.isLastMoveRepeated(potentialMove)){
-      Pathfinder.movePerpendicularTo(nearestObject.position, this.speed)
+      Pathfinder.movePerpendicularTo(nearestObject.position, this.position, this.speed)
     } else {
       return potentialMove
     }
