@@ -9,7 +9,7 @@ var Pathfinder = {
       return {'x': ((position.x + deltaX)/length * speed),'y': ((position.y + deltaY)/length * speed)}
     }
   },
-    
+
   movePerpendicularTo: function(location, currentPosition, speed){
   var deltaY = location.y - currentPosition.y;
     var deltaX = location.x - currentPosition.x;
@@ -28,7 +28,7 @@ var Pathfinder = {
   distanceTo: function(targetLocation, currentPosition){
     var deltaY = targetLocation.y - currentPosition.y;
     var deltaX = targetLocation.x - currentPosition.x;
-    return Math.pow(Math.sqrt(deltaY),2) + Math.pow(Math.sqrt(deltay),2)
+    return Math.pow(deltaY,2) + Math.pow(deltaX,2)
   },
 
   moveRandomly: function(currentPosition, speed){
