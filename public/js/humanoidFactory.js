@@ -10,5 +10,5 @@ var HumandoidBuilder = {
       population.push(newHumanoid)
     }
     return population
-  }
+  })
 }
