@@ -1,7 +1,7 @@
-var HumandoidBuilder = {
-  populate: function(numberOfHumans, zombies){
-    return (create(numberOfHumans, 'human', 10).push(create(zombies, 'zombies',5))
-  }
+var HumanoidBuilder = {
+  populate: function(numberOfHumans, numberOfZombies){
+    return HumanoidBuilder.creation(numberOfHumans, 'human', 10).concat(HumanoidBuilder.creation(numberOfZombies, 'zombies',5))
+  },
 
   creation: function(number, type, speed){
     var population = []
@@ -10,5 +10,5 @@ var HumandoidBuilder = {
       population.push(newHumanoid)
     }
     return population
-  })
+  }
 }
