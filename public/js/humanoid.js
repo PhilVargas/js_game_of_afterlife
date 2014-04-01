@@ -60,10 +60,10 @@ Humanoid.prototype = {
 
     if (this.lastPosition.x === this.position.x && this.lastPosition.y === this.position.y){
       this.storeLastPosition();
-      Pathfinder.moveRandomly(this.position, this.speed);
+      return Pathfinder.moveRandomly(this.position, this.speed);
     } else if (this.isLastMoveRepeated(potentialMove)){
       this.storeLastPosition();
-      Pathfinder.movePerpendicularTo(nearestObject.position, this.position, this.speed)
+      return Pathfinder.movePerpendicularTo(nearestObject.position, this.position, this.speed)
     } else {
       this.storeLastPosition();
       return potentialMove
