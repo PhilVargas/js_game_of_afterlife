@@ -31,7 +31,7 @@ Board.prototype = {
       if(closestPos[i] == closestHumanoidValue){ var closestHumanoid = otherHumanoids[i]}
     }
     return closestHumanoid
-  },
+},
 
   next_turn: function(){
 
