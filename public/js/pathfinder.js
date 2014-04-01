@@ -10,8 +10,8 @@ var Pathfinder = {
     }
   },
   movePerpendicularTo: function(friendlyLocation, currentPosition, speed){
-    var deltaY = location.y - currentPosition.y;
-    var deltaX = location.x - currentPosition.x;
+    var deltaY = friendlyLocation.y - currentPosition.y;
+    var deltaX = friendlyLocation.x - currentPosition.x;
     var length = distanceTo(friendlyLocation);
     if (speed > 0 && length < speed){
       return friendlyLocation
