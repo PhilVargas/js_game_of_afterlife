@@ -21,8 +21,8 @@ var Pathfinder = {
     }
   },
 
-  moveAwayFrom: function(hostileLocation, speed){
-    moveTowards(hostileLocation, -speed);
+  moveAwayFrom: function(currentPosition, hostileLocation, speed){
+    moveTowards(currentPosition, hostileLocation, -speed);
   },
 
   distanceTo: function(targetLocation, currentPosition){
@@ -31,8 +31,8 @@ var Pathfinder = {
     return Math.pow(Math.sqrt(deltaY),2) + Math.pow(Math.sqrt(deltay),2)
   },
 
-  moveRandomly: function(){
+  moveRandomly: function(currentPosition, speed){
     angle = Math.random() * 2 * Math.PI;
-      return {'x': (position.x + Math.cos(angle) * speed),'y': (position.y + Math.sin(angle) * speed)}
+      return {'x': (currentPosition.x + Math.cos(angle) * speed),'y': (currentPosition.y + Math.sin(angle) * speed)}
   },
 }

@@ -3,7 +3,7 @@ var Humanoid = function(attributes){
   this.speed = attributes.speed;
   this.humanType = attributes.humanType; //may be removed in favor of class inheritence
   this.timeSinceInfection = 0 // time since infection may be moved to infected zombie class 
-  this.lastPosition = this.position;
+  this.lastPosition = {'x': this.position.x, 'y': this.position.y}
 }
 
 Humanoid.prototype = {
@@ -17,7 +17,7 @@ Humanoid.prototype = {
   },
 
   isLastMoveRepeated: function(potentialMove){
-    return (Math.abs(potentialMove.x - this.lastPosition.x) && Math.abs(potentialMove.y - this.lastPosition.y));
+    return ((Math.abs(potentialMove.x - this.lastPosition.x) < 5) && (Math.abs(potentialMove.y - this.lastPosition.y)) < 5);
   },
 
   getBitten: function(){
@@ -34,17 +34,17 @@ Humanoid.prototype = {
   },
 
   turnToZombie: function(){
-    this.type = 'zombie'
+    this.humanType = 'zombie'
     // this.__proto__ = Zombie.prototype
     this.speed = 5
   },
 
   isAbleToBite: function(){
-    return this.type === 'zombie';
+    return this.humanType === 'zombie';
     // return this instanceOf Zombie
   },
 
-  incrementTimeSinzeInfection: function(){
+  incrementTimeSinceInfection: function(){
     this.timeSinceInfection ++;
     if (this.timeSinceInfection === 5){
       this.turnToZombie();
@@ -53,17 +53,19 @@ Humanoid.prototype = {
 
   moveNearest: function(nearestObject){
     if (this.isAttractedTo()){
-      var potentialMove = this.moveTowards(nearestObject.position, this.speed)
+      var potentialMove = Pathfinder.moveTowards(this.position, nearestObject.position, this.speed)
     } else {
-      var potentialMove = this.moveAwayFrom(nearestObject.position, this.speed)
+      var potentialMove = Pathfinder.moveAwayFrom(this.position, nearestObject.position, this.speed)
     }
 
-    this.storeLastPosition();
-    if (this.lastPosition === this.position){
-      moveRandomly();
-    } else if (isLastMoveRepeated(potentialMove)){
-      movePerpendicularTo(nearestObject.position, this.speed)
+    if (this.lastPosition.x === this.position.x && this.lastPosition.y === this.position.y){
+      this.storeLastPosition();
+      Pathfinder.moveRandomly(this.position, this.speed);
+    } else if (this.isLastMoveRepeated(potentialMove)){
+      this.storeLastPosition();
+      Pathfinder.movePerpendicularTo(nearestObject.position, this.position, this.speed)
     } else {
+      this.storeLastPosition();
       return potentialMove
     }
   },
