@@ -36,6 +36,4 @@ describe("Board", function(){
     });
   });
 
-
-
 });
