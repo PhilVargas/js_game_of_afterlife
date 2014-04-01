@@ -184,6 +184,7 @@ describe("Humanoid", function(){
           beforeEach(function(){
             spyOn(Pathfinder, 'movePerpendicularTo')
             spyOn(zombie, 'isLastMoveRepeated').and.returnValue(true)
+            zombie.position.x++
             zombie.moveNearest(human)
           })
 
@@ -195,8 +196,83 @@ describe("Humanoid", function(){
             expect(Pathfinder.movePerpendicularTo).toHaveBeenCalled()
           })
         })
+        
+        describe("else", function(){
+          beforeEach(function(){
+            zombie.position.x++
+            spyOn(zombie, 'isLastMoveRepeated').and.returnValue(false)
+            spyOn(Pathfinder, 'movePerpendicularTo').and.returnValue(false)
+            zombie.moveNearest(human)
+          })
+
+          it("should not call Pathfinder.moveRandomly", function(){
+            expect(Pathfinder.moveRandomly).not.toHaveBeenCalled()
+          })
+
+          it("should not call Pathfinder.movePerpendicularTo", function(){
+            expect(Pathfinder.movePerpendicularTo).not.toHaveBeenCalled()
+          })
+        })
+      })
+      
+    
+      describe("is not attracted to the nearest", function(){
+        beforeEach(function(){
+          spyOn(zombie, 'isAttractedTo').and.returnValue(false)
+          spyOn(Pathfinder, 'moveAwayFrom').and.returnValue({'x': 20, 'y': 20})
+          spyOn(Pathfinder, 'moveRandomly')
+        })
+
+        it("should call Pathfinder.moveAwayFrom", function(){
+          zombie.moveNearest(human)
+          expect(Pathfinder.moveAwayFrom).toHaveBeenCalled()
+        })
+
+        describe("and last position is the current position", function(){
+          beforeEach(function(){
+            zombie.lastPosition = zombie.position
+            zombie.moveNearest(human)
+          })
+
+          it("should call Pathfinder.moveRandomly", function(){
+            expect(Pathfinder.moveRandomly).toHaveBeenCalled()
+          })
+        })
+
+        describe("and the last move has been repeated", function(){
+          beforeEach(function(){
+            spyOn(Pathfinder, 'movePerpendicularTo')
+            spyOn(zombie, 'isLastMoveRepeated').and.returnValue(true)
+            zombie.position.x++
+            zombie.moveNearest(human)
+          })
+
+          it("should not call Pathfinder.moveRandomly", function(){
+            expect(Pathfinder.moveRandomly).not.toHaveBeenCalled()
+          })
+
+          it("should call Pathfinder.movePerpendicularTo", function(){
+            expect(Pathfinder.movePerpendicularTo).toHaveBeenCalled()
+          })
+        })
+        
+        describe("else", function(){
+          beforeEach(function(){
+            zombie.position.x++
+            spyOn(zombie, 'isLastMoveRepeated').and.returnValue(false)
+            spyOn(Pathfinder, 'movePerpendicularTo').and.returnValue(false)
+            zombie.moveNearest(human)
+          })
+
+          it("should not call Pathfinder.moveRandomly", function(){
+            expect(Pathfinder.moveRandomly).not.toHaveBeenCalled()
+          })
+
+          it("should not call Pathfinder.movePerpendicularTo", function(){
+            expect(Pathfinder.movePerpendicularTo).not.toHaveBeenCalled()
+          })
+        })
       })
     })
-
   });
 });
