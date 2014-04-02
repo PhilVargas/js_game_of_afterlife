@@ -39,6 +39,11 @@ describe("Board", function(){
     });
   });
 
+  // next turn
+  describe("#nextTurn", function(){
+
+  })
+
   describe("setDestination", function(){
     beforeEach(function(){
       zombie2 = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 101, 'y': 103}});
@@ -62,6 +67,7 @@ describe("Board", function(){
       expect(board.setHumanDestination).toHaveBeenCalled()
     });
   });
+
 
   describe("#setZombieDestination", function(){
     it("should set zombie destination to move to nearest human", function(){

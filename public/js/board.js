@@ -26,7 +26,7 @@ Board.prototype = {
     return closestHumanoid
   },
 
-  next_turn: function(){
+  nextTurn: function(){
     for( i=0; i< this.humanoids.length; i++ ){
       if( this.humanoids[i].humanType == "infectedHuman" ){
           this.humanoids[i].incrementTimeSinceInfection
@@ -43,7 +43,7 @@ Board.prototype = {
 
       //guard clause function
       if( nearestHuman != null ){
-        if( humanoid.isAbleToBite && Pathfinder.distanceTo( nearestHuman, humanoid ) < 10 ){ humanoid.bite( nearestHuman ) }
+        if( humanoid.isAbleToBite() && Pathfinder.distanceTo( nearestHuman, humanoid ) < 10 ){ humanoid.bite( nearestHuman ) }
       }
 
       //check on destination -- set destination
@@ -64,7 +64,7 @@ Board.prototype = {
     };
   },
 
-  //next_turn set destination methods
+  //nextTurn set destination methods
   setDestination: function( nearestHuman, nearestZombie, humanoid ){
     if( nearestHuman === null ) { return humanoid.moveNearest(  nearestZombie  )}
     else if( humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, humanoid ) }
