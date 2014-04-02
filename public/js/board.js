@@ -27,37 +27,48 @@ Board.prototype = {
   },
 
   next_turn: function(){
-    for( i=0; i< humanoids.length; i++ ){
-      if( humanoids[i].humanType == "infectedHuman" ){
-          humanoid[i].incrementTimeSinceInfection
+    for( i=0; i< this.humanoids.length; i++ ){
+      if( this.humanoids[i].humanType == "infectedHuman" ){
+          this.humanoids[i].incrementTimeSinceInfection
           continue
       }
-      var humanoid = humanoids[i]
+      var humanoid = this.humanoids[i]
       var nearestZombie = this.nearestHumanoid( humanoid, "zombie"  )
       var nearestHuman = this.nearestHumanoid(  humanoid, "human"  )
+
       setDestination( nearestHuman, nearestZombie, humanoid )
+
       destination.x = ( destination.x/this.width )
       destination.y = ( destination.y/this.height )
+
+      //guard clause function
       if( nearestHuman != null ){
-        if( humanoid.humanType == 'infectedHuman' &&  Pathfinder.distanceTo( nearestHuman, humanoid ) < 10 ){
-          humanoid.bite(  nearestHuman )
-        }
+        if( humanoid.isAbleToBite && Pathfinder.distanceTo( nearestHuman, humanoid ) < 10 ){ humanoid.bite( nearestHuman ) }
       }
+
+      //check on destination -- set destination
       if( this.isValidDestination( destination ) == true ){
         humanoid.position = destination
       }
-      if( humanoids.length > 0 ){
-        for(i=0; i < humanoids.length; i++){
-          humanoids[i].humanType == "human" ? humanoids : null;
+
+      //checks if there are any more humans
+      if( this.humanoids.length > 0 ){
+        var result = false
+        for( i=0; i < this.humanoids.length; i++ ){
+          if(this.humanoids[i].humanType == "human") { result = true };
         }
-      }
-    }
+        if( result ){ return this.humanoids }
+        else { return null };
+      };
+
+    };
   },
 
+  //next_turn set destination methods
   setDestination: function( nearestHuman, nearestZombie, humanoid ){
-    if(  nearestHuman === null  ) { var destination = humanoid.moveNearest(  nearestZombie  )}
-    else if( humanoid.humanType == "zombie" ){ setZombieDestination( nearestHuman, nearestZombie, humanoid ) }
-    else if( humanoid.humanType == "human" ){ setHumanDestination( nearestHuman, nearestZombie, humanoid ) }
+    if( nearestHuman === null ) { return humanoid.moveNearest(  nearestZombie  )}
+    else if( humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, humanoid ) }
+    else if( humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie, humanoid ) }
   },
   setZombieDestination: function( nearestHuman, nearestZombie, humanoid ){
    if ( Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < Pathfinder.distanceTo( nearestZombie.position, humanoid.position ) * 6){
@@ -68,13 +79,14 @@ Board.prototype = {
     }
   },
   setHumanDestination: function( nearestHuman, nearestZombie, humanoid  ){
-    if ( Pathfinder.distanceTo( nearestZombie, humanoid ) < 50 ){
+    if ( Pathfinder.distanceTo( nearestZombie.position, humanoid.position ) < 50 ){
       return humanoid.moveNearest( nearestZombie )
     }
     else {
       return humanoid.moveNearest( nearestHuman )
     }
   },
+
   //nearest HUMANOID PRIVATE METHODS
   deleteSelfHumanoid: function( humanoid ){
     var otherHumanoids = []
