@@ -1,5 +1,5 @@
 var Humanoid = function(attributes){
-  this.position = attributes.position || {'x': (5+ Math.floor(Math.random()*791)),'y': (5+ Math.floor(Math.random()*791))};
+this.position = attributes.position || {'x': (5+ Math.floor(Math.random()*791)),'y': (5+ Math.floor(Math.random()*791))};
   this.speed = attributes.speed;
   this.humanType = attributes.humanType; //may be removed in favor of class inheritence
   this.timeSinceInfection = 0 // time since infection may be moved to infected zombie class
