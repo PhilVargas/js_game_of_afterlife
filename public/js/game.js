@@ -66,7 +66,10 @@ function draw(player){
 function callNextTurn(board){
 
   nextRequest = setInterval(function(){
-    if (board.humanoids.length !== 0){
+    if (board.humanoids.length == 0) {
+      clearInterval(nextRequest);
+      alert('EVERYBODY IS DEAD!!!')
+    } else {
       ctx.clearRect(0,0,width,height)
 
       for (var i = 0; i < board.humanoids.length; i++){
@@ -83,10 +86,7 @@ function callNextTurn(board){
         draw(humanoid)
       }
       board.nextTurn()
-    } else {
-      clearInterval(nextRequest);
-      alert('EVERYBODY IS DEAD!!!')
-    }
+    } 
   }, 600);
 }
   callNextTurn(board)

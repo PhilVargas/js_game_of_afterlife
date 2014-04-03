@@ -29,17 +29,15 @@ Board.prototype = {
   nextTurn: function(){
     for( var i=0; i< this.humanoids.length; i++ ){
       if( this.humanoids[i].humanType == "infectedHuman" ){
-          this.humanoids[i].incrementTimeSinceInfection
+          this.humanoids[i].incrementTimeSinceInfection()
           continue
       }
       var humanoid = this.humanoids[i]
       var nearestZombie = this.nearestHumanoid( humanoid, "zombie"  )
       var nearestHuman = this.nearestHumanoid(  humanoid, "human"  )
       var destination = this.setDestination( nearestHuman, nearestZombie, humanoid )
-      debugger
       destination.x = ( destination.x%this.width )
       destination.y = ( destination.y%this.height )
-
       //guard clause function
       if( nearestHuman != null ){
         if( humanoid.isAbleToBite() && Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < 10 ){ humanoid.bite( nearestHuman ) }
@@ -56,7 +54,7 @@ Board.prototype = {
         for( var i=0; i < this.humanoids.length; i++ ){
           if(this.humanoids[i].humanType == "human") { result = true };
         }
-        if( !result ){ [] }
+        if( !result ){ this.humanoids = [] }
       };
   },
 
