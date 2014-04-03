@@ -13,7 +13,7 @@ var Pathfinder = {
     var deltaY = friendlyLocation.y - currentPosition.y;
     var deltaX = friendlyLocation.x - currentPosition.x;
     var length = Pathfinder.distanceTo(friendlyLocation, currentPosition);
-    if (speed > 0 && length < speed){
+    if (speed !== 0 && length < Math.abs(speed)){
       return friendlyLocation
     } else {
       return {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y - (deltaY / length * speed))}

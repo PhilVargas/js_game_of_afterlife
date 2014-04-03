@@ -3,7 +3,7 @@ var canvas = document.getElementsByTagName('canvas')[0];
 var width = canvas.width
 var height = canvas.height
 var ctx = canvas.getContext('2d');
-var allHumanoids = HumanoidBuilder.populate(40,10)
+var allHumanoids = HumanoidBuilder.populate(5,2)
 board = new Board({humanoids: allHumanoids, width: width, height: height})
 
 function draw(player){
