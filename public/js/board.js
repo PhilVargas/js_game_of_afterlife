@@ -37,8 +37,8 @@ Board.prototype = {
       var nearestHuman = this.nearestHumanoid(  humanoid, "human"  )
       var destination = this.setDestination( nearestHuman, nearestZombie, humanoid )
 
-      destination.x = ( destination.x/this.width )
-      destination.y = ( destination.y/this.height )
+      destination.x = ( destination.x%this.width )
+      destination.y = ( destination.y%this.height )
 
       //guard clause function
       if( nearestHuman != null ){
