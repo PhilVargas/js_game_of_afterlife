@@ -10,7 +10,7 @@ Board.prototype = {
   },
   isValidDestination: function( target_position ){
     var result = true
-    for(i= 0; i < this.humanoids.lenght; i++ ){
+    for(var i= 0; i < this.humanoids.lenght; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , target_position ) ){ result = false }
     }
     return result
@@ -27,7 +27,7 @@ Board.prototype = {
   },
 
   nextTurn: function(){
-    for( i=0; i< this.humanoids.length; i++ ){
+    for( var i=0; i< this.humanoids.length; i++ ){
       if( this.humanoids[i].humanType == "infectedHuman" ){
           this.humanoids[i].incrementTimeSinceInfection
           continue
@@ -49,18 +49,16 @@ Board.prototype = {
       if( this.isValidDestination( destination ) == true ){
         humanoid.position = destination
       }
-
       //checks if there are any more humans
+    };
       if( this.humanoids.length > 0 ){
         var result = false
-        for( i=0; i < this.humanoids.length; i++ ){
+        for( var i=0; i < this.humanoids.length; i++ ){
           if(this.humanoids[i].humanType == "human") { result = true };
         }
         if( result ){ return this.humanoids }
         else { return null };
       };
-
-    };
   },
 
   //nextTurn set destination methods
@@ -89,9 +87,9 @@ Board.prototype = {
   //nearest HUMANOID PRIVATE METHODS
   deleteSelfHumanoid: function( humanoid ){
     var otherHumanoids = []
-    for( i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i])}
+    for( var i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i])}
     
-    for( i=0; i < this.humanoids.length; i++ ){
+    for( var i=0; i < this.humanoids.length; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , humanoid.position ) ){
         otherHumanoids.splice( i, 1 )
         break
@@ -101,15 +99,14 @@ Board.prototype = {
   },
   findSimilarHumanoids: function( humanoid, humanoidType ){
     otherHumanoids = this.deleteSelfHumanoid( humanoid )
-    for( i=0; i< otherHumanoids.length; i++ ){
+    for( var i=0; i< otherHumanoids.length; i++ ){
       if( otherHumanoids[i].humanType != humanoidType ){ otherHumanoids.splice( i, 1 )}
     }
     return otherHumanoids
   },
   findClosestPos: function( otherHumanoids, humanoid ){
     var closestPos = []
-    // debugger
-    for( i=0; i< otherHumanoids.length; i++ ){
+    for( var i=0; i< otherHumanoids.length; i++ ){
       var dist = Pathfinder.distanceTo( otherHumanoids[i].position, humanoid.position )
       closestPos.push( dist );
     }
@@ -117,7 +114,7 @@ Board.prototype = {
   },
   findClosestHumanoid: function( closestPos, otherHumanoids  ){
     var closestHumanoidValue = Math.min.apply( null, closestPos )
-    for( i=0; i < closestPos.length; i++ ){
+    for( var i=0; i < closestPos.length; i++ ){
       if( closestPos[i] == closestHumanoidValue ){ var closestHumanoid = otherHumanoids[i]}
     }
    return closestHumanoid

@@ -21,7 +21,7 @@ var Pathfinder = {
   },
 
   moveAwayFrom: function(currentPosition, hostileLocation, speed){
-    Pathfinder.moveTowards(currentPosition, hostileLocation, -speed);
+    return Pathfinder.moveTowards(currentPosition, hostileLocation, -speed);
   },
 
   distanceTo: function(targetLocation, currentPosition){

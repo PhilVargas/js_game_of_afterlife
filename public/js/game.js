@@ -3,8 +3,8 @@ var canvas = document.getElementsByTagName('canvas')[0];
 var width = canvas.width
 var height = canvas.height
 var ctx = canvas.getContext('2d');
-var allHumanoids = HumanoidBuilder.populate(40,10)
-var board = new Board({humanoids: allHumanoids, width: width, height: height})
+var allHumanoids = HumanoidBuilder.populate(5,2)
+board = new Board({humanoids: allHumanoids, width: width, height: height})
 
 function draw(player){
   ctx.beginPath();
@@ -74,23 +74,22 @@ function callNextTurn(board){
         var humanoid = board.humanoids[i]
 
         if (humanoid.humanType === 'human') {
-          humanoid.color = '#00aaaa';
+          humanoid.color = '#00aaaa'
         } else if (humanoid.humanType === 'zombie') {
           humanoid.color = '#ff0000'
         } else {
           humanoid.color = '#770000'
         }
-
         draw(humanoid)
       }
-      board.nextTurn(board.humanoids)
+      board.nextTurn()
     } else {
-      clearTimeout(nextRequest);
+      clearInterval(nextRequest);
       alert('EVERYBODY IS DEAD!!!')
     }
-  }, 150);
+  }, 600);
 }
-callNextTurn(board)
+  callNextTurn(board)
 // makeAjaxRequest('/update')
 })()
 

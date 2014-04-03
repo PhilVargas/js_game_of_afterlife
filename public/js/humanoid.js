@@ -52,12 +52,12 @@ Humanoid.prototype = {
   },
 
   moveNearest: function(nearestObject){
+    var potentialMove;
     if (this.isAttractedTo(nearestObject)){
-      var potentialMove = Pathfinder.moveTowards(this.position, nearestObject.position, this.speed)
+      potentialMove = Pathfinder.moveTowards(this.position, nearestObject.position, this.speed)
     } else {
-      var potentialMove = Pathfinder.moveAwayFrom(this.position, nearestObject.position, this.speed)
+      potentialMove = Pathfinder.moveAwayFrom(this.position, nearestObject.position, this.speed)
     }
-
     if (this.lastPosition.x === this.position.x && this.lastPosition.y === this.position.y){
       this.storeLastPosition();
       return Pathfinder.moveRandomly(this.position, this.speed);
