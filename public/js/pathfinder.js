@@ -27,7 +27,7 @@ var Pathfinder = {
   distanceTo: function(targetLocation, currentPosition){
     var deltaY = targetLocation.y - currentPosition.y;
     var deltaX = targetLocation.x - currentPosition.x;
-    return Math.pow(deltaY,2) + Math.pow(deltaX,2)
+    return Math.sqrt(Math.pow(deltaY,2) + Math.pow(deltaX,2))
   },
 
   moveRandomly: function(currentPosition, speed){
