@@ -56,8 +56,7 @@ Board.prototype = {
         for( var i=0; i < this.humanoids.length; i++ ){
           if(this.humanoids[i].humanType == "human") { result = true };
         }
-        if( result ){ return this.humanoids }
-        else { return null };
+        if( !result ){ [] }
       };
   },
 
