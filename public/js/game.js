@@ -91,7 +91,7 @@ function callNextTurn(board){
     }
   }, 150);
 }
-
+debugger
 callNextTurn(board)
 // makeAjaxRequest('/update')
 })()

@@ -23,7 +23,6 @@ Board.prototype = {
     var similarHumanoids = this.findSimilarHumanoids( humanoid, humanoidType )
     var closestPos = this.findClosestPos( similarHumanoids, humanoid )
     var closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids  )
-      debugger
     return closestHumanoid
   },
 
@@ -90,7 +89,7 @@ Board.prototype = {
   //nearest HUMANOID PRIVATE METHODS
   deleteSelfHumanoid: function( humanoid ){
     var otherHumanoids = []
-    for( i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids)}
+    for( i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i])}
     
     for( i=0; i < this.humanoids.length; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , humanoid.position ) ){
@@ -110,6 +109,7 @@ Board.prototype = {
   },
   findClosestPos: function( otherHumanoids, humanoid ){
     var closestPos = []
+    // debugger
     for( i=0; i< otherHumanoids.length; i++ ){
       var dist = Pathfinder.distanceTo( otherHumanoids[i].position, humanoid.position )
       closestPos.push( dist );
