@@ -23,6 +23,7 @@ Board.prototype = {
     var similarHumanoids = this.findSimilarHumanoids( humanoid, humanoidType )
     var closestPos = this.findClosestPos( similarHumanoids, humanoid )
     var closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids  )
+      debugger
     return closestHumanoid
   },
 
@@ -35,8 +36,7 @@ Board.prototype = {
       var humanoid = this.humanoids[i]
       var nearestZombie = this.nearestHumanoid( humanoid, "zombie"  )
       var nearestHuman = this.nearestHumanoid(  humanoid, "human"  )
-
-      setDestination( nearestHuman, nearestZombie, humanoid )
+      this.setDestination( nearestHuman, nearestZombie, humanoid )
 
       destination.x = ( destination.x/this.width )
       destination.y = ( destination.y/this.height )
@@ -90,9 +90,10 @@ Board.prototype = {
   //nearest HUMANOID PRIVATE METHODS
   deleteSelfHumanoid: function( humanoid ){
     var otherHumanoids = []
+    for( i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids)}
+    
     for( i=0; i < this.humanoids.length; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , humanoid.position ) ){
-        var otherHumanoids = this.humanoids
         otherHumanoids.splice( i, 1 )
         break
       }
@@ -104,6 +105,7 @@ Board.prototype = {
     for( i=0; i< otherHumanoids.length; i++ ){
       if( otherHumanoids[i].humanType != humanoidType ){ otherHumanoids.splice( i, 1 )}
     }
+  // debugger
     return otherHumanoids
   },
   findClosestPos: function( otherHumanoids, humanoid ){
