@@ -83,7 +83,6 @@ function callNextTurn(board){
 
         draw(humanoid)
       }
-
       board.nextTurn(board.humanoids)
     } else {
       clearTimeout(nextRequest);
@@ -91,7 +90,6 @@ function callNextTurn(board){
     }
   }, 150);
 }
-debugger
 callNextTurn(board)
 // makeAjaxRequest('/update')
 })()

@@ -52,7 +52,6 @@ Humanoid.prototype = {
   },
 
   moveNearest: function(nearestObject){
-    debugger
     if (this.isAttractedTo(nearestObject)){
       var potentialMove = Pathfinder.moveTowards(this.position, nearestObject.position, this.speed)
     } else {
