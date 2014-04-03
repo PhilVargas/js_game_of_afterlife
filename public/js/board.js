@@ -45,6 +45,7 @@ Board.prototype = {
 
       //check on destination -- set destination
       if( this.isValidDestination( destination ) == true ){
+        humanoid.storeLastPosition()
         humanoid.position = destination
       }
       //checks if there are any more humans
