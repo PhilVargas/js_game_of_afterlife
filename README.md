@@ -1,6 +1,8 @@
 Vanilla Javascript Game of Afterlife
 ====================
+Feel free to make pull requests and improvements to the game.
 
+Contact: [@philvargas](https://github.com/philvargas) & [@johnnywu](https://github.com/jonathanpeterwu)
 
 This is a TDD driven build of Game of Afterlife in Vanilla Javascript.
 
