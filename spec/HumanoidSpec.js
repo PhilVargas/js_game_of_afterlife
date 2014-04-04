@@ -61,7 +61,7 @@ describe("Humanoid", function(){
 
     describe("#isLastMoveRepeated", function(){
       it("should return true for close positions", function(){
-        var closePosition = {'x': 21, 'y': 21}
+        var closePosition = {'x': 20.01, 'y': 20.01}
         expect(human.isLastMoveRepeated(closePosition)).toEqual(true)
       });
 
@@ -117,7 +117,7 @@ describe("Humanoid", function(){
       })
 
       it("should change the speed to 5", function(){
-        expect(human.speed).toEqual(5)
+        expect(human.speed).toEqual(gameSettings.zombieSpeed)
       })
     })
 

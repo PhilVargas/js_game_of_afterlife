@@ -16,7 +16,7 @@ Humanoid.prototype = {
   },
 
   isLastMoveRepeated: function(potentialMove){
-    return ((Math.abs(potentialMove.x - this.lastPosition.x) < 5) && (Math.abs(potentialMove.y - this.lastPosition.y) < 5));
+    return ((Math.abs(potentialMove.x - this.lastPosition.x) < gameSettings.repitionTolerance) && (Math.abs(potentialMove.y - this.lastPosition.y) < gameSettings.repitionTolerance));
   },
 
   getBitten: function(){
@@ -32,7 +32,7 @@ Humanoid.prototype = {
 
   turnToZombie: function(){
     this.humanType = 'zombie'
-    this.speed = 5
+    this.speed = gameSettings.zombieSpeed
   },
 
   isAbleToBite: function(){
