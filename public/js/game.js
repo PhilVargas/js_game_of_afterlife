@@ -87,7 +87,7 @@ function callNextTurn(board){
       }
       board.nextTurn()
     } 
-  }, 600);
+  }, 150);
 }
   callNextTurn(board)
 // makeAjaxRequest('/update')

@@ -6,8 +6,7 @@ var Pathfinder = {
     if (speed !== 0 && length < Math.abs(speed)){
       return friendlyLocation
     } else {
-    var k = {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y + (deltaY / length * speed))}
-      return k 
+    return {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y + (deltaY / length * speed))}
     }
   },
   movePerpendicularTo: function(currentPosition, friendlyLocation, speed){
