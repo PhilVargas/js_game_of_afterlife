@@ -21,13 +21,11 @@ canvas{
 }
 
 .footer h6{
-  color: #BFDFFF;
   text-align: center;
-
 }
 .footer a{
   text-align: left;
-  color: white;
+  color: #2de037;
   font-size: 0.8em;
   text-decoration: none;
 }
