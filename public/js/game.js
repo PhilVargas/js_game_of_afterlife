@@ -3,7 +3,7 @@
   var width = canvas.width
   var height = canvas.height
   var ctx = canvas.getContext('2d');
-  var allHumanoids = HumanoidBuilder.populate(40,10)
+  var allHumanoids = HumanoidBuilder.populate(gameSettings.humanCount , gameSettings.zombieCount)
   var board = new Board({humanoids: allHumanoids, width: width, height: height})
 
   function draw(player){
@@ -38,7 +38,7 @@
         }
         board.nextTurn()
       }
-    }, 150);
+    }, gameSettings.turnDelay);
   }
   callNextTurn(board)
 })()
