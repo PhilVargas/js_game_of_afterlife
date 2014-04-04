@@ -1,15 +1,16 @@
 var Pathfinder = {
-  moveTowards: function(friendlyLocation, currentPosition, speed){
+  moveTowards: function(currentPosition, friendlyLocation, speed){
     var deltaY = friendlyLocation.y - currentPosition.y;
     var deltaX = friendlyLocation.x - currentPosition.x;
     var length = Pathfinder.distanceTo(friendlyLocation, currentPosition);
     if (speed !== 0 && length < Math.abs(speed)){
       return friendlyLocation
     } else {
-      return {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y + (deltaY / length * speed))}
+    var k = {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y + (deltaY / length * speed))}
+      return k 
     }
   },
-  movePerpendicularTo: function(friendlyLocation, currentPosition, speed){
+  movePerpendicularTo: function(currentPosition, friendlyLocation, speed){
     var deltaY = friendlyLocation.y - currentPosition.y;
     var deltaX = friendlyLocation.x - currentPosition.x;
     var length = Pathfinder.distanceTo(friendlyLocation, currentPosition);

@@ -17,9 +17,6 @@ Board.prototype = {
   },
 
   nearestHumanoid: function( humanoid, humanoidType ){
-    var x = humanoid.position.x
-    var y = humanoid.position.y
-
     var similarHumanoids = this.findSimilarHumanoids( humanoid, humanoidType )
     var closestPos = this.findClosestPos( similarHumanoids, humanoid )
     var closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids  )
@@ -36,16 +33,16 @@ Board.prototype = {
       var nearestZombie = this.nearestHumanoid( humanoid, "zombie"  )
       var nearestHuman = this.nearestHumanoid(  humanoid, "human"  )
       var destination = this.setDestination( nearestHuman, nearestZombie, humanoid )
-      destination.x = ( destination.x%this.width )
-      destination.y = ( destination.y%this.height )
+      destination.x = ( (destination.x + this.width) % this.width )
+      destination.y = ( (destination.y + this.height) % this.height )
       //guard clause function
       if( nearestHuman != null ){
-        if( humanoid.isAbleToBite() && Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < 10 ){ humanoid.bite( nearestHuman ) }
+        if( humanoid.isAbleToBite() && (Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < 10) ){ humanoid.bite( nearestHuman ) }
       }
 
       //check on destination -- set destination
       if( this.isValidDestination( destination ) == true ){
-        humanoid.storeLastPosition()
+        // humanoid.storeLastPosition()
         humanoid.position = destination
       }
       //checks if there are any more humans
@@ -55,7 +52,7 @@ Board.prototype = {
         for( var i=0; i < this.humanoids.length; i++ ){
           if(this.humanoids[i].humanType == "human") { result = true };
         }
-        if( !result ){ this.humanoids = [] }
+        if( !result ){ return this.humanoids = [] }
       };
   },
 
@@ -64,6 +61,7 @@ Board.prototype = {
     if( nearestHuman === null ) { return humanoid.moveNearest(  nearestZombie  )}
     else if( humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, humanoid ) }
     else if( humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie, humanoid ) }
+    else { return humanoid.position }
   },
   setZombieDestination: function( nearestHuman, nearestZombie, humanoid ){
    if ( Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < Pathfinder.distanceTo( nearestZombie.position, humanoid.position ) * 6){

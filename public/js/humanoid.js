@@ -17,7 +17,7 @@ Humanoid.prototype = {
   },
 
   isLastMoveRepeated: function(potentialMove){
-    return ((Math.abs(potentialMove.x - this.lastPosition.x) < 5) && (Math.abs(potentialMove.y - this.lastPosition.y)) < 5);
+    return ((Math.abs(potentialMove.x - this.lastPosition.x) < 5) && (Math.abs(potentialMove.y - this.lastPosition.y) < 5));
   },
 
   getBitten: function(){
