@@ -1,5 +1,6 @@
 body {
   background-color: #333;
+font-family: 'Special Elite', cursive;
 }
 .header, .content{
   text-align: center;
@@ -7,4 +8,37 @@ body {
 canvas{
   background-color: #444;
   outline: 2px black solid;
+}
+
+.footer ul{
+  list-style-type: none;
+}
+
+.github {
+  color: green;
+}
+
+.footer h6{
+  color: #BFDFFF;
+  text-align: center;
+
+}
+.footer a{
+  text-align: center;
+  color: white;
+  font-size: 1.2em;
+  text-decoration: none;
+}
+
+#wrap {
+   width:600px;
+   margin:0 auto;
+}
+#left_col {
+   float:left;
+   width:300px;
+}
+#right_col {
+   float:right;
+   width:300px;
 }
