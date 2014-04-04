@@ -12,7 +12,7 @@ describe("Humanoid", function(){
 
     it("should have a default position", function(){
       var anotherHuman = new Humanoid({'speed': 10, 'humanType': 'human'});
-      expect(anotherHuman.position).toBeTruthy()  
+      expect(anotherHuman.position).toBeTruthy()
     })
 
     it("should have a speed of 10", function(){
@@ -196,7 +196,7 @@ describe("Humanoid", function(){
             expect(Pathfinder.movePerpendicularTo).toHaveBeenCalled()
           })
         })
-        
+
         describe("else", function(){
           beforeEach(function(){
             zombie.position.x++
@@ -214,8 +214,8 @@ describe("Humanoid", function(){
           })
         })
       })
-      
-    
+
+
       describe("is not attracted to the nearest", function(){
         beforeEach(function(){
           spyOn(zombie, 'isAttractedTo').and.returnValue(false)
@@ -255,7 +255,7 @@ describe("Humanoid", function(){
             expect(Pathfinder.movePerpendicularTo).toHaveBeenCalled()
           })
         })
-        
+
         describe("else", function(){
           beforeEach(function(){
             zombie.position.x++
