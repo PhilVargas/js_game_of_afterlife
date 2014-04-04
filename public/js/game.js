@@ -37,7 +37,7 @@
           draw(humanoid)
         }
         board.nextTurn()
-      } 
+      }
     }, 150);
   }
   callNextTurn(board)
