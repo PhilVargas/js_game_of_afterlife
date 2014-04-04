@@ -1,19 +1,19 @@
 var Pathfinder = {
-  moveTowards: function(friendlyLocation, currentPosition, speed){
+  moveTowards: function(currentPosition, friendlyLocation, speed){
     var deltaY = friendlyLocation.y - currentPosition.y;
     var deltaX = friendlyLocation.x - currentPosition.x;
-    var length = distanceTo(friendlyLocation);
-    if (speed > 0 && length < speed){
+    var length = Pathfinder.distanceTo(friendlyLocation, currentPosition);
+    if (speed !== 0 && length < Math.abs(speed)){
       return friendlyLocation
     } else {
-      return {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y + (deltaY / length * speed))}
+    return {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y + (deltaY / length * speed))}
     }
   },
-  movePerpendicularTo: function(friendlyLocation, currentPosition, speed){
+  movePerpendicularTo: function(currentPosition, friendlyLocation, speed){
     var deltaY = friendlyLocation.y - currentPosition.y;
     var deltaX = friendlyLocation.x - currentPosition.x;
-    var length = distanceTo(friendlyLocation);
-    if (speed > 0 && length < speed){
+    var length = Pathfinder.distanceTo(friendlyLocation, currentPosition);
+    if (speed !== 0 && length < Math.abs(speed)){
       return friendlyLocation
     } else {
       return {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y - (deltaY / length * speed))}
@@ -21,13 +21,13 @@ var Pathfinder = {
   },
 
   moveAwayFrom: function(currentPosition, hostileLocation, speed){
-    Pathfinder.moveTowards(currentPosition, hostileLocation, -speed);
+    return Pathfinder.moveTowards(currentPosition, hostileLocation, -speed);
   },
 
   distanceTo: function(targetLocation, currentPosition){
     var deltaY = targetLocation.y - currentPosition.y;
     var deltaX = targetLocation.x - currentPosition.x;
-    return Math.pow(deltaY,2) + Math.pow(deltaX,2)
+    return Math.sqrt(Math.pow(deltaY,2) + Math.pow(deltaX,2))
   },
 
   moveRandomly: function(currentPosition, speed){

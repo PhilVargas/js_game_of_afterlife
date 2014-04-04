@@ -1,6 +1,6 @@
 var HumanoidBuilder = {
   populate: function(numberOfHumans, numberOfZombies){
-    return HumanoidBuilder.creation(numberOfHumans, 'human', 10).concat(HumanoidBuilder.creation(numberOfZombies, 'zombies',5))
+    return HumanoidBuilder.creation(numberOfHumans, 'human', 10).concat(HumanoidBuilder.creation(numberOfZombies, 'zombie',5))
   },
 
   creation: function(number, type, speed){
