@@ -63,7 +63,7 @@ Humanoid.prototype = {
       return Pathfinder.moveRandomly(this.position, this.speed);
     } else if (this.isLastMoveRepeated(potentialMove)){
       // this.storeLastPosition();
-      return Pathfinder.movePerpendicularTo(nearestObject.position, this.position, this.speed)
+      return Pathfinder.movePerpendicularTo(this.position, nearestObject.position, this.speed)
     } else {
       // this.storeLastPosition();
       return potentialMove
