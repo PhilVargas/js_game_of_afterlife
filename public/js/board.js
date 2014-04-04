@@ -6,12 +6,15 @@ var Board = function( attributes  ){
 
 Board.prototype = {
   isPositionEqual: function( position1, position2 ){
-    return (position1.x == position2.x && position1.y == position2.y )
+    return position1.x === position2.x && position1.y === position2.y 
   },
   isValidDestination: function( target_position ){
     var result = true
-    for(var i= 0; i < this.humanoids.lenght; i++ ){
-      if( this.isPositionEqual( this.humanoids[i].position , target_position ) ){ result = false }
+    // debugger
+    for(var i= 0; i < this.humanoids.length; i++ ){
+      if( this.isPositionEqual( this.humanoids[i].position , target_position ) ){ 
+        result = false 
+      }
     }
     return result
   },
@@ -39,9 +42,9 @@ Board.prototype = {
       if( nearestHuman != null ){
         if( humanoid.isAbleToBite() && (Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < 10) ){ humanoid.bite( nearestHuman ) }
       }
-
+    // console.log(this.isValidDestination( destination ))
       //check on destination -- set destination
-      if( this.isValidDestination( destination ) == true ){
+      if( this.isValidDestination( destination ) ){
         // humanoid.storeLastPosition()
         humanoid.position = destination
       }
