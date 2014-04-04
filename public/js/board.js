@@ -63,7 +63,7 @@ Board.prototype = {
     else { return humanoid.position }
   },
   setZombieDestination: function( nearestHuman, nearestZombie, humanoid ){
-   if ( Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < Pathfinder.distanceTo( nearestZombie.position, humanoid.position ) * 6){
+   if ( Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < Pathfinder.distanceTo( nearestZombie.position, humanoid.position ) * gameSettings.zombieSpread){
       return humanoid.moveNearest( nearestHuman )
     }
     else {
@@ -71,7 +71,7 @@ Board.prototype = {
     }
   },
   setHumanDestination: function( nearestHuman, nearestZombie, humanoid  ){
-    if ( Pathfinder.distanceTo( nearestZombie.position, humanoid.position ) < 50 ){
+    if ( Pathfinder.distanceTo( nearestZombie.position, humanoid.position ) < gameSettings.humanFearRange ){
       return humanoid.moveNearest( nearestZombie )
     }
     else {
