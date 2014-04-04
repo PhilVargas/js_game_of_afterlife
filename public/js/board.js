@@ -10,7 +10,6 @@ Board.prototype = {
   },
   isValidDestination: function( target_position ){
     var result = true
-    // debugger
     for(var i= 0; i < this.humanoids.length; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , target_position ) ){ 
         result = false 
@@ -42,10 +41,8 @@ Board.prototype = {
       if( nearestHuman != null ){
         if( humanoid.isAbleToBite() && (Pathfinder.distanceTo( nearestHuman.position, humanoid.position ) < 10) ){ humanoid.bite( nearestHuman ) }
       }
-    // console.log(this.isValidDestination( destination ))
       //check on destination -- set destination
       if( this.isValidDestination( destination ) ){
-        // humanoid.storeLastPosition()
         humanoid.position = destination
       }
       //checks if there are any more humans
@@ -59,7 +56,6 @@ Board.prototype = {
       };
   },
 
-  //nextTurn set destination methods
   setDestination: function( nearestHuman, nearestZombie, humanoid ){
     if( nearestHuman === null ) { return humanoid.moveNearest(  nearestZombie  )}
     else if( humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, humanoid ) }
@@ -83,7 +79,6 @@ Board.prototype = {
     }
   },
 
-  //nearest HUMANOID PRIVATE METHODS
   deleteSelfHumanoid: function( humanoid ){
     var otherHumanoids = []
     for( var i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i])}
