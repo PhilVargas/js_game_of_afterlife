@@ -3,7 +3,7 @@ var canvas = document.getElementsByTagName('canvas')[0];
 var width = canvas.width
 var height = canvas.height
 var ctx = canvas.getContext('2d');
-var allHumanoids = HumanoidBuilder.populate(2,1)
+var allHumanoids = HumanoidBuilder.populate(10,3)
 board = new Board({humanoids: allHumanoids, width: width, height: height})
 
 function draw(player){
@@ -64,7 +64,6 @@ function draw(player){
 // }
 
 function callNextTurn(board){
-
   nextRequest = setInterval(function(){
     if (board.humanoids.length == 0) {
       clearInterval(nextRequest);
