@@ -57,7 +57,7 @@ Board.prototype = {
   },
 
   setDestination: function( nearestHuman, nearestZombie, humanoid ){
-    if( nearestHuman === null ) { return humanoid.moveNearest(  nearestZombie  )}
+    if( nearestHuman === null || nearestHuman === undefined  ) { return humanoid.moveNearest(  nearestZombie  )}
     else if( humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, humanoid ) }
     else if( humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie, humanoid ) }
     else { return humanoid.position }
@@ -92,11 +92,12 @@ Board.prototype = {
     return otherHumanoids
   },
   findSimilarHumanoids: function( humanoid, humanoidType ){
-    otherHumanoids = this.deleteSelfHumanoid( humanoid )
+    var otherHumanoids = this.deleteSelfHumanoid( humanoid )
+    var similar = [];
     for( var i=0; i< otherHumanoids.length; i++ ){
-      if( otherHumanoids[i].humanType != humanoidType ){ otherHumanoids.splice( i, 1 )}
+      if( otherHumanoids[i].humanType === humanoidType ){ similar.push(otherHumanoids[i])}
     }
-    return otherHumanoids
+    return similar
   },
   findClosestPos: function( otherHumanoids, humanoid ){
     var closestPos = []
