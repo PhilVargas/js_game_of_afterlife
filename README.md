@@ -1,5 +1,11 @@
 Vanilla Javascript Game of Afterlife
 ====================
+
+The Game of Afterlife is a new take on Conway's Game of Life: Zombie Edition. A zero-player game, Game of Afterlife seeds the board with randomized initial conditions full of Humans (blue) and Zombies (red). Humans band together and run from zombies. Zombies chase nearby humans or wander aimlessly. If a human gets caught, they become infected and transform into zombies. With the addition of a few more complicated mechanics, these general rules guide the games behavior and form an entertaining digital ant farm of zombie hordes.
+
+View it here: [philvargas.github.io/js_game_of_afterlife](http://philvargas.github.io/js_game_of_afterlife)
+
+====================
 Feel free to make pull requests and improvements to the game.
 
 Contact: [@philvargas](https://github.com/philvargas) & [@johnnywu](https://github.com/jonathanpeterwu)
