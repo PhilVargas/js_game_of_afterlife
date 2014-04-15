@@ -39,11 +39,6 @@ describe("Board", function(){
     });
   });
 
-  // next turn
-  describe("#nextTurn", function(){
-
-  })
-
   describe("setDestination", function(){
     beforeEach(function(){
       zombie2 = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 101, 'y': 103}});
@@ -68,7 +63,6 @@ describe("Board", function(){
     });
   });
 
-
   describe("#setZombieDestination", function(){
     it("should set zombie destination to move to nearest human", function(){
       var zombie3 = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 120, 'y': 120}});
@@ -91,7 +85,6 @@ describe("Board", function(){
     });
   });
 
-
   describe("#setHumanDestination", function(){
     it("should set human destination to move to nearest human", function(){
       var human3 = new Humanoid({'speed': 5, 'humanType': 'human', 'position': {'x': 120, 'y': 120}});
@@ -113,6 +106,4 @@ describe("Board", function(){
       expect(human5.moveNearest).toHaveBeenCalledWith(zombie5)
     });
   });
-
-
 });
