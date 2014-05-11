@@ -25,6 +25,17 @@ Board.prototype = {
     var closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids )
     return closestHumanoid
   },
+  
+  isAnyHumanRemaining: function(){
+    if( this.humanoids.length > 0 ){
+      var result = false
+      for( var i=0; i < this.humanoids.length; i++ ){
+        if(this.humanoids[i].humanType == "human") { result = true };
+      }
+      // if( !result ){ this.humanoids = [] }
+      return result
+    };
+  },
 
   nextTurn: function(){
     for( var i=0; i< this.humanoids.length; i++ ){
@@ -38,7 +49,7 @@ Board.prototype = {
       var destination = this.setDestination( nearestHuman, nearestZombie )
       destination.x = ( (destination.x + this.width) % this.width )
       destination.y = ( (destination.y + this.height) % this.height )
-      
+
       if ( this.humanoid.isAbleToBite() ){
         this.humanoid.bite( nearestHuman )
       }
@@ -48,13 +59,6 @@ Board.prototype = {
       }
       //checks if there are any more humans
     };
-      if( this.humanoids.length > 0 ){
-        var result = false
-        for( var i=0; i < this.humanoids.length; i++ ){
-          if(this.humanoids[i].humanType == "human") { result = true };
-        }
-        if( !result ){ return this.humanoids = [] }
-      };
   },
 
   setDestination: function( nearestHuman, nearestZombie ){
