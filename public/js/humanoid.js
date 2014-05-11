@@ -25,7 +25,7 @@ Humanoid.prototype = {
   },
 
   bite: function(humanoid){
-    if (humanoid.humanType === 'human'){
+    if (humanoid && (Pathfinder.distanceTo( humanoid.position, this.position ) < 10) && humanoid.humanType === 'human'){
       humanoid.getBitten();
     }
   },

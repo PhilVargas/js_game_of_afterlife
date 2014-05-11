@@ -38,9 +38,9 @@ Board.prototype = {
       var destination = this.setDestination( nearestHuman, nearestZombie )
       destination.x = ( (destination.x + this.width) % this.width )
       destination.y = ( (destination.y + this.height) % this.height )
-      //guard clause function
-      if( nearestHuman != null ){
-        if( this.humanoid.isAbleToBite() && (Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position ) < 10) ){ this.humanoid.bite( nearestHuman ) }
+      
+      if ( this.humanoid.isAbleToBite() ){
+        this.humanoid.bite( nearestHuman )
       }
       //check on destination -- set destination
       if( this.isValidDestination( destination ) ){
