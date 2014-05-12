@@ -7,21 +7,13 @@ describe("Humanoid", function(){
     beforeEach(function(){
       human = new Humanoid({'speed': 10, 'humanType': 'human', 'position': {'x': 20, 'y': 20}});
       zombie = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 25, 'y': 25}});
-      infected = new Humanoid({'speed': 5, 'humanType': 'infectedHuman'});
+      infected = new Humanoid({'speed': 0, 'humanType': 'infectedHuman'});
     });
 
     it("should have a default position", function(){
       var anotherHuman = new Humanoid({'speed': 10, 'humanType': 'human'});
       expect(anotherHuman.position).toBeTruthy()
     })
-
-    it("should have a speed of 10", function(){
-      expect(human.speed).toEqual(10)
-    });
-
-    it("should have a humanType of human", function(){
-      expect(human.humanType).toEqual('human')
-    });
 
     it("should have a default lastPosition equal to position", function(){
       expect(human.lastPosition).toEqual(human.position)
