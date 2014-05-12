@@ -94,7 +94,7 @@ describe("Humanoid", function(){
           spyOn(anotherZombie, 'getBitten')
           zombie.bite(anotherZombie)
         })
-        it("should call #getBitten", function(){
+        it("should call not #getBitten", function(){
           expect(anotherZombie.getBitten).not.toHaveBeenCalled()
         })
       })

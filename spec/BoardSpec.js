@@ -43,7 +43,7 @@ describe("Board", function(){
     });
   });
 
-  describe("setDestination", function(){
+  describe("#setDestination", function(){
     beforeEach(function(){
       zombie2 = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 101, 'y': 103}});
     })
@@ -55,14 +55,14 @@ describe("Board", function(){
       expect(human.moveNearest).toHaveBeenCalledWith(zombie)
     });
 
-    it("if nearest humanoid is a zombie ", function(){
+    it("if nearest humanoid is a zombie it should call setZombieDestination", function(){
       board.humanoid = zombie
       spyOn(board, 'setZombieDestination')
       board.setDestination( human2, zombie2 )
       expect(board.setZombieDestination).toHaveBeenCalled()
     });
 
-    it("if nearest humanoid is a human ", function(){
+    it("if nearest humanoid is a human it should call setHumanDestination", function(){
       board.humanoid = human
       spyOn(board, 'setHumanDestination')
       board.setDestination( human2, zombie2 )
