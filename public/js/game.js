@@ -17,37 +17,29 @@
 
   function callNextTurn(board){
     nextRequest = setInterval(function(){
-      if (board.humanoids.length == 0) {
+        ctx.clearRect(0,0,width,height)
+
+      for (var i = 0; i < board.humanoids.length; i++){
+
+        var humanoid = board.humanoids[i]
+
+        if (humanoid.humanType === 'human') {
+          humanoid.color = '#00aaaa'
+        } else if (humanoid.humanType === 'zombie') {
+          humanoid.color = '#ff0000'
+        } else {
+          humanoid.color = '#770000'
+        }
+        draw(humanoid)
+      }
+      
+      if (!board.isAnyHumanRemaining()) {
         clearInterval(nextRequest);
         alert('EVERYBODY IS DEAD!!!')
       } else {
-        ctx.clearRect(0,0,width,height)
-
-        for (var i = 0; i < board.humanoids.length; i++){
-
-          var humanoid = board.humanoids[i]
-
-          if (humanoid.humanType === 'human') {
-            humanoid.color = '#00aaaa'
-          } else if (humanoid.humanType === 'zombie') {
-            humanoid.color = '#ff0000'
-          } else {
-            humanoid.color = '#770000'
-          }
-          draw(humanoid)
-        }
         board.nextTurn()
       }
     }, gameSettings.turnDelay);
   }
   callNextTurn(board)
 })()
-
-
-
-
-
-
-
-
-
