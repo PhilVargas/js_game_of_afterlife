@@ -47,7 +47,7 @@ Board.prototype = {
       destination.x = ( (destination.x + this.width) % this.width )
       destination.y = ( (destination.y + this.height) % this.height )
 
-      if ( this.humanoid.isAbleToBite() ){
+      if ( this.humanoid.isAbleToBite( nearestHuman ) ){
         this.humanoid.bite( nearestHuman )
       }
 

@@ -87,17 +87,6 @@ describe("Humanoid", function(){
           expect(human.getBitten).toHaveBeenCalled()
         })
       })
-
-      describe("a zombie", function(){
-        beforeEach(function(){
-          anotherZombie = new Humanoid({'speed': 5, 'humanType': 'zombie'});
-          spyOn(anotherZombie, 'getBitten')
-          zombie.bite(anotherZombie)
-        })
-        it("should call not #getBitten", function(){
-          expect(anotherZombie.getBitten).not.toHaveBeenCalled()
-        })
-      })
     })
 
     describe("#turnToZombie", function(){
@@ -115,7 +104,7 @@ describe("Humanoid", function(){
 
     describe("#isAbleToBite", function(){
       it("should return true if the humanoid is a zombie", function(){
-        expect(zombie.isAbleToBite()).toEqual(true)
+        expect(zombie.isAbleToBite(human)).toEqual(true)
       })
 
       it("should return false if the humanoid is a human", function(){

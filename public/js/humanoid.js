@@ -25,9 +25,7 @@ Humanoid.prototype = {
   },
 
   bite: function(human){
-    if ( human && (Pathfinder.distanceTo( human.position, this.position ) < 10) ){
-      human.getBitten();
-    }
+    if ( human ) human.getBitten();
   },
 
   turnToZombie: function(){
@@ -35,8 +33,10 @@ Humanoid.prototype = {
     this.speed = gameSettings.zombieSpeed
   },
 
-  isAbleToBite: function(){
-    return this.humanType === 'zombie';
+  isAbleToBite: function(human){
+    if ( human ) {
+      return this.humanType === 'zombie' && (Pathfinder.distanceTo( human.position, this.position ) < 10);
+    }
   },
 
   incrementTimeSinceInfection: function(){
