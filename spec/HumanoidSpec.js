@@ -7,7 +7,7 @@ describe("Humanoid", function(){
     beforeEach(function(){
       human = new Humanoid({'speed': 10, 'humanType': 'human', 'position': {'x': 20, 'y': 20}});
       zombie = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 25, 'y': 25}});
-      infected = new Humanoid({'speed': 0, 'humanType': 'infectedHuman'});
+      infected = new Humanoid({'speed': 0, 'humanType': 'infectedHuman', position: {'x': 21, 'y': 21}});
     });
 
     it("should have a default position", function(){
@@ -108,11 +108,12 @@ describe("Humanoid", function(){
       })
 
       it("should return false if the humanoid is a human", function(){
-        expect(human.isAbleToBite()).toEqual(false)
+        var anotherHuman = new Humanoid({'speed': 10, 'humanType': 'human', position: {'x': 21, 'y': 21}});
+        expect(human.isAbleToBite(anotherHuman)).toEqual(false)
       })
 
       it("should return false if the humanoid is an infectedHuman", function(){
-        expect(infected.isAbleToBite()).toEqual(false)
+        expect(infected.isAbleToBite(human)).toEqual(false)
       })
     })
 
