@@ -7,6 +7,7 @@
   var board = new Board({humanoids: allHumanoids, width: width, height: height})
 
   function drawHumanoids(){
+    ctx.clearRect(0,0,width,height)
     for (var i = 0; i < board.humanoids.length; i++){
       ctx.beginPath();
       var player = board.humanoids[i]
@@ -29,7 +30,6 @@
 
   function callNextTurn(board){
     nextRequest = setInterval(function(){
-      ctx.clearRect(0,0,width,height)
       drawHumanoids()
       
       if (board.isAnyHumanRemaining()) {
