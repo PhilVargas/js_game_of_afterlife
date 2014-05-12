@@ -1,4 +1,4 @@
-var Board = function( attributes  ){
+var Board = function( attributes ){
   this.humanoid;
   this.humanoids = attributes.humanoids || [];
   this.width = attributes.width  || '600px';
@@ -27,14 +27,11 @@ Board.prototype = {
   },
   
   isAnyHumanRemaining: function(){
-    if( this.humanoids.length > 0 ){
-      var result = false
-      for( var i=0; i < this.humanoids.length; i++ ){
-        if(this.humanoids[i].humanType == "human") { result = true };
-      }
-      // if( !result ){ this.humanoids = [] }
-      return result
-    };
+    var result = false
+    for( var i=0; i < this.humanoids.length; i++ ){
+      if(this.humanoids[i].humanType == "human") { result = true; break };
+    }
+    return result
   },
 
   nextTurn: function(){
@@ -53,11 +50,10 @@ Board.prototype = {
       if ( this.humanoid.isAbleToBite() ){
         this.humanoid.bite( nearestHuman )
       }
-      //check on destination -- set destination
+
       if( this.isValidDestination( destination ) ){
         this.humanoid.position = destination
       }
-      //checks if there are any more humans
     };
   },
 
