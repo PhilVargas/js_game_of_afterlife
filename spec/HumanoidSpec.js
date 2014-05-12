@@ -7,21 +7,13 @@ describe("Humanoid", function(){
     beforeEach(function(){
       human = new Humanoid({'speed': 10, 'humanType': 'human', 'position': {'x': 20, 'y': 20}});
       zombie = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 25, 'y': 25}});
-      infected = new Humanoid({'speed': 5, 'humanType': 'infectedHuman'});
+      infected = new Humanoid({'speed': 0, 'humanType': 'infectedHuman', position: {'x': 21, 'y': 21}});
     });
 
     it("should have a default position", function(){
       var anotherHuman = new Humanoid({'speed': 10, 'humanType': 'human'});
       expect(anotherHuman.position).toBeTruthy()
     })
-
-    it("should have a speed of 10", function(){
-      expect(human.speed).toEqual(10)
-    });
-
-    it("should have a humanType of human", function(){
-      expect(human.humanType).toEqual('human')
-    });
 
     it("should have a default lastPosition equal to position", function(){
       expect(human.lastPosition).toEqual(human.position)
@@ -95,17 +87,6 @@ describe("Humanoid", function(){
           expect(human.getBitten).toHaveBeenCalled()
         })
       })
-
-      describe("a zombie", function(){
-        beforeEach(function(){
-          anotherZombie = new Humanoid({'speed': 5, 'humanType': 'zombie'});
-          spyOn(anotherZombie, 'getBitten')
-          zombie.bite(anotherZombie)
-        })
-        it("should call #getBitten", function(){
-          expect(anotherZombie.getBitten).not.toHaveBeenCalled()
-        })
-      })
     })
 
     describe("#turnToZombie", function(){
@@ -123,15 +104,16 @@ describe("Humanoid", function(){
 
     describe("#isAbleToBite", function(){
       it("should return true if the humanoid is a zombie", function(){
-        expect(zombie.isAbleToBite()).toEqual(true)
+        expect(zombie.isAbleToBite(human)).toEqual(true)
       })
 
       it("should return false if the humanoid is a human", function(){
-        expect(human.isAbleToBite()).toEqual(false)
+        var anotherHuman = new Humanoid({'speed': 10, 'humanType': 'human', position: {'x': 21, 'y': 21}});
+        expect(human.isAbleToBite(anotherHuman)).toEqual(false)
       })
 
       it("should return false if the humanoid is an infectedHuman", function(){
-        expect(infected.isAbleToBite()).toEqual(false)
+        expect(infected.isAbleToBite(human)).toEqual(false)
       })
     })
 

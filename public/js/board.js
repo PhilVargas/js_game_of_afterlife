@@ -1,4 +1,4 @@
-var Board = function( attributes  ){
+var Board = function( attributes ){
   this.humanoid;
   this.humanoids = attributes.humanoids || [];
   this.width = attributes.width  || '600px';
@@ -27,42 +27,38 @@ Board.prototype = {
   },
   
   isAnyHumanRemaining: function(){
-    if( this.humanoids.length > 0 ){
-      var result = false
-      for( var i=0; i < this.humanoids.length; i++ ){
-        if(this.humanoids[i].humanType == "human") { result = true };
-      }
-      // if( !result ){ this.humanoids = [] }
-      return result
-    };
+    var result = false
+    for( var i=0; i < this.humanoids.length; i++ ){
+      if(this.humanoids[i].humanType == "human") { result = true; break };
+    }
+    return result
   },
 
   nextTurn: function(){
     for( var i=0; i< this.humanoids.length; i++ ){
-      if( this.humanoids[i].humanType == "infectedHuman" ){
-          this.humanoids[i].incrementTimeSinceInfection()
+      this.humanoid = this.humanoids[i]
+      if( this.humanoid.humanType == "infectedHuman" ){
+          this.humanoid.incrementTimeSinceInfection()
           continue
       }
-      this.humanoid = this.humanoids[i]
       var nearestZombie = this.nearestHumanoid( "zombie" )
       var nearestHuman = this.nearestHumanoid( "human" )
       var destination = this.setDestination( nearestHuman, nearestZombie )
       destination.x = ( (destination.x + this.width) % this.width )
       destination.y = ( (destination.y + this.height) % this.height )
 
-      if ( this.humanoid.isAbleToBite() ){
+      if ( this.humanoid.isAbleToBite( nearestHuman ) ){
         this.humanoid.bite( nearestHuman )
       }
-      //check on destination -- set destination
+
       if( this.isValidDestination( destination ) ){
         this.humanoid.position = destination
       }
-      //checks if there are any more humans
     };
   },
 
   setDestination: function( nearestHuman, nearestZombie ){
-    if( nearestHuman === null || nearestHuman === undefined  ) { return this.humanoid.moveNearest(  nearestZombie  )}
+    if( !nearestHuman ) { return this.humanoid.moveNearest(  nearestZombie  )}
     else if( this.humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie ) }
     else if( this.humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie ) }
     else { return this.humanoid.position }
