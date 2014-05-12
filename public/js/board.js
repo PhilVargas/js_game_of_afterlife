@@ -36,11 +36,11 @@ Board.prototype = {
 
   nextTurn: function(){
     for( var i=0; i< this.humanoids.length; i++ ){
-      if( this.humanoids[i].humanType == "infectedHuman" ){
-          this.humanoids[i].incrementTimeSinceInfection()
+      this.humanoid = this.humanoids[i]
+      if( this.humanoid.humanType == "infectedHuman" ){
+          this.humanoid.incrementTimeSinceInfection()
           continue
       }
-      this.humanoid = this.humanoids[i]
       var nearestZombie = this.nearestHumanoid( "zombie" )
       var nearestHuman = this.nearestHumanoid( "human" )
       var destination = this.setDestination( nearestHuman, nearestZombie )
