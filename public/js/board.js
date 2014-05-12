@@ -58,7 +58,7 @@ Board.prototype = {
   },
 
   setDestination: function( nearestHuman, nearestZombie ){
-    if( nearestHuman === null || nearestHuman === undefined  ) { return this.humanoid.moveNearest(  nearestZombie  )}
+    if( !nearestHuman ) { return this.humanoid.moveNearest(  nearestZombie  )}
     else if( this.humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie ) }
     else if( this.humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie ) }
     else { return this.humanoid.position }
