@@ -8,7 +8,7 @@ var Humanoid = function(attributes){
 
 Humanoid.prototype = {
   isAttractedTo: function(nearestObject){
-    return nearestObject.humanType === 'human';
+    return nearestObject.humanType === 'human' || nearestObject.humanType === 'player';
   },
 
   storeLastPosition: function(){

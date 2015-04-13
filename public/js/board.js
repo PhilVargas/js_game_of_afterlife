@@ -52,9 +52,14 @@ Board.prototype = {
       }
       var nearestZombie = this.nearestHumanoid( "zombie" )
       var nearestHuman = this.nearestHumanoid( "human" )
-      var destination = this.setDestination( nearestHuman, nearestZombie )
+      var player = this.nearestHumanoid( 'player' )
+      var destination = this.setDestination( nearestHuman, nearestZombie, player )
       destination.x = ( (destination.x + this.width) % this.width )
       destination.y = ( (destination.y + this.height) % this.height )
+
+      if ( this.humanoid.isAbleToBite( player ) ){
+        this.humanoid.bite( player )
+      }
 
       if ( this.humanoid.isAbleToBite( nearestHuman ) ){
         this.humanoid.bite( nearestHuman )
@@ -66,17 +71,26 @@ Board.prototype = {
     };
   },
 
-  setDestination: function( nearestHuman, nearestZombie ){
+  setDestination: function( nearestHuman, nearestZombie, player ){
     if( !nearestHuman ) { return this.humanoid.moveNearest(  nearestZombie  )}
-    else if( this.humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie ) }
+    else if( this.humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, player ) }
     else if( this.humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie ) }
     else { return this.humanoid.position }
   },
-  setZombieDestination: function( nearestHuman, nearestZombie ){
-   if ( Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position ) < Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) * gameSettings.zombieSpread){
+
+  setZombieDestination: function( nearestHuman, nearestZombie, player ){
+    var playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position )
+    var humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position )
+    var zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) * gameSettings.zombieSpread
+    if ( playerDistance < humanDistance ){
+      if ( playerDistance < zombieDistance ){
+        return this.humanoid.moveNearest( player )
+      } else {
+        return this.humanoid.moveNearest( nearestZombie )
+      }
+    } else if ( humanDistance < zombieDistance ){
       return this.humanoid.moveNearest( nearestHuman )
-    }
-    else {
+    } else {
       return this.humanoid.moveNearest( nearestZombie )
     }
   },
