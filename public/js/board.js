@@ -72,9 +72,8 @@ Board.prototype = {
   },
 
   setDestination: function( nearestHuman, nearestZombie, player ){
-    if( !nearestHuman ) { return this.humanoid.moveNearest(  nearestZombie  )}
-    else if( this.humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, player ) }
-    else if( this.humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie ) }
+    if( this.humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, player ) }
+    else if( this.humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie, player ) }
     else { return this.humanoid.position }
   },
 
@@ -98,11 +97,18 @@ Board.prototype = {
     }
   },
 
-  setHumanDestination: function( nearestHuman, nearestZombie ){
-    if ( Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) < gameSettings.humanFearRange ){
+  setHumanDestination: function( nearestHuman, nearestZombie, player ){
+    var playerDistance = Number.POSITIVE_INFINITY;
+    var humanDistance = Number.POSITIVE_INFINITY;
+    var zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position )
+    if (player){ playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position ) }
+    if (nearestHuman){ humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position ) }
+
+    if ( zombieDistance < gameSettings.humanFearRange || ( !player && !nearestHuman ) ){
       return this.humanoid.moveNearest( nearestZombie )
-    }
-    else {
+    } else if ( playerDistance < humanDistance ){
+      return this.humanoid.moveNearest( player )
+    } else {
       return this.humanoid.moveNearest( nearestHuman )
     }
   },
