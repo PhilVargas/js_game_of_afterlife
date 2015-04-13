@@ -1,7 +1,7 @@
 var Humanoid = function(attributes){
   this.position = attributes.position || {'x': (5+ Math.floor(Math.random()*591)),'y': (5+ Math.floor(Math.random()*391))};
   this.speed = attributes.speed;
-  this.humanType = attributes.humanType; 
+  this.humanType = attributes.humanType;
   this.timeSinceInfection = 0;
   this.lastPosition = {'x': this.position.x, 'y': this.position.y};
 }

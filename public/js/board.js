@@ -7,13 +7,13 @@ var Board = function( attributes ){
 
 Board.prototype = {
   isPositionEqual: function( position1, position2 ){
-    return position1.x === position2.x && position1.y === position2.y 
+    return position1.x === position2.x && position1.y === position2.y
   },
   isValidDestination: function( target_position ){
     var result = true
     for(var i= 0; i < this.humanoids.length; i++ ){
-      if( this.isPositionEqual( this.humanoids[i].position , target_position ) ){ 
-        result = false 
+      if( this.isPositionEqual( this.humanoids[i].position , target_position ) ){
+        result = false
       }
     }
     return result
@@ -25,7 +25,7 @@ Board.prototype = {
     var closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids )
     return closestHumanoid
   },
-  
+
   isAnyHumanRemaining: function(){
     var result = false
     for( var i=0; i < this.humanoids.length; i++ ){
@@ -83,7 +83,7 @@ Board.prototype = {
   deleteSelfHumanoid: function(){
     var otherHumanoids = []
     for( var i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i])}
-    
+
     for( var i=0; i < this.humanoids.length; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , this.humanoid.position ) ){
         otherHumanoids.splice( i, 1 )

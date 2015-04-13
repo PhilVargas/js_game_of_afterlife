@@ -31,7 +31,7 @@
   function callNextTurn(board){
     nextRequest = setInterval(function(){
       drawHumanoids()
-      
+
       if (board.isAnyHumanRemaining()) {
         board.nextTurn()
       } else {
