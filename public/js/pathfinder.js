@@ -9,6 +9,11 @@ var Pathfinder = {
     return {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y + (deltaY / length * speed))}
     }
   },
+
+  playerMove: function(currentPosition, dx, dy, speed){
+    return{ x: currentPosition.x + (dx * speed), y: currentPosition.y + ( dy * speed ) }
+  },
+
   movePerpendicularTo: function(currentPosition, friendlyLocation, speed){
     var deltaY = friendlyLocation.y - currentPosition.y;
     var deltaX = friendlyLocation.x - currentPosition.x;

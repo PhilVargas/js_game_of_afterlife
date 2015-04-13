@@ -1,5 +1,7 @@
 var Board = function( attributes ){
   this.humanoid;
+  this.dx = 0;
+  this.dy = 0;
   this.humanoids = attributes.humanoids || [];
   this.width = attributes.width  || '600px';
   this.height = attributes.height || '400px';
@@ -40,6 +42,13 @@ Board.prototype = {
       if( this.humanoid.humanType == "infectedHuman" ){
           this.humanoid.incrementTimeSinceInfection()
           continue
+      }
+      if( this.humanoid.humanType == "player" ){
+        var coords = ( Pathfinder.playerMove(this.humanoid.position, this.dx, this.dy, this.humanoid.speed) )
+        coords.x = ( (coords.x + this.width) % this.width )
+        coords.y = ( (coords.y + this.height) % this.height )
+        this.humanoid.position = coords
+        continue
       }
       var nearestZombie = this.nearestHumanoid( "zombie" )
       var nearestHuman = this.nearestHumanoid( "human" )
