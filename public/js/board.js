@@ -31,7 +31,7 @@ Board.prototype = {
   isAnyHumanRemaining: function(){
     var result = false
     for( var i=0; i < this.humanoids.length; i++ ){
-      if(this.humanoids[i].humanType == "human") { result = true; break };
+      if(this.humanoids[i].humanType == "human"  || this.humanoids[i].humanType == "player") { result = true; break };
     }
     return result
   },
@@ -79,9 +79,12 @@ Board.prototype = {
   },
 
   setZombieDestination: function( nearestHuman, nearestZombie, player ){
-    var playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position )
-    var humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position )
+    var playerDistance = Number.POSITIVE_INFINITY;
+    var humanDistance = Number.POSITIVE_INFINITY;
     var zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) * gameSettings.zombieSpread
+    if (player){ playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position ) }
+    if (nearestHuman){ humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position ) }
+
     if ( playerDistance < humanDistance ){
       if ( playerDistance < zombieDistance ){
         return this.humanoid.moveNearest( player )
@@ -94,6 +97,7 @@ Board.prototype = {
       return this.humanoid.moveNearest( nearestZombie )
     }
   },
+
   setHumanDestination: function( nearestHuman, nearestZombie ){
     if ( Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) < gameSettings.humanFearRange ){
       return this.humanoid.moveNearest( nearestZombie )
