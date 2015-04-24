@@ -51,6 +51,7 @@
       drawHumanoids()
 
       if (board.isAnyHumanRemaining()) {
+        document.getElementById('score').innerHTML = board.score
         board.nextTurn()
       } else {
         clearInterval(nextRequest);

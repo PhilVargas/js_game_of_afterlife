@@ -42,3 +42,9 @@ canvas{
    float:right;
    width:200px;
 }
+
+.score-container{
+  display: inline-block;
+  position: absolute;
+  top: 120px;
+}

@@ -1,5 +1,6 @@
 var Board = function( attributes ){
   this.humanoid;
+  this.score = 0;
   this.dx = 0;
   this.dy = 0;
   this.humanoids = attributes.humanoids || [];
@@ -71,6 +72,11 @@ Board.prototype = {
         this.humanoid.position = destination
       }
     };
+    this.incrementStore(player);
+  },
+
+  incrementStore: function(player){
+    if (player && player.humanType === 'player'){ this.score += 10 }
   },
 
   setDestination: function( nearestHuman, nearestZombie, player ){
