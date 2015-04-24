@@ -11,6 +11,7 @@ Board.prototype = {
   isPositionEqual: function( position1, position2 ){
     return position1.x === position2.x && position1.y === position2.y
   },
+
   isValidDestination: function( target_position ){
     var result = true
     for(var i= 0; i < this.humanoids.length; i++ ){
@@ -44,7 +45,8 @@ Board.prototype = {
           continue
       }
       if( this.humanoid.humanType == "player" ){
-        var coords = ( Pathfinder.playerMove(this.humanoid.position, this.dx, this.dy, this.humanoid.speed) )
+        var targetLoc = { x: this.humanoid.position.x + this.dx*this.humanoid.speed,  y: this.humanoid.position.y + this.dy*this.humanoid.speed }
+        var coords = ( Pathfinder.moveTowards(this.humanoid.position, targetLoc, this.humanoid.speed) )
         coords.x = ( (coords.x + this.width) % this.width )
         coords.y = ( (coords.y + this.height) % this.height )
         this.humanoid.position = coords

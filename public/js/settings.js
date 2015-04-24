@@ -1,5 +1,6 @@
 var gameSettings = {
   humanSpeed: 7,
+  playerSpeed: 6,
   zombieSpeed: 4,
   humanCount: 30,
   zombieCount: 3,
