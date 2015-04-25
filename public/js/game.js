@@ -55,7 +55,7 @@
         board.nextTurn()
       } else {
         clearInterval(nextRequest);
-        alert('EVERYBODY IS DEAD!!!')
+        alert('EVERYBODY IS DEAD!!!\nYour score was: ' + board.score)
       }
     }, gameSettings.turnDelay);
   }
