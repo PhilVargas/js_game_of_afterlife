@@ -9,6 +9,26 @@ var Board = function( attributes ){
 }
 
 Board.prototype = {
+  isGameActive: function(){
+    var activeStatus = false;
+    for (var i = 0; i < this.humanoids.length; i++){
+      if (this.humanoids[i].humanType === 'human' || this.humanoids[i].humanType === 'player'){
+        activeStatus = true;
+      }
+    }
+    return activeStatus;
+  },
+
+  isPlayerAlive: function(){
+    var activeStatus = false;
+    for (var i = 0; i < this.humanoids.length; i++){
+      if (this.humanoids[i].humanType === 'player'){
+        activeStatus = true;
+      }
+    }
+    return activeStatus;
+  },
+
   isPositionEqual: function( position1, position2 ){
     return position1.x === position2.x && position1.y === position2.y
   },
