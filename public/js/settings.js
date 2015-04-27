@@ -4,7 +4,7 @@ var gameSettings = {
   zombieSpeed: 4,
   humanCount: 30,
   zombieCount: 3,
-  turnDelay: 100,
+  turnDelay: { normal: 100, fast: 25 },
   //sets the timeout between turns
   repitionTolerance: 1,
   //the range in which a move is considered repetitive

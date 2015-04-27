@@ -47,17 +47,19 @@
   }
 
   function callNextTurn(board){
-    nextRequest = setInterval(function(){
-      drawHumanoids()
-
-      if (board.isAnyHumanRemaining()) {
+    var delay, nextRequest;
+    nextRequest = function(){
+      drawHumanoids();
+      if (board.isGameActive()){
         document.getElementById('score').innerHTML = board.score
         board.nextTurn()
+        delay = ( board.isPlayerAlive() ? gameSettings.turnDelay.normal : gameSettings.turnDelay.fast )
+        setTimeout(nextRequest, delay)
       } else {
-        clearInterval(nextRequest);
         alert('EVERYBODY IS DEAD!!!\nYour score was: ' + board.score)
       }
-    }, gameSettings.turnDelay);
+    }
+    setTimeout(nextRequest, gameSettings.turnDelay.normal)
   }
   callNextTurn(board)
 })()
