@@ -35,7 +35,7 @@
       } else if (player.humanType === 'zombie') {
         player.color = '#ff0000'
       } else if (player.humanType === 'player') {
-        player.color = 'green'
+        player.color = '#00cc00'
       } else {
         player.color = '#770000'
       }

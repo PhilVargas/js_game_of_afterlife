@@ -1,6 +1,6 @@
 body {
   background-color: #333;
-font-family: 'Special Elite', cursive;
+  font-family: 'Special Elite', cursive;
 }
 .header, .content{
   text-align: center;
@@ -8,6 +8,51 @@ font-family: 'Special Elite', cursive;
 canvas{
   background-color: #444;
   outline: 2px black solid;
+}
+
+.panel {
+  background-color: #444;
+  float: left;
+  position: absolute;
+  padding: 10px;
+  margin: 0 0 0 100px;
+  border: 2px black solid;
+}
+
+.player-example {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  border: 1px black solid;
+  background-color: #00cc00;
+}
+
+.human-example {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  border: 1px black solid;
+  background-color: #00aaaa;
+}
+
+.zombie-example {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  border: 1px black solid;
+  background-color: #ff0000;
+}
+
+.infected-human-example {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  border: 1px black solid;
+  background-color: #770000;
 }
 
 .footer ul{
