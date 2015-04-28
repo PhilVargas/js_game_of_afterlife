@@ -16,7 +16,13 @@ canvas{
   position: absolute;
   padding: 10px;
   margin: 0 0 0 100px;
-  border: 2px black solid;
+  outline: 2px black solid;
+  max-width: 185px;
+}
+
+.player-label, .human-label, .zombie-label, .infected-label {
+  display: inline-block;
+  width: 40%;
 }
 
 .player-example {
@@ -46,7 +52,7 @@ canvas{
   background-color: #ff0000;
 }
 
-.infected-human-example {
+.infected-example {
   display: inline-block;
   width: 10px;
   height: 10px;
