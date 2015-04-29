@@ -9,6 +9,7 @@ var Pathfinder = {
     return {'x': (currentPosition.x + (deltaX / length * speed)),'y': (currentPosition.y + (deltaY / length * speed))}
     }
   },
+
   movePerpendicularTo: function(currentPosition, friendlyLocation, speed){
     var deltaY = friendlyLocation.y - currentPosition.y;
     var deltaX = friendlyLocation.x - currentPosition.x;

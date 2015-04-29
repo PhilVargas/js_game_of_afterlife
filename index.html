@@ -9,9 +9,24 @@
 <body>
 <div class='header'>
   <img src='public/img/game_of_afterlife_logo.png'>
+  <div class="score-container">
+    score: <span id="score">0</span>
+  </div>
 </div>
+  <div class='panel'> Use ASWD to move
+    <br>
+    <div><div class="player-label">Player </div><div class="player-example"></div></div>
+    <div><div class="human-label">Human </div><div class="human-example"></div></div>
+    <div><div class="zombie-label">Zombie </div><div class="zombie-example"></div></div>
+    <div><div class="infected-label">Infected </div><div class="infected-example"></div></div>
+    <br>
+    <div>
+      <div>Hint:</div>
+      <div>The Game will speed up after the player is bitten.</div>
+    </div>
+  </div>
 <div class='content'>
-<canvas width='600px' height='400px'></canvas>
+  <canvas width='600px' height='400px'></canvas>
 </div>
 
 <div class="footer" id="wrap">
