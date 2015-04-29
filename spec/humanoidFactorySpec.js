@@ -6,8 +6,10 @@ describe("HumanoidBuilder", function(){
   })
 
   describe(".populate", function(){
-    it("should create an array of length 15",function(){
-      expect(HumanoidBuilder.populate(10,5).length).toEqual(15)
+    // builder creates an array of humanoids 1 greater than the inputs to account for the human
+    // player
+    it("should create an array of length 16",function(){
+      expect(HumanoidBuilder.populate(10,5).length).toEqual(16)
     })
 
     it("should call .creation", function(){

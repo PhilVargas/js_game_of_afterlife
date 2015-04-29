@@ -74,10 +74,10 @@ describe("Board", function(){
     it("should set zombie destination to move to nearest human", function(){
       var zombie3 = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 120, 'y': 120}});
       var zombie4 = new Humanoid({'speed': 5, 'humanType': 'zombie', 'position': {'x': 1, 'y': 1}});
-      var human3 = new Humanoid({'speed': 10, 'humanType': 'human', 'position': {'x': 121, 'y': 121}});
+      var human3 = new Humanoid({'speed': 10, 'humanType': 'human', 'position': {'x': 130, 'y': 130}});
       board.humanoid = zombie3
       spyOn(zombie3, 'moveNearest')
-      board.setZombieDestination( human3, zombie4 , zombie3 )
+      board.setZombieDestination( human3, zombie4 )
       expect(zombie3.moveNearest).toHaveBeenCalledWith(human3)
     });
 
