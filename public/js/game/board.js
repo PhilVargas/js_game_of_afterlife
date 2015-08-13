@@ -1,4 +1,9 @@
-var Board = function( attributes ){
+let Board, Pathfinder, gameSettings;
+
+Pathfinder = require('pathfinder');
+gameSettings = require('settings');
+
+Board = function( attributes ){
   this.humanoid;
   this.score = 0;
   this.dx = 0;
@@ -177,3 +182,5 @@ Board.prototype = {
    return closestHumanoid
   }
 }
+
+module.exports = Board

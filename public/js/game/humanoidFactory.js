@@ -1,4 +1,8 @@
-var HumanoidBuilder = {
+let HumnanoidBuilder, Humanoid, gameSettings;
+gameSettings = require('settings')
+Humanoid = require('humanoid')
+
+let HumanoidBuilder = {
   populate: function(numberOfHumans, numberOfZombies){
     return HumanoidBuilder.creation(numberOfHumans, 'human', gameSettings.humanSpeed).concat(HumanoidBuilder.creation(numberOfZombies, 'zombie', gameSettings.zombieSpeed )).concat(HumanoidBuilder.creation(1, 'player', gameSettings.playerSpeed))
   },
@@ -12,3 +16,5 @@ var HumanoidBuilder = {
     return population
   }
 }
+
+module.exports = HumanoidBuilder

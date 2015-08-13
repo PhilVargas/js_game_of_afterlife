@@ -1,4 +1,9 @@
-var Humanoid = function(attributes){
+let Humanoid, Pathfinder, gameSettings;
+
+Pathfinder = require('pathfinder')
+gameSettings = require('settings')
+
+Humanoid = function(attributes){
   this.position = attributes.position || {'x': (5+ Math.floor(Math.random()*591)),'y': (5+ Math.floor(Math.random()*391))};
   this.speed = attributes.speed;
   this.humanType = attributes.humanType;
@@ -65,3 +70,5 @@ Humanoid.prototype = {
     }
   },
 }
+
+module.exports = Humanoid

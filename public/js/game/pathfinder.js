@@ -1,4 +1,4 @@
-var Pathfinder = {
+let Pathfinder = {
   moveTowards: function(currentPosition, friendlyLocation, speed){
     var deltaY = friendlyLocation.y - currentPosition.y;
     var deltaX = friendlyLocation.x - currentPosition.x;
@@ -32,7 +32,10 @@ var Pathfinder = {
   },
 
   moveRandomly: function(currentPosition, speed){
+    let angle;
     angle = Math.random() * 2 * Math.PI;
       return {'x': (currentPosition.x + Math.cos(angle) * speed),'y': (currentPosition.y + Math.sin(angle) * speed)}
   },
 }
+
+module.exports = Pathfinder
