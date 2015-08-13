@@ -1,8 +1,8 @@
-var path,
+let path,
     JS_BASE_DIR,
     STYLES_BASE_DIR,
     SASS_BASE_DIR,
-    VENDOR_ROOT,
+    VENDOR_ROOT;
 
 path = require('path');
 
@@ -12,24 +12,24 @@ SASS_BASE_DIR = 'public/style/sass';
 VENDOR_ROOT = 'node_modules';
 
 function displayError(error){
-  var errorMessage;
-  errorMessage = '[' +error.plugin + '] ' + error.message.replace('\n','');
+  let errorMessage;
+  errorMessage = `[${error.plugin}] ${error.message.replace('\n','')}`;
   if(error.fileName){
-    errorMessage += ' in ' + error.fileName;
+    errorMessage += ` in ${error.fileName}`;
   }
   if(error.lineNumber){
-    errorMessage += ' on line ' + error.lineNumber;
+    errorMessage += ` on line ${error.lineNumber}`;
   }
   console.error(errorMessage);
 }
 
 module.exports = {
   build: JS_BASE_DIR,
-  displayError: displayError,
+  displayError,
   entries: ['game/initialize.js'],
   includes: ['./', 'game/'],
   stylesRoot: SASS_BASE_DIR,
-  sassFiles: SASS_BASE_DIR + '/**/*.scss',
+  sassFiles: `${SASS_BASE_DIR}/**/*.scss`,
   jsRoot: JS_BASE_DIR,
   jsVendor: VENDOR_ROOT,
   root: JS_BASE_DIR

@@ -1,4 +1,4 @@
-var gulp,
+let gulp,
     sass,
     browserify,
     babelify,
@@ -33,7 +33,7 @@ browserifyOptions = {
 }
 
 function buildJs(){
-  var browserBundle, watcher;
+  let browserBundle, watcher;
   browserBundle = browserify(browserifyOptions);
   browserBundle.transform(babelify);
   watcher = watchify(browserBundle)
@@ -48,7 +48,8 @@ function buildJs(){
 }
 
 function initializeWatcher(bundleToWatch){
-  var watcher = watchify(bundleToWatch);
+  let watcher, updateStart;
+  watcher = watchify(bundleToWatch);
   watcher.on('update', function(){
     updateStart = Date.now();
     watcher.bundle().on('error', function(e){
@@ -56,13 +57,13 @@ function initializeWatcher(bundleToWatch){
       return
     }).pipe(source('bundle.js'))
     .pipe(gulp.dest(paths.build));
-    console.log('Updated! ' + (Date.now() - updateStart) + 'ms. Complete at' + new Date())
+    console.log(`Updated! ${Date.now() - updateStart}ms. Complete at ${new Date()}`)
   });
   return watcher
 }
 
 function watchJs(){
-  var browserBundle, watcher;
+  let browserBundle, watcher;
   browserBundle = browserify(browserifyOptions);
   browserBundle.transform(babelify);
   watcher = initializeWatcher(browserBundle);

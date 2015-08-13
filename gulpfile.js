@@ -1,3 +1,4 @@
+require('babel/register');
 var gulp, gulpTasks;
 
 gulp = require('gulp');
