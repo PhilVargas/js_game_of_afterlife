@@ -1,46 +1,46 @@
-let Humanoid, Pathfinder, gameSettings;
+let Pathfinder, gameSettings;
 
 Pathfinder = require('pathfinder');
 gameSettings = require('settings');
 
-Humanoid = function(attributes){
-  this.position = attributes.position ||
-    { x: (5+ Math.floor(Math.random()*591)), y: (5+ Math.floor(Math.random()*391)) };
-  this.speed = attributes.speed;
-  this.humanType = attributes.humanType;
-  this.timeSinceInfection = 0;
-  this.lastPosition = { x: this.position.x, y: this.position.y };
-};
+class Humanoid {
+  constructor(attributes){
+    this.position = attributes.position ||
+      { x: (5+ Math.floor(Math.random()*591)), y: (5+ Math.floor(Math.random()*391)) };
+    this.speed = attributes.speed;
+    this.humanType = attributes.humanType;
+    this.timeSinceInfection = 0;
+    this.lastPosition = { x: this.position.x, y: this.position.y };
+  }
 
-Humanoid.prototype = {
   isAttractedTo(nearestObject){
     return nearestObject.humanType === 'human' || nearestObject.humanType === 'player';
-  },
+  }
 
   storeLastPosition(){
-    this.lastPosition = {'x': this.position.x, 'y': this.position.y};
-  },
+    this.lastPosition = {x: this.position.x, y: this.position.y};
+  }
 
   isLastMoveRepeated(potentialMove){
     return (
       (Math.abs(potentialMove.x - this.lastPosition.x) < gameSettings.repitionTolerance) &&
         (Math.abs(potentialMove.y - this.lastPosition.y) < gameSettings.repitionTolerance)
     );
-  },
+  }
 
   getBitten(){
     this.humanType = 'infectedHuman';
     this.speed = 0;
-  },
+  }
 
   bite(human){
     if ( human ) { human.getBitten(); }
-  },
+  }
 
   turnToZombie(){
     this.humanType = 'zombie';
     this.speed = gameSettings.zombieSpeed;
-  },
+  }
 
   isAbleToBite(human){
     if ( human ) {
@@ -48,14 +48,14 @@ Humanoid.prototype = {
         this.humanType === 'zombie' && (Pathfinder.distanceTo( human.position, this.position ) < 10)
       );
     }
-  },
+  }
 
   incrementTimeSinceInfection(){
     this.timeSinceInfection ++;
     if (this.timeSinceInfection === 5){
       this.turnToZombie();
     }
-  },
+  }
 
   moveNearest(nearestObject){
     let potentialMove;
@@ -74,6 +74,7 @@ Humanoid.prototype = {
       this.storeLastPosition();
       return potentialMove;
     }
-  },
-};
+  }
+}
+
 module.exports = Humanoid;
