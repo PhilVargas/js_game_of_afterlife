@@ -1,17 +1,17 @@
-let HumnanoidBuilder, Humanoid, gameSettings;
-gameSettings = require('settings')
-Humanoid = require('humanoid')
+let Humanoid, gameSettings;
+gameSettings = require('settings');
+Humanoid = require('humanoid');
 
-let HumanoidBuilder = {
-  populate(numberOfHumans, numberOfZombies){
+class HumanoidBuilder {
+  static populate(numberOfHumans, numberOfZombies){
     return (
-      HumanoidBuilder.creation(numberOfHumans, 'human', gameSettings.humanSpeed)
+      this.creation(numberOfHumans, 'human', gameSettings.humanSpeed)
         .concat(HumanoidBuilder.creation(numberOfZombies, 'zombie', gameSettings.zombieSpeed))
         .concat(HumanoidBuilder.creation(1, 'player', gameSettings.playerSpeed))
     )
-  },
+  }
 
-  creation(number, type, speed){
+  static creation(number, type, speed){
     let population, newHumanoid;
     population = [];
     for(let i = 0; i < number; i++){
