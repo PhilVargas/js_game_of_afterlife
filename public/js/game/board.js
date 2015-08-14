@@ -1,20 +1,20 @@
-let Board, Pathfinder, gameSettings;
+let Pathfinder, gameSettings;
 
 Pathfinder = require('pathfinder');
 gameSettings = require('settings');
 
-Board = function( attributes ){
-  this.humanoid = null;
-  this.score = 0;
-  this.dx = 0;
-  this.dy = 0;
-  this.humanoids = attributes.humanoids || [];
-  this.width = attributes.width  || '600px';
-  this.height = attributes.height || '400px';
-};
+class Board {
+  constructor( attributes ){
+    this.humanoid = null;
+    this.score = 0;
+    this.dx = 0;
+    this.dy = 0;
+    this.humanoids = attributes.humanoids || [];
+    this.width = attributes.width  || '600px';
+    this.height = attributes.height || '400px';
+  }
 
-Board.prototype = {
-  isGameActive: function(){
+  isGameActive(){
     let activeStatus = false;
     for (let i = 0; i < this.humanoids.length; i++){
       if (this.humanoids[i].humanType === 'human' || this.humanoids[i].humanType === 'player'){
@@ -22,9 +22,9 @@ Board.prototype = {
       }
     }
     return activeStatus;
-  },
+  }
 
-  isPlayerAlive: function(){
+  isPlayerAlive(){
     let activeStatus = false;
     for (let i = 0; i < this.humanoids.length; i++){
       if (this.humanoids[i].humanType === 'player'){
@@ -32,13 +32,13 @@ Board.prototype = {
       }
     }
     return activeStatus;
-  },
+  }
 
-  isPositionEqual: function( position1, position2 ){
+  isPositionEqual( position1, position2 ){
     return position1.x === position2.x && position1.y === position2.y;
-  },
+  }
 
-  isValidDestination: function( targetPosition ){
+  isValidDestination( targetPosition ){
     let result = true;
     for(let i= 0; i < this.humanoids.length; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , targetPosition ) ){
@@ -46,17 +46,17 @@ Board.prototype = {
       }
     }
     return result;
-  },
+  }
 
-  nearestHumanoid: function( humanoidType ){
+  nearestHumanoid( humanoidType ){
     let similarHumanoids, closestPos, closestHumanoid;
     similarHumanoids = this.findSimilarHumanoids( humanoidType );
     closestPos = this.findClosestPos( similarHumanoids );
     closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids );
     return closestHumanoid;
-  },
+  }
 
-  isAnyHumanRemaining: function(){
+  isAnyHumanRemaining(){
     let result = false;
     for( let i=0; i < this.humanoids.length; i++ ){
       if(this.humanoids[i].humanType === 'human'  || this.humanoids[i].humanType === 'player') {
@@ -65,9 +65,9 @@ Board.prototype = {
       }
     }
     return result;
-  },
+  }
 
-  nextTurn: function(){
+  nextTurn(){
     let player;
     for( let i=0; i< this.humanoids.length; i++ ){
       this.humanoid = this.humanoids[i];
@@ -108,13 +108,13 @@ Board.prototype = {
       }
     }
     this.incrementStore(player);
-  },
+  }
 
-  incrementStore: function(player){
+  incrementStore(player){
     if (player && player.humanType === 'player'){ this.score += 10; }
-  },
+  }
 
-  setDestination: function( nearestHuman, nearestZombie, player ){
+  setDestination( nearestHuman, nearestZombie, player ){
     if( this.humanoid.humanType === 'zombie' ){
       return this.setZombieDestination( nearestHuman, nearestZombie, player );
     }
@@ -122,9 +122,9 @@ Board.prototype = {
       return this.setHumanDestination( nearestHuman, nearestZombie, player );
     }
     else { return this.humanoid.position; }
-  },
+  }
 
-  setZombieDestination: function( nearestHuman, nearestZombie, player ){
+  setZombieDestination( nearestHuman, nearestZombie, player ){
     let playerDistance, humanDistance, zombieDistance;
     playerDistance = Number.POSITIVE_INFINITY;
     humanDistance = Number.POSITIVE_INFINITY;
@@ -147,9 +147,9 @@ Board.prototype = {
     } else {
       return this.humanoid.moveNearest( nearestZombie );
     }
-  },
+  }
 
-  setHumanDestination: function( nearestHuman, nearestZombie, player ){
+  setHumanDestination( nearestHuman, nearestZombie, player ){
     let playerDistance, humanDistance, zombieDistance;
     playerDistance = Number.POSITIVE_INFINITY;
     humanDistance = Number.POSITIVE_INFINITY;
@@ -168,9 +168,9 @@ Board.prototype = {
     } else {
       return this.humanoid.moveNearest( nearestHuman );
     }
-  },
+  }
 
-  deleteSelfHumanoid: function(){
+  deleteSelfHumanoid(){
     let otherHumanoids = [];
     for( let i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i]);}
 
@@ -181,16 +181,18 @@ Board.prototype = {
       }
     }
     return otherHumanoids;
-  },
-  findSimilarHumanoids: function( humanoidType ){
+  }
+
+  findSimilarHumanoids( humanoidType ){
     let otherHumanoids = this.deleteSelfHumanoid();
     let similar = [];
     for( let i=0; i< otherHumanoids.length; i++ ){
       if( otherHumanoids[i].humanType === humanoidType ){ similar.push(otherHumanoids[i]);}
     }
     return similar;
-  },
-  findClosestPos: function( otherHumanoids ){
+  }
+
+  findClosestPos( otherHumanoids ){
     let closestPos, dist;
     closestPos = [];
     for( let i=0; i< otherHumanoids.length; i++ ){
@@ -198,8 +200,9 @@ Board.prototype = {
       closestPos.push( dist );
     }
     return closestPos;
-  },
-  findClosestHumanoid: function( closestPos, otherHumanoids ){
+  }
+
+  findClosestHumanoid( closestPos, otherHumanoids ){
     let closestHumanoidValue, closestHumanoid;
     closestHumanoidValue = Math.min.apply( null, closestPos );
     for( let i=0; i < closestPos.length; i++ ){
@@ -207,6 +210,6 @@ Board.prototype = {
     }
     return closestHumanoid;
   }
-};
+}
 
 module.exports = Board;
