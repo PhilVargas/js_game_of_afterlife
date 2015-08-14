@@ -14,3 +14,5 @@ var gameSettings = {
   humanFearRange: 20
   //the range at which humans start running from zombies.
 };
+
+module.exports = gameSettings

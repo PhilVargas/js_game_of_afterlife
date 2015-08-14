@@ -1,4 +1,8 @@
-(function(){
+let Board = require('board')
+let HumanoidBuilder = require('humanoidFactory')
+let gameSettings = require('settings')
+
+function initialize(){
   var canvas = document.getElementsByTagName('canvas')[0];
   var width = canvas.width
   var height = canvas.height
@@ -62,4 +66,6 @@
     setTimeout(nextRequest, gameSettings.turnDelay.normal)
   }
   callNextTurn(board)
-})()
+}
+
+module.exports = initialize

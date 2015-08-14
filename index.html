@@ -1,64 +1,59 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-<link rel='stylesheet' type='text/css' href='public/style/game.css'>
-<link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
-<title>game of afterlife</title>
-</head>
+  <head>
+    <link rel='stylesheet' type='text/css' href='public/style/game.css'>
+    <link rel='stylesheet' type='text/css' href='public/style/application.css'>
+    <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+    <title>Game Of Afterlife</title>
+  </head>
 
-<body>
-<div class='header'>
-  <img src='public/img/game_of_afterlife_logo.png'>
-  <div class="score-container">
-    score: <span id="score">0</span>
-  </div>
-</div>
-  <div class='panel'> Use ASWD to move
-    <br>
-    <div><div class="player-label">Player </div><div class="player-example"></div></div>
-    <div><div class="human-label">Human </div><div class="human-example"></div></div>
-    <div><div class="zombie-label">Zombie </div><div class="zombie-example"></div></div>
-    <div><div class="infected-label">Infected </div><div class="infected-example"></div></div>
-    <br>
-    <div>
-      <div>Hint:</div>
-      <div>The Game will speed up after the player is bitten.</div>
+  <body>
+    <div class='header'>
+      <img alt='Game of Afterlife' src='public/img/game_of_afterlife_logo.png'>
+      <div class="score-container">
+        score: <span id="score">0</span>
+      </div>
     </div>
-  </div>
-<div class='content'>
-  <canvas width='600px' height='400px'></canvas>
-</div>
+    <div class='panel'> Use ASWD to move
+      <br>
+      <div><div class="player-label">Player </div><div class="player-example"></div></div>
+      <div><div class="human-label">Human </div><div class="human-example"></div></div>
+      <div><div class="zombie-label">Zombie </div><div class="zombie-example"></div></div>
+      <div><div class="infected-label">Infected </div><div class="infected-example"></div></div>
+      <br>
+      <div>
+        <div>Hint:</div>
+        <div>The Game will speed up after the player is bitten.</div>
+      </div>
+    </div>
+    <div class='content'>
+      <canvas width='600' height='400'></canvas>
+    </div>
 
-<div class="footer" id="wrap">
+    <div class="footer" id="wrap">
 
-  <div id="left_col">
-  <h4><a href="https://github.com/ianaroot/game_of_afterlife">Original Game By</a></h4>
-  <ul>
-  <li><a href="https://github.com/ianaroot">@Ian</a></li>
-  <li><a href="https://github.com/philvargas">@Phil</a></li>
-  <li><a href="https://github.com/c14jcdj">@Chermaine</a></li>
-  <li><a href="https://github.com/hpchesss">@Hunter</a></li>
-  <li><a href="https://github.com/menor">@Jose</a></li>
-  <li><a href="https://github.com/elreimundo">@David</a></li>
-  </ul>
-  </div>
+      <div id="left_col">
+        <h4><a href="https://github.com/ianaroot/game_of_afterlife">Original Game By</a></h4>
+        <ul>
+          <li><a href="https://github.com/ianaroot">@Ian</a></li>
+          <li><a href="https://github.com/philvargas">@Phil</a></li>
+          <li><a href="https://github.com/c14jcdj">@Chermaine</a></li>
+          <li><a href="https://github.com/hpchesss">@Hunter</a></li>
+          <li><a href="https://github.com/menor">@Jose</a></li>
+          <li><a href="https://github.com/elreimundo">@David</a></li>
+        </ul>
+      </div>
 
-  <div id="right_col">
-  <h4><a href="https://github.com/philvargas/js_game_of_afterlife"> OOJS Remake Version By</a></h4>
-  <ul>
-  <li><a href="https://github.com/philvargas">@Phil</a></li>
-  <li><a href="https://github.com/hpchesss">@Hunter</a></li>
-  <li><a href="https://github.com/jonathanpeterwu">@Johnny</a></li>
-  </ul>
-  </div>
-</div>
-
-</body>
-  <!-- include source files here... -->
-  <script type="text/javascript" src="public/js/settings.js"></script>
-  <script type="text/javascript" src="public/js/pathfinder.js"></script>
-  <script type="text/javascript" src="public/js/humanoid.js"></script>
-  <script type="text/javascript" src="public/js/humanoidFactory.js"></script>
-  <script type="text/javascript" src="public/js/board.js"></script>
-  <script type="text/javascript" src="public/js/game.js"></script>
+      <div id="right_col">
+        <h4><a href="https://github.com/philvargas/js_game_of_afterlife"> OOJS Remake Version By</a></h4>
+        <ul>
+          <li><a href="https://github.com/philvargas">@Phil</a></li>
+          <li><a href="https://github.com/hpchesss">@Hunter</a></li>
+          <li><a href="https://github.com/jonathanpeterwu">@Johnny</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- include source files here... -->
+    <script type="text/javascript" src="public/js/bundle.js"></script>
+  </body>
 </html>
