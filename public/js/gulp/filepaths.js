@@ -28,7 +28,7 @@ module.exports = {
   displayError,
   entries: ['game/initialize.js'],
   includes: ['./', 'game/'],
-  stylesRoot: SASS_BASE_DIR,
+  stylesRoot: STYLES_BASE_DIR,
   sassFiles: `${SASS_BASE_DIR}/**/*.scss`,
   jsRoot: JS_BASE_DIR,
   jsVendor: VENDOR_ROOT,

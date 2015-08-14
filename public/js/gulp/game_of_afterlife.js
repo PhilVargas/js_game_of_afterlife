@@ -76,9 +76,25 @@ function watchJs(){
   return
 }
 
+function buildSass(){
+  console.log(paths.stylesRoot)
+  gulp.src('public/style/sass/application.scss')
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(gulp.dest(paths.stylesRoot));
+}
+
+function watchSass(){
+  gulp.watch(paths.sassFiles, ['build:sass'])
+  .on('change', function(e){
+    console.log(`[watcher] File ${e.path.replace(/.*(?=sass)/,'')} was ${e.type} at ${new Date()}, compiling...`);
+  });
+}
+
 module.exports.watch = {
-  js: watchJs
+  js: watchJs,
+  sass: watchSass
 }
 module.exports.build = {
-  js: buildJs
+  js: buildJs,
+  sass: buildSass
 }
