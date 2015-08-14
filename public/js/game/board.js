@@ -4,14 +4,14 @@ Pathfinder = require('pathfinder');
 gameSettings = require('settings');
 
 Board = function( attributes ){
-  this.humanoid;
+  this.humanoid = null;
   this.score = 0;
   this.dx = 0;
   this.dy = 0;
   this.humanoids = attributes.humanoids || [];
   this.width = attributes.width  || '600px';
   this.height = attributes.height || '400px';
-}
+};
 
 Board.prototype = {
   isGameActive: function(){

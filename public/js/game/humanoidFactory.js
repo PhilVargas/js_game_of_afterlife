@@ -8,7 +8,7 @@ class HumanoidBuilder {
       this.creation(numberOfHumans, 'human', gameSettings.humanSpeed)
         .concat(HumanoidBuilder.creation(numberOfZombies, 'zombie', gameSettings.zombieSpeed))
         .concat(HumanoidBuilder.creation(1, 'player', gameSettings.playerSpeed))
-    )
+    );
   }
 
   static creation(number, type, speed){
@@ -18,8 +18,8 @@ class HumanoidBuilder {
       newHumanoid = new Humanoid({'humanType': type, 'speed': speed});
       population.push(newHumanoid);
     }
-    return population
+    return population;
   }
 }
 
-module.exports = HumanoidBuilder
+module.exports = HumanoidBuilder;

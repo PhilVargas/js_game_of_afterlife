@@ -1,2 +1,2 @@
-let init = require('game')
-init()
+let init = require('game');
+init();
