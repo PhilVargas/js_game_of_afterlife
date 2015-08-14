@@ -15,8 +15,8 @@ Board = function( attributes ){
 
 Board.prototype = {
   isGameActive: function(){
-    var activeStatus = false;
-    for (var i = 0; i < this.humanoids.length; i++){
+    let activeStatus = false;
+    for (let i = 0; i < this.humanoids.length; i++){
       if (this.humanoids[i].humanType === 'human' || this.humanoids[i].humanType === 'player'){
         activeStatus = true;
       }
@@ -25,8 +25,8 @@ Board.prototype = {
   },
 
   isPlayerAlive: function(){
-    var activeStatus = false;
-    for (var i = 0; i < this.humanoids.length; i++){
+    let activeStatus = false;
+    for (let i = 0; i < this.humanoids.length; i++){
       if (this.humanoids[i].humanType === 'player'){
         activeStatus = true;
       }
@@ -35,152 +35,178 @@ Board.prototype = {
   },
 
   isPositionEqual: function( position1, position2 ){
-    return position1.x === position2.x && position1.y === position2.y
+    return position1.x === position2.x && position1.y === position2.y;
   },
 
-  isValidDestination: function( target_position ){
-    var result = true
-    for(var i= 0; i < this.humanoids.length; i++ ){
-      if( this.isPositionEqual( this.humanoids[i].position , target_position ) ){
-        result = false
+  isValidDestination: function( targetPosition ){
+    let result = true;
+    for(let i= 0; i < this.humanoids.length; i++ ){
+      if( this.isPositionEqual( this.humanoids[i].position , targetPosition ) ){
+        result = false;
       }
     }
-    return result
+    return result;
   },
 
   nearestHumanoid: function( humanoidType ){
-    var similarHumanoids = this.findSimilarHumanoids( humanoidType )
-    var closestPos = this.findClosestPos( similarHumanoids )
-    var closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids )
-    return closestHumanoid
+    let similarHumanoids, closestPos, closestHumanoid;
+    similarHumanoids = this.findSimilarHumanoids( humanoidType );
+    closestPos = this.findClosestPos( similarHumanoids );
+    closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids );
+    return closestHumanoid;
   },
 
   isAnyHumanRemaining: function(){
-    var result = false
-    for( var i=0; i < this.humanoids.length; i++ ){
-      if(this.humanoids[i].humanType == "human"  || this.humanoids[i].humanType == "player") { result = true; break };
+    let result = false;
+    for( let i=0; i < this.humanoids.length; i++ ){
+      if(this.humanoids[i].humanType === 'human'  || this.humanoids[i].humanType === 'player') {
+        result = true;
+        break;
+      }
     }
-    return result
+    return result;
   },
 
   nextTurn: function(){
-    for( var i=0; i< this.humanoids.length; i++ ){
-      this.humanoid = this.humanoids[i]
-      if( this.humanoid.humanType == "infectedHuman" ){
-          this.humanoid.incrementTimeSinceInfection()
-          continue
+    let player;
+    for( let i=0; i< this.humanoids.length; i++ ){
+      this.humanoid = this.humanoids[i];
+      if( this.humanoid.humanType === 'infectedHuman' ){
+        this.humanoid.incrementTimeSinceInfection();
+        continue;
       }
-      if( this.humanoid.humanType == "player" ){
-        var targetLoc = { x: this.humanoid.position.x + this.dx*this.humanoid.speed,  y: this.humanoid.position.y + this.dy*this.humanoid.speed }
-        var coords = ( Pathfinder.moveTowards(this.humanoid.position, targetLoc, this.humanoid.speed) )
-        coords.x = ( (coords.x + this.width) % this.width )
-        coords.y = ( (coords.y + this.height) % this.height )
-        this.humanoid.position = coords
-        continue
+      if( this.humanoid.humanType === 'player' ){
+        let targetLoc, coords;
+        targetLoc = {
+          x: this.humanoid.position.x + this.dx*this.humanoid.speed,
+          y: this.humanoid.position.y + this.dy*this.humanoid.speed
+        };
+        coords = ( Pathfinder.moveTowards(this.humanoid.position, targetLoc, this.humanoid.speed) );
+        coords.x = ( (coords.x + this.width) % this.width );
+        coords.y = ( (coords.y + this.height) % this.height );
+        this.humanoid.position = coords;
+        continue;
       }
-      var nearestZombie = this.nearestHumanoid( "zombie" )
-      var nearestHuman = this.nearestHumanoid( "human" )
-      var player = this.nearestHumanoid( 'player' )
-      var destination = this.setDestination( nearestHuman, nearestZombie, player )
-      destination.x = ( (destination.x + this.width) % this.width )
-      destination.y = ( (destination.y + this.height) % this.height )
+      let nearestHuman, nearestZombie, destination;
+      nearestZombie = this.nearestHumanoid( 'zombie' );
+      nearestHuman = this.nearestHumanoid( 'human' );
+      player = this.nearestHumanoid( 'player' );
+      destination = this.setDestination( nearestHuman, nearestZombie, player );
+      destination.x = ( (destination.x + this.width) % this.width );
+      destination.y = ( (destination.y + this.height) % this.height );
 
       if ( this.humanoid.isAbleToBite( player ) ){
-        this.humanoid.bite( player )
+        this.humanoid.bite( player );
       }
 
       if ( this.humanoid.isAbleToBite( nearestHuman ) ){
-        this.humanoid.bite( nearestHuman )
+        this.humanoid.bite( nearestHuman );
       }
 
       if( this.isValidDestination( destination ) ){
-        this.humanoid.position = destination
+        this.humanoid.position = destination;
       }
-    };
+    }
     this.incrementStore(player);
   },
 
   incrementStore: function(player){
-    if (player && player.humanType === 'player'){ this.score += 10 }
+    if (player && player.humanType === 'player'){ this.score += 10; }
   },
 
   setDestination: function( nearestHuman, nearestZombie, player ){
-    if( this.humanoid.humanType == "zombie" ){ return this.setZombieDestination( nearestHuman, nearestZombie, player ) }
-    else if( this.humanoid.humanType == "human" ){ return this.setHumanDestination( nearestHuman, nearestZombie, player ) }
-    else { return this.humanoid.position }
+    if( this.humanoid.humanType === 'zombie' ){
+      return this.setZombieDestination( nearestHuman, nearestZombie, player );
+    }
+    else if( this.humanoid.humanType === 'human' ){
+      return this.setHumanDestination( nearestHuman, nearestZombie, player );
+    }
+    else { return this.humanoid.position; }
   },
 
   setZombieDestination: function( nearestHuman, nearestZombie, player ){
-    var playerDistance = Number.POSITIVE_INFINITY;
-    var humanDistance = Number.POSITIVE_INFINITY;
-    var zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) * gameSettings.zombieSpread
-    if (player){ playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position ) }
-    if (nearestHuman){ humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position ) }
+    let playerDistance, humanDistance, zombieDistance;
+    playerDistance = Number.POSITIVE_INFINITY;
+    humanDistance = Number.POSITIVE_INFINITY;
+    zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) * gameSettings.zombieSpread
+    if (player){
+      playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position );
+    }
+    if (nearestHuman){
+      humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position );
+    }
 
     if ( playerDistance < humanDistance ){
       if ( playerDistance < zombieDistance ){
-        return this.humanoid.moveNearest( player )
+        return this.humanoid.moveNearest( player );
       } else {
-        return this.humanoid.moveNearest( nearestZombie )
+        return this.humanoid.moveNearest( nearestZombie );
       }
     } else if ( humanDistance < zombieDistance ){
-      return this.humanoid.moveNearest( nearestHuman )
+      return this.humanoid.moveNearest( nearestHuman );
     } else {
-      return this.humanoid.moveNearest( nearestZombie )
+      return this.humanoid.moveNearest( nearestZombie );
     }
   },
 
   setHumanDestination: function( nearestHuman, nearestZombie, player ){
-    var playerDistance = Number.POSITIVE_INFINITY;
-    var humanDistance = Number.POSITIVE_INFINITY;
-    var zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position )
-    if (player){ playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position ) }
-    if (nearestHuman){ humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position ) }
+    let playerDistance, humanDistance, zombieDistance;
+    playerDistance = Number.POSITIVE_INFINITY;
+    humanDistance = Number.POSITIVE_INFINITY;
+    zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position );
+    if (player){
+      playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position );
+    }
+    if (nearestHuman){
+      humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position );
+    }
 
     if ( zombieDistance < gameSettings.humanFearRange || ( !player && !nearestHuman ) ){
-      return this.humanoid.moveNearest( nearestZombie )
+      return this.humanoid.moveNearest( nearestZombie );
     } else if ( playerDistance < humanDistance ){
-      return this.humanoid.moveNearest( player )
+      return this.humanoid.moveNearest( player );
     } else {
-      return this.humanoid.moveNearest( nearestHuman )
+      return this.humanoid.moveNearest( nearestHuman );
     }
   },
 
   deleteSelfHumanoid: function(){
-    var otherHumanoids = []
-    for( var i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i])}
+    let otherHumanoids = [];
+    for( let i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i]);}
 
-    for( var i=0; i < this.humanoids.length; i++ ){
+    for( let i=0; i < this.humanoids.length; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , this.humanoid.position ) ){
-        otherHumanoids.splice( i, 1 )
-        break
+        otherHumanoids.splice( i, 1 );
+        break;
       }
     }
-    return otherHumanoids
+    return otherHumanoids;
   },
   findSimilarHumanoids: function( humanoidType ){
-    var otherHumanoids = this.deleteSelfHumanoid()
-    var similar = [];
-    for( var i=0; i< otherHumanoids.length; i++ ){
-      if( otherHumanoids[i].humanType === humanoidType ){ similar.push(otherHumanoids[i])}
+    let otherHumanoids = this.deleteSelfHumanoid();
+    let similar = [];
+    for( let i=0; i< otherHumanoids.length; i++ ){
+      if( otherHumanoids[i].humanType === humanoidType ){ similar.push(otherHumanoids[i]);}
     }
-    return similar
+    return similar;
   },
   findClosestPos: function( otherHumanoids ){
-    var closestPos = []
-    for( var i=0; i< otherHumanoids.length; i++ ){
-      var dist = Pathfinder.distanceTo( otherHumanoids[i].position, this.humanoid.position )
+    let closestPos, dist;
+    closestPos = [];
+    for( let i=0; i< otherHumanoids.length; i++ ){
+      dist = Pathfinder.distanceTo( otherHumanoids[i].position, this.humanoid.position );
       closestPos.push( dist );
     }
-    return closestPos
+    return closestPos;
   },
   findClosestHumanoid: function( closestPos, otherHumanoids ){
-    var closestHumanoidValue = Math.min.apply( null, closestPos )
-    for( var i=0; i < closestPos.length; i++ ){
-      if( closestPos[i] == closestHumanoidValue ){ var closestHumanoid = otherHumanoids[i]}
+    let closestHumanoidValue, closestHumanoid;
+    closestHumanoidValue = Math.min.apply( null, closestPos );
+    for( let i=0; i < closestPos.length; i++ ){
+      if( closestPos[i] === closestHumanoidValue ){ closestHumanoid = otherHumanoids[i];}
     }
-   return closestHumanoid
+    return closestHumanoid;
   }
-}
+};
 
-module.exports = Board
+module.exports = Board;
