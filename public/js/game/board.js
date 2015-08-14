@@ -15,25 +15,15 @@ class Board {
   }
 
   isGameActive(){
-    let activeStatus = false;
-    for (let i = 0; i < this.humanoids.length; i++){
-      if (this.humanoids[i].humanType === 'human' || this.humanoids[i].humanType === 'player'){
-        activeStatus = true;
-        break;
-      }
-    }
-    return activeStatus;
+    return this.humanoids.some(function(humanoid) {
+      return humanoid.humanType === 'human' || humanoid.humanType === 'player';
+    });
   }
 
   isPlayerAlive(){
-    let activeStatus = false;
-    for (let i = 0; i < this.humanoids.length; i++){
-      if (this.humanoids[i].humanType === 'player'){
-        activeStatus = true;
-        break;
-      }
-    }
-    return activeStatus;
+    return this.humanoids.some(function(humanoid) {
+      return humanoid.humanType === 'player';
+    });
   }
 
   isPositionEqual( position1, position2 ){
@@ -41,14 +31,9 @@ class Board {
   }
 
   isValidDestination( targetPosition ){
-    let result = true;
-    for(let i= 0; i < this.humanoids.length; i++ ){
-      if( this.isPositionEqual( this.humanoids[i].position , targetPosition ) ){
-        result = false;
-        break;
-      }
-    }
-    return result;
+    return !this.humanoids.some((humanoid) => {
+      return this.isPositionEqual(humanoid.position, targetPosition);
+    });
   }
 
   nearestHumanoid( humanoidType ){
@@ -57,17 +42,6 @@ class Board {
     closestPos = this.findClosestPos( similarHumanoids );
     closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids );
     return closestHumanoid;
-  }
-
-  isAnyHumanRemaining(){
-    let result = false;
-    for( let i=0; i < this.humanoids.length; i++ ){
-      if(this.humanoids[i].humanType === 'human'  || this.humanoids[i].humanType === 'player') {
-        result = true;
-        break;
-      }
-    }
-    return result;
   }
 
   nextTurn(){
@@ -110,10 +84,10 @@ class Board {
         this.humanoid.position = destination;
       }
     }
-    this.incrementStore(player);
+    this.incrementScore(player);
   }
 
-  incrementStore(player){
+  incrementScore(player){
     if (player && player.humanType === 'player'){ this.score += 10; }
   }
 
@@ -173,27 +147,16 @@ class Board {
     }
   }
 
-  deleteSelfHumanoid(){
-    let otherHumanoids = [];
-    for( let i=0; i < this.humanoids.length; i++){otherHumanoids.push(this.humanoids[i]);}
-
-    for( let i=0; i < this.humanoids.length; i++ ){
-      if( this.isPositionEqual( this.humanoids[i].position , this.humanoid.position ) ){
-        otherHumanoids.splice( i, 1 );
-        break;
-      }
-    }
-    return otherHumanoids;
+  otherHumanoids(){
+    return this.humanoids.filter((currentHumanoid) => {
+      return this.humanoid.id !== currentHumanoid.id;
+    });
   }
 
   findSimilarHumanoids( humanoidType ){
-    let otherHumanoids, similar;
-    otherHumanoids = this.deleteSelfHumanoid();
-    similar = [];
-    for( let i=0; i< otherHumanoids.length; i++ ){
-      if( otherHumanoids[i].humanType === humanoidType ){ similar.push(otherHumanoids[i]);}
-    }
-    return similar;
+    return this.otherHumanoids().filter(function(humanoid){
+      return humanoid.humanType === humanoidType;
+    });
   }
 
   findClosestPos( otherHumanoids ){
