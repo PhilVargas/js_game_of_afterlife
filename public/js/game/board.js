@@ -19,6 +19,7 @@ class Board {
     for (let i = 0; i < this.humanoids.length; i++){
       if (this.humanoids[i].humanType === 'human' || this.humanoids[i].humanType === 'player'){
         activeStatus = true;
+        break;
       }
     }
     return activeStatus;
@@ -29,6 +30,7 @@ class Board {
     for (let i = 0; i < this.humanoids.length; i++){
       if (this.humanoids[i].humanType === 'player'){
         activeStatus = true;
+        break;
       }
     }
     return activeStatus;
@@ -43,6 +45,7 @@ class Board {
     for(let i= 0; i < this.humanoids.length; i++ ){
       if( this.isPositionEqual( this.humanoids[i].position , targetPosition ) ){
         result = false;
+        break;
       }
     }
     return result;
@@ -184,8 +187,9 @@ class Board {
   }
 
   findSimilarHumanoids( humanoidType ){
-    let otherHumanoids = this.deleteSelfHumanoid();
-    let similar = [];
+    let otherHumanoids, similar;
+    otherHumanoids = this.deleteSelfHumanoid();
+    similar = [];
     for( let i=0; i< otherHumanoids.length; i++ ){
       if( otherHumanoids[i].humanType === humanoidType ){ similar.push(otherHumanoids[i]);}
     }

@@ -5,6 +5,7 @@ gameSettings = require('settings');
 
 class Humanoid {
   constructor(attributes){
+    this.id = attributes.id;
     this.position = attributes.position ||
       { x: (5+ Math.floor(Math.random()*591)), y: (5+ Math.floor(Math.random()*391)) };
     this.speed = attributes.speed;

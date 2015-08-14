@@ -15,7 +15,7 @@ class HumanoidBuilder {
     let population, newHumanoid;
     population = [];
     for(let i = 0; i < number; i++){
-      newHumanoid = new Humanoid({'humanType': type, 'speed': speed});
+      newHumanoid = new Humanoid({humanType: type, speed: speed, id: i});
       population.push(newHumanoid);
     }
     return population;
