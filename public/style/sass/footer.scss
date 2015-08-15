@@ -1,0 +1,36 @@
+.github {
+  color: green;
+}
+
+.footer {
+  h6{
+    text-align: center;
+  }
+  a{
+    text-align: left;
+    color: #2de037;
+    font-size: 0.8em;
+    text-decoration: none;
+  }
+  ul{
+    list-style-type: none;
+    padding-left: 0px;
+    margin-left: 0px;
+  }
+}
+
+#wrap {
+   width:400px;
+   margin: 0 auto;
+}
+
+#left_col {
+   float:left;
+   width:200px;
+}
+
+#right_col {
+   float:right;
+   width:200px;
+}
+

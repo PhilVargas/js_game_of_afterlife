@@ -1,4 +1,4 @@
-var gameSettings = {
+let gameSettings = {
   humanSpeed: 7,
   playerSpeed: 6,
   zombieSpeed: 4,
@@ -14,3 +14,5 @@ var gameSettings = {
   humanFearRange: 20
   //the range at which humans start running from zombies.
 };
+
+module.exports = gameSettings;
