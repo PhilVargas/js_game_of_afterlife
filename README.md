@@ -4,7 +4,7 @@
 The Game of Afterlife is a new take on Conway's Game of Life: Zombie Edition. A (formerlly) zero-player game, Game of Afterlife seeds the board with randomized initial conditions full of Humans (blue) and Zombies (red). Humans band together and run from zombies. Zombies chase nearby humans or wander aimlessly. If a human gets caught, they become infected and transform into zombies. With the addition of a few more complicated mechanics, these general rules guide the games behavior and form an entertaining digital ant farm of zombie hordes.  
 With version 1.2 and above, you're in control: command a player humanoid with `ASWD` and run from zombies for as long as you can.
 
-[inser ss]
+![Game of Afterlife](https://raw.githubusercontent.com/PhilVargas/js_game_of_afterlife/master/public/img/Game%20of%20Afterlife.png)
 
 View it here: [philvargas.github.io/js_game_of_afterlife](http://philvargas.github.io/js_game_of_afterlife)
 
