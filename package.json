@@ -1,6 +1,6 @@
 {
   "name": "game-of-afterlife",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Conway's game of life - zombie edition",
   "main": "bundle.js",
   "scripts": {
