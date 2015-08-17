@@ -105,7 +105,13 @@ class Board {
     let playerDistance, humanDistance, zombieDistance;
     playerDistance = Number.POSITIVE_INFINITY;
     humanDistance = Number.POSITIVE_INFINITY;
-    zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) * gameSettings.zombieSpread
+    zombieDistance = Number.POSITIVE_INFINITY;
+    if (nearestZombie){
+      zombieDistance = (
+        Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) *
+        gameSettings.zombieSpread
+      );
+    }
     if (player){
       playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position );
     }

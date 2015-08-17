@@ -8,6 +8,7 @@ class GameOfAfterlife {
     let canvas, allHumanoids;
     canvas = document.getElementsByTagName('canvas')[0];
     allHumanoids = HumanoidBuilder.populate(gameSettings.humanCount , gameSettings.zombieCount);
+    this.hasBegun = false;
     this.width = canvas.width;
     this.height = canvas.height;
     this.ctx = canvas.getContext('2d');
@@ -64,7 +65,9 @@ class GameOfAfterlife {
         delay = (this.board.isPlayerAlive() ? gameSettings.turnDelay.normal : gameSettings.turnDelay.fast);
         setTimeout(nextRequest, delay);
       } else {
-        alert(`EVERYBODY IS DEAD!!!\nYour score was: ${this.board.score}`);
+        document.getElementById('overlay-message')
+        .innerHTML = `EVERYBODY IS DEAD!!!\nYour score was: ${this.board.score}`;
+        document.getElementById('overlay').className = '';
       }
     };
     setTimeout(nextRequest, gameSettings.turnDelay.normal);
