@@ -12,11 +12,8 @@ gameSettings = require('settings');
 Pathfinder = require('pathfinder');
 
 describe('Humanoid', function(){
-  var human;
-  var zombie;
-  var infected;
+  var human, zombie, infected;
   describe('A human', function(){
-
     beforeEach(function(){
       human = new Humanoid({speed: 10, humanType: 'human', position: {x: 20, y: 20}});
       zombie = new Humanoid({speed: 5, humanType: 'zombie', position: {x: 25, y: 25}});
@@ -71,7 +68,7 @@ describe('Humanoid', function(){
       });
 
       it('should return false for distant positions', function(){
-        var distantPosition = {'x': 10, 'y': 20};
+        var distantPosition = {x: 10, y: 20};
         expect(human.isLastMoveRepeated(distantPosition)).to.equal(false);
       });
     });
@@ -151,11 +148,11 @@ describe('Humanoid', function(){
       });
     });
 
-    xdescribe('#moveNearest', function(){
+    describe('#moveNearest', function(){
       describe('is attracted to the nearest', function(){
         beforeEach(function(){
-          chai.spy.on(zombie, 'isAttractedTo')//.and.returnValue(true);
-          chai.spy.on(Pathfinder, 'moveTowards')//.and.returnValue({'x': 20, 'y': 20});
+          sinon.stub(zombie, 'isAttractedTo').returns(true);
+          chai.spy.on(Pathfinder, 'moveTowards');
           chai.spy.on(Pathfinder, 'moveRandomly');
         });
 
@@ -178,7 +175,7 @@ describe('Humanoid', function(){
         describe('and the last move has been repeated', function(){
           beforeEach(function(){
             chai.spy.on(Pathfinder, 'movePerpendicularTo');
-            chai.spy.on(zombie, 'isLastMoveRepeated')//.and.returnValue(true);
+            sinon.stub(zombie, 'isLastMoveRepeated').returns(true);
             zombie.position.x++;
             zombie.moveNearest(human);
           });
@@ -195,8 +192,8 @@ describe('Humanoid', function(){
         describe('else', function(){
           beforeEach(function(){
             zombie.position.x++;
-            chai.spy.on(zombie, 'isLastMoveRepeated').and.returnValue(false);
-            chai.spy.on(Pathfinder, 'movePerpendicularTo').and.returnValue(false);
+            sinon.stub(zombie, 'isLastMoveRepeated').returns(false);
+            chai.spy.on(Pathfinder, 'movePerpendicularTo');
             zombie.moveNearest(human);
           });
 
@@ -213,8 +210,8 @@ describe('Humanoid', function(){
 
       describe('is not attracted to the nearest', function(){
         beforeEach(function(){
-          chai.spy.on(zombie, 'isAttractedTo')//.and.returnValue(false);
-          chai.spy.on(Pathfinder, 'moveAwayFrom')//.and.returnValue({'x': 20, 'y': 20});
+          sinon.stub(zombie, 'isAttractedTo').returns(false);
+          chai.spy.on(Pathfinder, 'moveAwayFrom');
           chai.spy.on(Pathfinder, 'moveRandomly');
         });
 
@@ -237,7 +234,7 @@ describe('Humanoid', function(){
         describe('and the last move has been repeated', function(){
           beforeEach(function(){
             chai.spy.on(Pathfinder, 'movePerpendicularTo');
-            chai.spy.on(zombie, 'isLastMoveRepeated')//.and.returnValue(true);
+            sinon.stub(zombie, 'isLastMoveRepeated').returns(true);
             zombie.position.x++;
             zombie.moveNearest(human);
           });
@@ -254,8 +251,8 @@ describe('Humanoid', function(){
         describe('else', function(){
           beforeEach(function(){
             zombie.position.x++;
-            chai.spy.on(zombie, 'isLastMoveRepeated')//.and.returnValue(false);
-            chai.spy.on(Pathfinder, 'movePerpendicularTo')//.and.returnValue(false);
+            chai.spy.on(zombie, 'isLastMoveRepeated');
+            chai.spy.on(Pathfinder, 'movePerpendicularTo');
             zombie.moveNearest(human);
           });
 
