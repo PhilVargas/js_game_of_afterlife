@@ -1,7 +1,8 @@
 require('babel/register');
-var chai, expect;
+var chai, sinon, expect;
 chai = require('chai');
 chai.use(require('chai-spies'));
+sinon = require('sinon');
 expect = chai.expect;
 
 var Humanoid, gameSettings, Pathfinder;
