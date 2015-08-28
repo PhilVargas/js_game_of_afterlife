@@ -58,7 +58,7 @@ class Board {
         getRelativePosition: this.getRelativePosition.bind(this)
       });
     }
-    this.incrementScore(player);
+    this.incrementScore();
   }
 
   getRelativePosition(position) {
@@ -68,70 +68,8 @@ class Board {
     return {x, y};
   }
 
-  incrementScore(player){
-    if (player && player.humanType === 'player'){ this.score += 10; }
-  }
-
-  setDestination( nearestHuman, nearestZombie, player ){
-    if( this.humanoid.humanType === 'zombie' ){
-      return this.setZombieDestination( nearestHuman, nearestZombie, player );
-    }
-    else if( this.humanoid.humanType === 'human' ){
-      return this.setHumanDestination( nearestHuman, nearestZombie, player );
-    }
-    else { return this.humanoid.position; }
-  }
-
-  setZombieDestination( nearestHuman, nearestZombie, player ){
-    let playerDistance, humanDistance, zombieDistance;
-    playerDistance = Number.POSITIVE_INFINITY;
-    humanDistance = Number.POSITIVE_INFINITY;
-    zombieDistance = Number.POSITIVE_INFINITY;
-    if (nearestZombie){
-      zombieDistance = (
-        Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position ) *
-        gameSettings.zombieSpread
-      );
-    }
-    if (player){
-      playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position );
-    }
-    if (nearestHuman){
-      humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position );
-    }
-
-    if ( playerDistance < humanDistance ){
-      if ( playerDistance < zombieDistance ){
-        return this.humanoid.moveNearest( player );
-      } else {
-        return this.humanoid.moveNearest( nearestZombie );
-      }
-    } else if ( humanDistance < zombieDistance ){
-      return this.humanoid.moveNearest( nearestHuman );
-    } else {
-      return this.humanoid.moveNearest( nearestZombie );
-    }
-  }
-
-  setHumanDestination( nearestHuman, nearestZombie, player ){
-    let playerDistance, humanDistance, zombieDistance;
-    playerDistance = Number.POSITIVE_INFINITY;
-    humanDistance = Number.POSITIVE_INFINITY;
-    zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.humanoid.position );
-    if (player){
-      playerDistance = Pathfinder.distanceTo( player.position, this.humanoid.position );
-    }
-    if (nearestHuman){
-      humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.humanoid.position );
-    }
-
-    if ( zombieDistance < gameSettings.humanFearRange || ( !player && !nearestHuman ) ){
-      return this.humanoid.moveNearest( nearestZombie );
-    } else if ( playerDistance < humanDistance ){
-      return this.humanoid.moveNearest( player );
-    } else {
-      return this.humanoid.moveNearest( nearestHuman );
-    }
+  incrementScore(){
+    if (this.isPlayerAlive()){ this.score += 10; }
   }
 
   otherHumanoids(){
