@@ -10,8 +10,8 @@ class Board {
     this.dx = 0;
     this.dy = 0;
     this.humanoids = attributes.humanoids || [];
-    this.width = attributes.width  || '600px';
-    this.height = attributes.height || '400px';
+    this.width = attributes.width  || 600;
+    this.height = attributes.height || 400;
   }
 
   isGameActive(){
@@ -59,9 +59,7 @@ class Board {
           y: this.humanoid.position.y + this.dy*this.humanoid.speed
         };
         coords = ( Pathfinder.moveTowards(this.humanoid.position, targetLoc, this.humanoid.speed) );
-        coords.x = ( (coords.x + this.width) % this.width );
-        coords.y = ( (coords.y + this.height) % this.height );
-        this.humanoid.position = coords;
+        this.humanoid.position = this.getRelativePosition(coords);
         continue;
       }
       let nearestHuman, nearestZombie, destination;
@@ -85,6 +83,13 @@ class Board {
       }
     }
     this.incrementScore(player);
+  }
+
+  getRelativePosition(position) {
+    let x,y;
+    x = ( (position.x + this.width) % this.width );
+    y = ( (position.y + this.height) % this.height );
+    return {x, y};
   }
 
   incrementScore(player){
