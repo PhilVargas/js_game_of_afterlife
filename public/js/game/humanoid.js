@@ -14,6 +14,14 @@ class Humanoid {
     this.lastPosition = { x: this.position.x, y: this.position.y };
   }
 
+  cloneProps() {
+    return {
+      id: this.id,
+      position: this.position,
+      lastPosition: this.lastPosition
+    };
+  }
+
   isAttractedTo(nearestObject){
     return nearestObject.humanType === 'human' || nearestObject.humanType === 'player';
   }
