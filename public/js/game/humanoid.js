@@ -8,9 +8,6 @@ class Humanoid {
     this.id = attributes.id;
     this.position = attributes.position ||
       { x: (5+ Math.floor(Math.random()*591)), y: (5+ Math.floor(Math.random()*391)) };
-    this.speed = attributes.speed;
-    this.humanType = attributes.humanType;
-    // this.timeSinceInfection = 0;
     this.lastPosition = { x: this.position.x, y: this.position.y };
   }
 
@@ -35,26 +32,6 @@ class Humanoid {
       (Math.abs(potentialMove.x - this.lastPosition.x) < gameSettings.repitionTolerance) &&
         (Math.abs(potentialMove.y - this.lastPosition.y) < gameSettings.repitionTolerance)
     );
-  }
-
-  // move
-  getBitten(){
-    this.humanType = 'infectedHuman';
-    this.speed = 0;
-  }
-
-  // move
-  bite(human){
-    if ( human ) { human.getBitten(); }
-  }
-
-  // move
-  isAbleToBite(human){
-    if ( human ) {
-      return (
-        this.humanType === 'zombie' && (Pathfinder.distanceTo( human.position, this.position ) < 10)
-      );
-    }
   }
 
   moveNearest(nearestObject){

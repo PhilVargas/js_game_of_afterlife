@@ -69,7 +69,7 @@ class Zombie extends Humanoid {
       this.position = destination;
     }
     if ( this.isAbleToBite( player ) ){
-      this.bite( player );
+      humanoids[player.id] = player.transform();
     }
     if ( this.isAbleToBite( nearestHuman ) ){
       humanoids[nearestHuman.id] = nearestHuman.transform();

@@ -48,52 +48,15 @@ class Board {
     let player;
     for( let i=0; i< this.humanoids.length; i++ ){
       this.humanoid = this.humanoids[i];
-      if( this.humanoid.humanType === 'player' ){
-        let targetLoc, coords;
-        targetLoc = {
-          x: this.humanoid.position.x + this.dx*this.humanoid.speed,
-          y: this.humanoid.position.y + this.dy*this.humanoid.speed
-        };
-        coords = ( Pathfinder.moveTowards(this.humanoid.position, targetLoc, this.humanoid.speed) );
-        this.humanoid.position = this.getRelativePosition(coords);
-        continue;
-      }
-      if (this.humanoid.handleNextMove){
-        this.humanoid.handleNextMove(
-          {
-            nearestHuman: this.nearestHumanoid('human'),
-            nearestZombie: this.nearestHumanoid('zombie'),
-            player: this.nearestHumanoid('player'),
-            dx: this.dx,
-            dy: this.dy,
-            humanoids: this.humanoids,
-            getRelativePosition: this.getRelativePosition.bind(this)
-          }
-        );
-      } else {
-        let nearestHuman, nearestZombie, destination;
-        nearestZombie = this.nearestHumanoid( 'zombie' );
-        nearestHuman = this.nearestHumanoid( 'human' );
-        player = this.nearestHumanoid( 'player' );
-        destination = this.setDestination( nearestHuman, nearestZombie, player );
-        destination.x = ( (destination.x + this.width) % this.width );
-        destination.y = ( (destination.y + this.height) % this.height );
-        if ( this.humanoid.isAbleToBite( player ) ){
-          this.humanoid.bite( player );
-        }
-
-        if ( this.humanoid.isAbleToBite( nearestHuman ) ){
-          this.humanoids[nearestHuman.id] = nearestHuman.transform();
-        }
-
-        destination.x = ( (destination.x + this.width) % this.width );
-        destination.y = ( (destination.y + this.height) % this.height );
-
-        if( this.isValidDestination( this.getRelativePosition(destination) ) ) {
-          this.humanoid.position = destination;
-        }
-
-      }
+      this.humanoid.handleNextMove({
+        nearestHuman: this.nearestHumanoid('human'),
+        nearestZombie: this.nearestHumanoid('zombie'),
+        player: this.nearestHumanoid('player'),
+        dx: this.dx,
+        dy: this.dy,
+        humanoids: this.humanoids,
+        getRelativePosition: this.getRelativePosition.bind(this)
+      });
     }
     this.incrementScore(player);
   }
