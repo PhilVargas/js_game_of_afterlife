@@ -62,24 +62,41 @@ class Board {
         this.humanoid.position = this.getRelativePosition(coords);
         continue;
       }
-      let nearestHuman, nearestZombie, destination;
-      nearestZombie = this.nearestHumanoid( 'zombie' );
-      nearestHuman = this.nearestHumanoid( 'human' );
-      player = this.nearestHumanoid( 'player' );
-      destination = this.setDestination( nearestHuman, nearestZombie, player );
-      destination.x = ( (destination.x + this.width) % this.width );
-      destination.y = ( (destination.y + this.height) % this.height );
+      if (this.humanoid.handleNextMove){
+        this.humanoid.handleNextMove(
+          {
+            nearestHuman: this.nearestHumanoid('human'),
+            nearestZombie: this.nearestHumanoid('zombie'),
+            player: this.nearestHumanoid('player'),
+            dx: this.dx,
+            dy: this.dy,
+            humanoids: this.humanoids,
+            getRelativePosition: this.getRelativePosition.bind(this)
+          }
+        );
+      } else {
+        let nearestHuman, nearestZombie, destination;
+        nearestZombie = this.nearestHumanoid( 'zombie' );
+        nearestHuman = this.nearestHumanoid( 'human' );
+        player = this.nearestHumanoid( 'player' );
+        destination = this.setDestination( nearestHuman, nearestZombie, player );
+        destination.x = ( (destination.x + this.width) % this.width );
+        destination.y = ( (destination.y + this.height) % this.height );
+        if ( this.humanoid.isAbleToBite( player ) ){
+          this.humanoid.bite( player );
+        }
 
-      if ( this.humanoid.isAbleToBite( player ) ){
-        this.humanoid.bite( player );
-      }
+        if ( this.humanoid.isAbleToBite( nearestHuman ) ){
+          this.humanoid.bite( nearestHuman );
+        }
 
-      if ( this.humanoid.isAbleToBite( nearestHuman ) ){
-        this.humanoid.bite( nearestHuman );
-      }
+        destination.x = ( (destination.x + this.width) % this.width );
+        destination.y = ( (destination.y + this.height) % this.height );
 
-      if( this.isValidDestination( destination ) ){
-        this.humanoid.position = destination;
+        if( this.isValidDestination( this.getRelativePosition(destination) ) ) {
+          this.humanoid.position = destination;
+        }
+
       }
     }
     this.incrementScore(player);
