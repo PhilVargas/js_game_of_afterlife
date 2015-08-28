@@ -87,7 +87,7 @@ class Board {
         }
 
         if ( this.humanoid.isAbleToBite( nearestHuman ) ){
-          this.humanoid.bite( nearestHuman );
+          this.humanoids[nearestHuman.id] = nearestHuman.transform();
         }
 
         destination.x = ( (destination.x + this.width) % this.width );

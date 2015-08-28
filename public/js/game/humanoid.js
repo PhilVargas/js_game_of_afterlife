@@ -59,13 +59,6 @@ class Humanoid {
     }
   }
 
-  incrementTimeSinceInfection(){
-    this.timeSinceInfection ++;
-    if (this.timeSinceInfection === 5){
-      this.turnToZombie();
-    }
-  }
-
   moveNearest(nearestObject){
     let potentialMove;
     if (this.isAttractedTo(nearestObject)){
