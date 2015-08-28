@@ -10,7 +10,7 @@ class Humanoid {
       { x: (5+ Math.floor(Math.random()*591)), y: (5+ Math.floor(Math.random()*391)) };
     this.speed = attributes.speed;
     this.humanType = attributes.humanType;
-    this.timeSinceInfection = 0;
+    // this.timeSinceInfection = 0;
     this.lastPosition = { x: this.position.x, y: this.position.y };
   }
 
@@ -37,20 +37,18 @@ class Humanoid {
     );
   }
 
+  // move
   getBitten(){
     this.humanType = 'infectedHuman';
     this.speed = 0;
   }
 
+  // move
   bite(human){
     if ( human ) { human.getBitten(); }
   }
 
-  turnToZombie(){
-    this.humanType = 'zombie';
-    this.speed = gameSettings.zombieSpeed;
-  }
-
+  // move
   isAbleToBite(human){
     if ( human ) {
       return (
