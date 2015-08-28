@@ -2,6 +2,7 @@ let Humanoid, gameSettings, Human, Zombie, Player;
 gameSettings = require('settings');
 Humanoid = require('humanoid');
 Human = require('humanoids/human');
+Zombie = require('humanoids/zombie');
 
 class HumanoidBuilder {
   static humanoidMap(){
@@ -28,8 +29,8 @@ class HumanoidBuilder {
     let population, newHumanoid;
     population = [];
     for(let i = 0; i < number; i++){
-      if (type === 'human') {
-        let H = this.humanoidMap()[type]
+      if (type === 'human' || type === 'zombie') {
+        let H = this.humanoidMap()[type];
         newHumanoid = new H({speed: speed, id: baseId + i});
       // } else if (type === 'zombie'){
       //   newHumanoid = new Zombie({speed: speed, id: baseId + i});

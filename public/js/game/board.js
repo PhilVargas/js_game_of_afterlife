@@ -48,10 +48,6 @@ class Board {
     let player;
     for( let i=0; i< this.humanoids.length; i++ ){
       this.humanoid = this.humanoids[i];
-      // if( this.humanoid.humanType === 'infectedHuman' ){
-      //   this.humanoid.incrementTimeSinceInfection();
-      //   continue;
-      // }
       if( this.humanoid.humanType === 'player' ){
         let targetLoc, coords;
         targetLoc = {
