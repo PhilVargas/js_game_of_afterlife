@@ -68,7 +68,7 @@ class Board {
   }
 
   incrementScore(){
-    if (this.isPlayerAlive()){ this.score += 10; }
+    if (this.isPlayerAlive()) { this.score += 10; }
   }
 
   otherHumanoids(){

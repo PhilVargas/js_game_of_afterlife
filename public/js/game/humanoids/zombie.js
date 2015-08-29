@@ -61,17 +61,17 @@ class Zombie extends Humanoid {
   handleNextMove(opts){
     let destination;
     let { nearestHuman, nearestZombie, player, humanoids, getRelativePosition} = opts;
-    destination = getRelativePosition(
-      this.getNextDestination(nearestHuman, nearestZombie, player)
-    );
-    if ( this.isValidDestination(humanoids, destination) ) {
-      this.position = destination;
-    }
     if ( this.isAbleToBite( player ) ){
       humanoids[player.id] = player.transform();
     }
     if ( this.isAbleToBite( nearestHuman ) ){
       humanoids[nearestHuman.id] = nearestHuman.transform();
+    }
+    destination = getRelativePosition(
+      this.getNextDestination(nearestHuman, nearestZombie, player)
+    );
+    if ( this.isValidDestination(humanoids, destination) ) {
+      this.position = destination;
     }
   }
 }
