@@ -9,6 +9,19 @@ class Humanoid {
     this.position = attributes.position ||
       { x: (5+ Math.floor(Math.random()*591)), y: (5+ Math.floor(Math.random()*391)) };
     this.lastPosition = { x: this.position.x, y: this.position.y };
+    this.humanType = this.constructor.name;
+  }
+
+  isZombie(){
+    return this.humanType === 'Zombie';
+  }
+
+  isPlayer(){
+    return this.humanType === 'Player';
+  }
+
+  isHuman(){
+    return this.humanType === 'Human';
   }
 
   cloneProps() {
@@ -19,8 +32,8 @@ class Humanoid {
     };
   }
 
-  isAttractedTo(nearestObject){
-    return nearestObject.humanType === 'human' || nearestObject.humanType === 'player';
+  isAttractedTo(nearestHumanoid){
+    return nearestHumanoid.isPlayer() || nearestHumanoid.isHuman();
   }
 
   storeLastPosition(){

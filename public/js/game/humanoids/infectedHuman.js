@@ -8,7 +8,6 @@ Zombie = require('humanoids/zombie');
 class InfectedHuman extends Humanoid {
   constructor(opts) {
     super(opts);
-    this.humanType = 'infectedHuman';
     this.speed = 0;
     this.timeSinceInfection = 0;
   }

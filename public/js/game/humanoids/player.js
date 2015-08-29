@@ -8,7 +8,6 @@ InfectedHuman = require('humanoids/infectedHuman');
 class Player extends Humanoid {
   constructor(opts) {
     super(opts);
-    this.humanType = 'player';
     this.speed = gameSettings.playerSpeed;
   }
 

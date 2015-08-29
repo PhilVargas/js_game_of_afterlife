@@ -16,13 +16,13 @@ class Board {
 
   isGameActive(){
     return this.humanoids.some(function(humanoid) {
-      return humanoid.humanType === 'human' || humanoid.humanType === 'player';
+      return humanoid.isHuman() || humanoid.isPlayer();
     });
   }
 
   isPlayerAlive(){
     return this.humanoids.some(function(humanoid) {
-      return humanoid.humanType === 'player';
+      return humanoid.isPlayer();
     });
   }
 
@@ -45,13 +45,12 @@ class Board {
   }
 
   nextTurn(){
-    let player;
     for( let i=0; i< this.humanoids.length; i++ ){
       this.humanoid = this.humanoids[i];
       this.humanoid.handleNextMove({
-        nearestHuman: this.nearestHumanoid('human'),
-        nearestZombie: this.nearestHumanoid('zombie'),
-        player: this.nearestHumanoid('player'),
+        nearestHuman: this.nearestHumanoid('Human'),
+        nearestZombie: this.nearestHumanoid('Zombie'),
+        player: this.nearestHumanoid('Player'),
         dx: this.dx,
         dy: this.dy,
         humanoids: this.humanoids,

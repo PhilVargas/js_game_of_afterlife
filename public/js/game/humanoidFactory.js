@@ -8,29 +8,30 @@ Player = require('humanoids/player');
 class HumanoidBuilder {
   static humanoidMap(){
     return {
-      human: Human,
-      zombie: Zombie,
-      player: Player
+      Human,
+      Zombie,
+      Player
     };
   }
 
   static populate(numberOfHumans, numberOfZombies){
     let population = [];
-    population = population.concat(this.creation(numberOfHumans, 'human', gameSettings.humanSpeed));
+    population = population.concat(this.creation(numberOfHumans, 'Human', gameSettings.humanSpeed));
     population = population.concat(
-      this.creation(numberOfZombies, 'zombie', gameSettings.zombieSpeed, population.length)
+      this.creation(numberOfZombies, 'Zombie', gameSettings.zombieSpeed, population.length)
     );
     population = population.concat(
-      this.creation(1, 'player', gameSettings.playerSpeed, population.length)
+      this.creation(1, 'Player', gameSettings.playerSpeed, population.length)
     );
     return population;
   }
 
   static creation(number, type, speed, baseId = 0){
-    let population, newHumanoid;
+    let population, newHumanoid, map;
+    map = this.humanoidMap();
     population = [];
     for(let i = 0; i < number; i++){
-      let H = this.humanoidMap()[type];
+      let H = map[type];
       newHumanoid = new H({speed: speed, id: baseId + i});
       population.push(newHumanoid);
     }

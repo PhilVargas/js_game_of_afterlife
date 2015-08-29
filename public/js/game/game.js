@@ -14,10 +14,10 @@ class GameOfAfterlife {
     this.ctx = canvas.getContext('2d');
     this.board = new Board({humanoids: allHumanoids, width: this.width, height: this.height});
     this.humanoidColorMap = {
-      human: '#00aaaa',
-      zombie: '#ff0000',
-      player: '#00cc00',
-      infectedHuman: '#770000'
+      Human: '#00aaaa',
+      Zombie: '#ff0000',
+      Player: '#00cc00',
+      InfectedHuman: '#770000'
     };
   }
 
