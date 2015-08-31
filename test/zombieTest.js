@@ -1,7 +1,6 @@
 require('babel/register');
 var chai, sinon, expect;
 chai = require('chai');
-chai.use(require('chai-spies'));
 sinon = require('sinon');
 expect = chai.expect;
 
@@ -62,6 +61,36 @@ describe('Zombie', function(){
     it('returns the zombie', function(){
       expect(zombie.transform()).to.equal(zombie);
     });
+  });
+
+  describe('#isValidDestination', function(){
+    context('when target destination is not identical to a position', function(){
+      it('returns true', function(){
+        expect(
+          zombie.isValidDestination(
+            [{position: { x: 0, y: 0 }}, {position: {x: 1, y: 1}}], {x: 0, y: 1}
+          )
+        ).to.equal(true);
+      });
+    });
+
+    context('when target destination is identical to a position', function(){
+      it('returns false', function(){
+        expect(
+          zombie.isValidDestination(
+            [{position: { x: 0, y: 0 }}, {position: {x: 1, y: 1}}], {x: 0, y: 0}
+          )
+        ).to.equal(false);
+      });
+    });
+  });
+
+  describe('#getNextDestination', function(){
+
+  });
+
+  describe('#handleNextMove', function(){
+
   });
 });
 
