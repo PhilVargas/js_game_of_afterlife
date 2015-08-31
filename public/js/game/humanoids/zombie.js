@@ -12,13 +12,13 @@ class Zombie extends Humanoid {
   }
 
   isAbleToBite(human){
-    return ( human && Pathfinder.distanceTo( human.position, this.position ) < 10);
+    return (
+      human && Pathfinder.distanceTo( human.position, this.position ) < gameSettings.zombieBiteRange
+    );
   }
 
   transform() {
-    return(
-      new InfectedHuman(this.cloneProps())
-    );
+    return(this);
   }
 
   isValidDestination(humanoids, targetPosition) {
