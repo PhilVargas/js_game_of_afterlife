@@ -7,73 +7,93 @@ expect = chai.expect;
 
 var Humanoid, gameSettings, Pathfinder;
 
-Humanoid = require('humanoid');
+Humanoid = require('humanoids/humanoid');
 gameSettings = require('settings');
 Pathfinder = require('pathfinder');
 
 describe('Humanoid', function(){
-  var human, zombie, infected;
-  describe('A human', function(){
+  var humanoid, humanoid2;
+  describe('A humanoid', function(){
     beforeEach(function(){
-      human = new Humanoid({speed: 10, humanType: 'human', position: {x: 20, y: 20}});
-      zombie = new Humanoid({speed: 5, humanType: 'zombie', position: {x: 25, y: 25}});
-      infected = new Humanoid({speed: 0, humanType: 'infectedHuman', position: {x: 21, y: 21}});
+      // human = new Humanoid({speed: 10, humanType: 'human', position: {x: 20, y: 20}});
+      // zombie = new Humanoid({speed: 5, humanType: 'zombie', position: {x: 25, y: 25}});
+      // infected = new Humanoid({speed: 0, humanType: 'infectedHuman', position: {x: 21, y: 21}});
+      humanoid = new Humanoid({id: 0});
+      humanoid2 = new Humanoid({id: 0});
     });
 
     it('should have a default position', function(){
-      var anotherHuman = new Humanoid({speed: 10, humanType: 'human'});
-      expect(anotherHuman.position).to.be.ok;
+      expect(humanoid.position).to.be.defined;
     });
 
     it('should have a default lastPosition equal to position', function(){
-      expect(human.lastPosition).to.eql(human.position);
+      expect(humanoid.lastPosition).to.eql(humanoid.position);
     });
 
-    it('should have a timeSinceInfection equal to 0', function(){
+    // move to zombie
+    xit('should have a timeSinceInfection equal to 0', function(){
       expect(human.timeSinceInfection).to.equal(0);
     });
 
+    describe('#closeProps', function(){
+      it('returns an object with `id`, `position`, and `lastPosition`', function(){
+        expect(humanoid.cloneProps()).to.eql(
+          {id: humanoid.id, position: humanoid.position, lastPosition: humanoid.lastPosition}
+        );
+      });
+    });
+
     describe('#isAttractedTo', function(){
-
-      it('should be attracted to a human', function(){
-        var anotherHuman = new Humanoid({speed: 10, humanType: 'human'});
-        expect(human.isAttractedTo(anotherHuman)).to.equal(true);
+      it('is attracted to a human', function(){
+        sinon.stub(humanoid2, 'isHuman').returns(true);
+        expect(humanoid.isAttractedTo(humanoid2)).to.equal(true);
       });
 
-      it('should not be attracted to a zombie', function(){
-        expect(human.isAttractedTo(zombie)).to.equal(false);
+      it('is attracted to a player', function(){
+        sinon.stub(humanoid2, 'isPlayer').returns(true);
+        expect(humanoid.isAttractedTo(humanoid2)).to.equal(true);
       });
 
-      it('should not be attracted to an infectedHuman', function(){
-        expect(human.isAttractedTo(infected)).to.equal(false);
+      it('is not attracted to a zombie', function(){
+        sinon.stub(humanoid2, 'isZombie').returns(true);
+        sinon.stub(humanoid2, 'isPlayer').returns(false);
+        sinon.stub(humanoid2, 'isHuman').returns(false);
+        expect(humanoid.isAttractedTo(humanoid2)).to.equal(false);
+      });
+
+      it('is not attracted to an infectedHuman', function(){
+        sinon.stub(humanoid2, 'isZombie').returns(false);
+        sinon.stub(humanoid2, 'isPlayer').returns(false);
+        sinon.stub(humanoid2, 'isHuman').returns(false);
+        expect(humanoid.isAttractedTo(humanoid2)).to.equal(false);
       });
     });
 
     describe('#storeLastPosition', function(){
       var newPosition = {x: 15, y: 10};
       beforeEach(function(){
-        human.position = newPosition;
-        human.storeLastPosition();
+        humanoid.position = newPosition;
+        humanoid.storeLastPosition();
       });
 
-      it('should change the lastPosition to this.position', function(){
-        expect(human.lastPosition).to.eql(newPosition);
+      it('changes the lastPosition to this.position', function(){
+        expect(humanoid.lastPosition).to.eql(newPosition);
       });
     });
 
     describe('#isLastMoveRepeated', function(){
       it('should return true for close positions', function(){
-        var closePosition = {x: 20.01, y: 20.01};
-        expect(human.isLastMoveRepeated(closePosition)).to.equal(true);
+        var closePosition = {x: humanoid.position.x + 0.01, y: humanoid.position.y + 0.01};
+        expect(humanoid.isLastMoveRepeated(closePosition)).to.equal(true);
       });
 
       it('should return false for distant positions', function(){
         var distantPosition = {x: 10, y: 20};
-        expect(human.isLastMoveRepeated(distantPosition)).to.equal(false);
+        expect(humanoid.isLastMoveRepeated(distantPosition)).to.equal(false);
       });
     });
 
-    describe('#getBitten', function(){
+    xdescribe('#getBitten', function(){
       beforeEach(function(){
         human.getBitten();
       });
@@ -87,7 +107,7 @@ describe('Humanoid', function(){
       });
     });
 
-    describe('#bite', function(){
+    xdescribe('#bite', function(){
       describe('a human', function(){
         beforeEach(function(){
           chai.spy.on(human,'getBitten');
@@ -99,7 +119,7 @@ describe('Humanoid', function(){
       });
     });
 
-    describe('#turnToZombie', function(){
+    xdescribe('#turnToZombie', function(){
       beforeEach(function(){
         human.turnToZombie();
       });
@@ -112,7 +132,7 @@ describe('Humanoid', function(){
       });
     });
 
-    describe('#isAbleToBite', function(){
+    xdescribe('#isAbleToBite', function(){
       it('should return true if the humanoid is a zombie', function(){
         expect(zombie.isAbleToBite(human)).to.equal(true);
       });
@@ -127,7 +147,7 @@ describe('Humanoid', function(){
       });
     });
 
-    describe('#incrementTimeSinceInfection',function(){
+    xdescribe('#incrementTimeSinceInfection',function(){
       it('should increase the timeSinceInfection', function(){
         infected.incrementTimeSinceInfection();
         expect(infected.timeSinceInfection).to.equal(1);
@@ -151,20 +171,20 @@ describe('Humanoid', function(){
     describe('#moveNearest', function(){
       describe('is attracted to the nearest', function(){
         beforeEach(function(){
-          sinon.stub(zombie, 'isAttractedTo').returns(true);
+          sinon.stub(humanoid, 'isAttractedTo').returns(true);
           chai.spy.on(Pathfinder, 'moveTowards');
           chai.spy.on(Pathfinder, 'moveRandomly');
         });
 
         it('should call Pathfinder.moveTowards', function(){
-          zombie.moveNearest(human);
+          humanoid.moveNearest(humanoid2);
           expect(Pathfinder.moveTowards).to.have.been.called();
         });
 
         describe('and last position is the current position', function(){
           beforeEach(function(){
-            zombie.lastPosition = zombie.position;
-            zombie.moveNearest(human);
+            humanoid.lastPosition = humanoid.position;
+            humanoid.moveNearest(humanoid2);
           });
 
           it('should call Pathfinder.moveRandomly', function(){
@@ -175,9 +195,9 @@ describe('Humanoid', function(){
         describe('and the last move has been repeated', function(){
           beforeEach(function(){
             chai.spy.on(Pathfinder, 'movePerpendicularTo');
-            sinon.stub(zombie, 'isLastMoveRepeated').returns(true);
-            zombie.position.x++;
-            zombie.moveNearest(human);
+            sinon.stub(humanoid, 'isLastMoveRepeated').returns(true);
+            humanoid.position.x++;
+            humanoid.moveNearest(humanoid2);
           });
 
           it('should not call Pathfinder.moveRandomly', function(){
@@ -191,10 +211,10 @@ describe('Humanoid', function(){
 
         describe('else', function(){
           beforeEach(function(){
-            zombie.position.x++;
-            sinon.stub(zombie, 'isLastMoveRepeated').returns(false);
+            humanoid.position.x++;
+            sinon.stub(humanoid, 'isLastMoveRepeated').returns(false);
             chai.spy.on(Pathfinder, 'movePerpendicularTo');
-            zombie.moveNearest(human);
+            humanoid.moveNearest(humanoid2);
           });
 
           it('should not call Pathfinder.moveRandomly', function(){
@@ -210,20 +230,20 @@ describe('Humanoid', function(){
 
       describe('is not attracted to the nearest', function(){
         beforeEach(function(){
-          sinon.stub(zombie, 'isAttractedTo').returns(false);
+          sinon.stub(humanoid, 'isAttractedTo').returns(false);
           chai.spy.on(Pathfinder, 'moveAwayFrom');
           chai.spy.on(Pathfinder, 'moveRandomly');
         });
 
         it('should call Pathfinder.moveAwayFrom', function(){
-          zombie.moveNearest(human);
+          humanoid.moveNearest(humanoid2);
           expect(Pathfinder.moveAwayFrom).to.have.been.called();
         });
 
         describe('and last position is the current position', function(){
           beforeEach(function(){
-            zombie.lastPosition = zombie.position;
-            zombie.moveNearest(human);
+            humanoid.lastPosition = humanoid.position;
+            humanoid.moveNearest(humanoid2);
           });
 
           it('should call Pathfinder.moveRandomly', function(){
@@ -234,9 +254,9 @@ describe('Humanoid', function(){
         describe('and the last move has been repeated', function(){
           beforeEach(function(){
             chai.spy.on(Pathfinder, 'movePerpendicularTo');
-            sinon.stub(zombie, 'isLastMoveRepeated').returns(true);
-            zombie.position.x++;
-            zombie.moveNearest(human);
+            sinon.stub(humanoid, 'isLastMoveRepeated').returns(true);
+            humanoid.position.x++;
+            humanoid.moveNearest(humanoid2);
           });
 
           it('should not call Pathfinder.moveRandomly', function(){
@@ -250,10 +270,10 @@ describe('Humanoid', function(){
 
         describe('else', function(){
           beforeEach(function(){
-            zombie.position.x++;
-            chai.spy.on(zombie, 'isLastMoveRepeated');
+            humanoid.position.x++;
+            chai.spy.on(humanoid, 'isLastMoveRepeated');
             chai.spy.on(Pathfinder, 'movePerpendicularTo');
-            zombie.moveNearest(human);
+            humanoid.moveNearest(humanoid2);
           });
 
           it('should not call Pathfinder.moveRandomly', function(){
