@@ -2,7 +2,7 @@ let Pathfinder, gameSettings, Humanoid, Zombie;
 
 gameSettings = require('settings');
 Pathfinder = require('pathfinder');
-Humanoid = require('humanoid');
+Humanoid = require('humanoids/humanoid');
 Zombie = require('humanoids/zombie');
 
 class InfectedHuman extends Humanoid {

@@ -1,6 +1,5 @@
-let Humanoid, gameSettings, Human, Zombie, Player;
+let gameSettings, Human, Zombie, Player;
 gameSettings = require('settings');
-Humanoid = require('humanoid');
 Human = require('humanoids/human');
 Zombie = require('humanoids/zombie');
 Player = require('humanoids/player');
