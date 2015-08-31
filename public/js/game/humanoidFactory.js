@@ -16,23 +16,23 @@ class HumanoidBuilder {
 
   static populate(numberOfHumans, numberOfZombies){
     let population = [];
-    population = population.concat(this.creation(numberOfHumans, 'Human', gameSettings.humanSpeed));
+    population = population.concat(this.creation(numberOfHumans, 'Human'));
     population = population.concat(
-      this.creation(numberOfZombies, 'Zombie', gameSettings.zombieSpeed, population.length)
+      this.creation(numberOfZombies, 'Zombie', population.length)
     );
     population = population.concat(
-      this.creation(1, 'Player', gameSettings.playerSpeed, population.length)
+      this.creation(1, 'Player', population.length)
     );
     return population;
   }
 
-  static creation(number, type, speed, baseId = 0){
+  static creation(number, type, baseId = 0){
     let population, newHumanoid, map;
     map = this.humanoidMap();
     population = [];
     for(let i = 0; i < number; i++){
       let H = map[type];
-      newHumanoid = new H({speed: speed, id: baseId + i});
+      newHumanoid = new H({id: baseId + i});
       population.push(newHumanoid);
     }
     return population;
