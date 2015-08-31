@@ -15,9 +15,6 @@ describe('Humanoid', function(){
   var humanoid, humanoid2;
   describe('A humanoid', function(){
     beforeEach(function(){
-      // human = new Humanoid({speed: 10, humanType: 'human', position: {x: 20, y: 20}});
-      // zombie = new Humanoid({speed: 5, humanType: 'zombie', position: {x: 25, y: 25}});
-      // infected = new Humanoid({speed: 0, humanType: 'infectedHuman', position: {x: 21, y: 21}});
       humanoid = new Humanoid({id: 0});
       humanoid2 = new Humanoid({id: 0});
     });
@@ -93,32 +90,6 @@ describe('Humanoid', function(){
       });
     });
 
-    xdescribe('#getBitten', function(){
-      beforeEach(function(){
-        human.getBitten();
-      });
-
-      it('should change the humantype to an infectedHuman', function(){
-        expect(human.humanType).to.equal('infectedHuman');
-      });
-
-      it('should set the speed of the humanoid to 0', function(){
-        expect(human.speed).to.equal(0);
-      });
-    });
-
-    xdescribe('#bite', function(){
-      describe('a human', function(){
-        beforeEach(function(){
-          chai.spy.on(human,'getBitten');
-          zombie.bite(human);
-        });
-        it('should call #getBitten', function(){
-          expect(human.getBitten).to.have.been.called();
-        });
-      });
-    });
-
     xdescribe('#turnToZombie', function(){
       beforeEach(function(){
         human.turnToZombie();
@@ -129,21 +100,6 @@ describe('Humanoid', function(){
 
       it('should change the speed to 5', function(){
         expect(human.speed).to.equal(gameSettings.zombieSpeed);
-      });
-    });
-
-    xdescribe('#isAbleToBite', function(){
-      it('should return true if the humanoid is a zombie', function(){
-        expect(zombie.isAbleToBite(human)).to.equal(true);
-      });
-
-      it('should return false if the humanoid is a human', function(){
-        var anotherHuman = new Humanoid({speed: 10, humanType: 'human', position: {x: 21, y: 21}});
-        expect(human.isAbleToBite(anotherHuman)).to.equal(false);
-      });
-
-      it('should return false if the humanoid is an infectedHuman', function(){
-        expect(infected.isAbleToBite(human)).to.equal(false);
       });
     });
 
