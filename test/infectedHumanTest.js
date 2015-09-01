@@ -2,6 +2,7 @@ require('babel/register');
 var chai, sinon, expect;
 chai = require('chai');
 chai.use(require('chai-changes'));
+chai.use(require('chai-spies'))
 sinon = require('sinon');
 expect = chai.expect;
 
@@ -54,6 +55,34 @@ describe('InfectedHuman', function(){
       expect(function(){
         return infected.timeSinceInfection;
       }).to.change.by(1).when(function(){ infected.incrementTimeSinceInfection(); });
+    });
+  });
+
+  describe('#handleNextMove', function(){
+    beforeEach(function(){
+      chai.spy.on(infected, 'incrementTimeSinceInfection');
+      chai.spy.on(infected, 'transform');
+    });
+
+    it('calls `incrementTimeSinceInfection`', function(){
+      infected.handleNextMove({humanoids: []});
+      expect(infected.incrementTimeSinceInfection).to.have.been.called();
+    });
+
+    context('when the `timeSinceInfection` is greater than or equal to `5`', function(){
+      var humanoids = [];
+      beforeEach(function(){
+        infected.timeSinceInfection = 5;
+        infected.handleNextMove({humanoids: humanoids});
+      });
+
+      it('calls `transform`', function(){
+        expect(infected.transform).to.have.been.called();
+      });
+
+      it('replaces `humanoids[infected.id]` with the `new Zombie`', function(){
+        expect(humanoids[infected.id]).to.be.an.instanceOf(Zombie);
+      });
     });
   });
 });
