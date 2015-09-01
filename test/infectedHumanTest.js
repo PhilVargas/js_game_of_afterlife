@@ -1,6 +1,7 @@
 require('babel/register');
 var chai, sinon, expect;
 chai = require('chai');
+chai.use(require('chai-changes'));
 sinon = require('sinon');
 expect = chai.expect;
 
@@ -35,6 +36,24 @@ describe('InfectedHuman', function(){
   describe('#isAbleToBite', function(){
     it('is false', function(){
       expect(infected.isAbleToBite()).to.equal(false);
+    });
+  });
+
+  describe('#transform', function(){
+    it('transforms into a `Zombie`', function(){
+      expect(infected.transform()).to.be.an.instanceOf(Zombie);
+    });
+
+    it('maintains the position of the `InfectedHuman`', function(){
+      expect(infected.transform().position).to.eql(infected.position);
+    });
+  });
+
+  describe('#incrementTimeSinceInfection', function(){
+    it('increments `timeSinceInfection` by 1', function(){
+      expect(function(){
+        return infected.timeSinceInfection;
+      }).to.change.by(1).when(function(){ infected.incrementTimeSinceInfection(); });
     });
   });
 });
