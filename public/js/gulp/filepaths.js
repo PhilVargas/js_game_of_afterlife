@@ -36,5 +36,5 @@ module.exports = {
   jsRoot: JS_BASE_DIR,
   jsVendor: VENDOR_ROOT,
   root: JS_BASE_DIR
-}
+};
 
