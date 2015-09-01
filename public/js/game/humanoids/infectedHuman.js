@@ -29,7 +29,7 @@ class InfectedHuman extends Humanoid {
   handleNextMove(opts){
     let { humanoids } = opts;
     this.incrementTimeSinceInfection();
-    if (this.timeSinceInfection === 5){
+    if (this.timeSinceInfection >= 5){
       humanoids[this.id] = this.transform();
     }
   }
