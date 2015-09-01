@@ -1,12 +1,11 @@
-require('babel/register');
-var chai, sinon, expect;
+let chai, sinon, expect;
 chai = require('chai');
 chai.use(require('chai-changes'));
-chai.use(require('chai-spies'))
+chai.use(require('chai-spies'));
 sinon = require('sinon');
 expect = chai.expect;
 
-var Zombie, Infected, gameSettings, Pathfinder;
+let Zombie, Infected, gameSettings, Pathfinder;
 
 Infected = require('humanoids/infectedHuman');
 Zombie = require('humanoids/zombie');
@@ -14,7 +13,7 @@ gameSettings = require('settings');
 Pathfinder = require('pathfinder');
 
 describe('InfectedHuman', function(){
-  var zombie, infected;
+  let infected;
 
   beforeEach(function(){
     infected = new Infected({id: 0});
@@ -70,7 +69,7 @@ describe('InfectedHuman', function(){
     });
 
     context('when the `timeSinceInfection` is greater than or equal to `5`', function(){
-      var humanoids = [];
+      let humanoids = [];
       beforeEach(function(){
         infected.timeSinceInfection = 5;
         infected.handleNextMove({humanoids: humanoids});

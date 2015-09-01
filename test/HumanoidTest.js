@@ -1,18 +1,17 @@
-require('babel/register');
-var chai, sinon, expect;
+let chai, sinon, expect;
 chai = require('chai');
 chai.use(require('chai-spies'));
 sinon = require('sinon');
 expect = chai.expect;
 
-var Humanoid, gameSettings, Pathfinder;
+let Humanoid, gameSettings, Pathfinder;
 
 Humanoid = require('humanoids/humanoid');
 gameSettings = require('settings');
 Pathfinder = require('pathfinder');
 
 describe('Humanoid', function(){
-  var humanoid, humanoid2;
+  let humanoid, humanoid2;
   describe('A humanoid', function(){
     beforeEach(function(){
       humanoid = new Humanoid({id: 0});
@@ -25,11 +24,6 @@ describe('Humanoid', function(){
 
     it('should have a default lastPosition equal to position', function(){
       expect(humanoid.lastPosition).to.eql(humanoid.position);
-    });
-
-    // move to zombie
-    xit('should have a timeSinceInfection equal to 0', function(){
-      expect(human.timeSinceInfection).to.equal(0);
     });
 
     describe('#closeProps', function(){
@@ -67,7 +61,7 @@ describe('Humanoid', function(){
     });
 
     describe('#storeLastPosition', function(){
-      var newPosition = {x: 15, y: 10};
+      let newPosition = {x: 15, y: 10};
       beforeEach(function(){
         humanoid.position = newPosition;
         humanoid.storeLastPosition();
@@ -80,47 +74,13 @@ describe('Humanoid', function(){
 
     describe('#isLastMoveRepeated', function(){
       it('should return true for close positions', function(){
-        var closePosition = {x: humanoid.position.x + 0.01, y: humanoid.position.y + 0.01};
+        let closePosition = {x: humanoid.position.x + 0.01, y: humanoid.position.y + 0.01};
         expect(humanoid.isLastMoveRepeated(closePosition)).to.equal(true);
       });
 
       it('should return false for distant positions', function(){
-        var distantPosition = {x: 10, y: 20};
+        let distantPosition = {x: 10, y: 20};
         expect(humanoid.isLastMoveRepeated(distantPosition)).to.equal(false);
-      });
-    });
-
-    xdescribe('#turnToZombie', function(){
-      beforeEach(function(){
-        human.turnToZombie();
-      });
-      it('should change the humanoid type to zombie', function(){
-        expect(human.humanType).to.equal('zombie');
-      });
-
-      it('should change the speed to 5', function(){
-        expect(human.speed).to.equal(gameSettings.zombieSpeed);
-      });
-    });
-
-    xdescribe('#incrementTimeSinceInfection',function(){
-      it('should increase the timeSinceInfection', function(){
-        infected.incrementTimeSinceInfection();
-        expect(infected.timeSinceInfection).to.equal(1);
-      });
-
-      it('should not call turnToZombie if timeSinceInfection is not 4', function(){
-        chai.spy.on(infected, 'turnToZombie');
-        infected.timeSinceInfection = 0;
-        infected.incrementTimeSinceInfection();
-        expect(infected.turnToZombie).to.not.have.been.called();
-      });
-
-      it('should call turnToZombie if timeSinceInfection is 4', function(){
-        chai.spy.on(infected, 'turnToZombie');
-        infected.timeSinceInfection = 4;
-        infected.incrementTimeSinceInfection();
-        expect(infected.turnToZombie).to.have.been.called();
       });
     });
 

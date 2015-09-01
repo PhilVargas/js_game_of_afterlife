@@ -1,16 +1,15 @@
-require('babel/register');
-var chai, expect;
+let chai, expect;
 chai = require('chai');
 expect = chai.expect;
 
-var Pathfinder;
+let Pathfinder;
 
 Pathfinder = require('pathfinder');
 
 describe('Pathfinder', function(){
 
   describe('#distanceTo', function(){
-    var coord1, coord2;
+    let coord1, coord2;
     beforeEach(function(){
       coord1 = { x:0, y:0 };
       coord2 = { x:1, y:1 };

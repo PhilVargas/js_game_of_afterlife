@@ -1,5 +1,4 @@
-require('babel/register');
-var chai, expect, spies, Human, Zombie, Player, Board;
+let chai, expect, Human, Zombie, Player, Board;
 chai = require('chai');
 expect = chai.expect;
 
@@ -9,7 +8,7 @@ Zombie = require('../public/js/game/humanoids/zombie');
 Board = require('../public/js/game/board');
 
 describe('Board', function(){
-  var human, human2, player, zombie, board;
+  let human, human2, player, zombie, board;
 
   describe('A board', function(){
     beforeEach(function(){
@@ -215,8 +214,7 @@ describe('Board', function(){
 
     context('when there is no humanoid on target position', function(){
       it('returns true', function(){
-        var targetPosition = {x: 10, y: 20};
-        expect(board.isValidDestination(targetPosition)).to.equal(true);
+        expect(board.isValidDestination({x: 10, y: 20})).to.equal(true);
       });
     });
   });

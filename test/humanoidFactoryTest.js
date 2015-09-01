@@ -1,5 +1,4 @@
-require('babel/register');
-var chai, expect, spies, HumanoidBuilder;
+let chai, expect, spies, HumanoidBuilder;
 chai = require('chai');
 spies = require('chai-spies');
 chai.use(spies);
