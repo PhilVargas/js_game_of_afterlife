@@ -14,11 +14,11 @@ Pathfinder = require('pathfinder');
 describe('InfectedHuman', function(){
   var zombie, infected;
 
-  describe('An infectedHuman', function(){
-    beforeEach(function(){
-      infected = new Infected({id: 0});
-    });
+  beforeEach(function(){
+    infected = new Infected({id: 0});
+  });
 
+  describe('An infectedHuman', function(){
     it('is an InfectedHuman `#humanType`', function(){
       expect(infected.humanType).to.equal('InfectedHuman');
     });
@@ -28,7 +28,7 @@ describe('InfectedHuman', function(){
     });
 
     it('has a `timeSinceInfection` of 0', function(){
-      expect(infected.speed).to.equal(0);
+      expect(infected.timeSinceInfection).to.equal(0);
     });
   });
 
