@@ -38,6 +38,14 @@ describe('Human', function(){
     it('returns an instance of InfectedHuman', function(){
       expect(human.transform()).to.be.an.instanceOf(InfectedHuman);
     });
+
+    it('returns an instance of InfectedHuman with the same position as the human', function(){
+      expect(human.transform().position).to.eql(human.position);
+    });
+
+    it('returns an instance of InfectedHuman with the same id as the human', function(){
+      expect(human.transform().id).to.equal(human.id);
+    });
   });
 
   describe('#handleNextMove', function(){
