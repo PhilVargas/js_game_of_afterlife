@@ -48,6 +48,28 @@ describe('Human', function(){
     });
   });
 
+  describe('#isValidDestination', function(){
+    context('when target destination is not identical to a position', function(){
+      it('returns true', function(){
+        expect(
+          human.isValidDestination(
+            [{position: { x: 0, y: 0 }}, {position: {x: 1, y: 1}}], {x: 0, y: 1}
+          )
+        ).to.equal(true);
+      });
+    });
+
+    context('when target destination is identical to a position', function(){
+      it('returns false', function(){
+        expect(
+          human.isValidDestination(
+            [{position: { x: 0, y: 0 }}, {position: {x: 1, y: 1}}], {x: 0, y: 0}
+          )
+        ).to.equal(false);
+      });
+    });
+  });
+
   describe('#handleNextMove', function(){
     let opts, destination;
     afterEach(function(){
