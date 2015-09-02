@@ -10,6 +10,7 @@ class Board {
     this.dx = 0;
     this.dy = 0;
     this.humanoids = attributes.humanoids || [];
+    // TODO extract height and width out to game settings
     this.width = attributes.width  || 600;
     this.height = attributes.height || 400;
   }
@@ -60,6 +61,7 @@ class Board {
     this.incrementScore();
   }
 
+  //TODO extract out to pathfinder, extract width and height to settings
   getRelativePosition(position) {
     let x,y;
     x = ( (position.x + this.width) % this.width );
