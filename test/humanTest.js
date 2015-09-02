@@ -3,9 +3,10 @@ chai = require('chai');
 sinon = require('sinon');
 expect = chai.expect;
 
-let Human, gameSettings, Pathfinder;
+let Human, InfectedHuman, gameSettings, Pathfinder;
 
 Human = require('humanoids/human');
+InfectedHuman = require('humanoids/infectedHuman');
 gameSettings = require('settings');
 Pathfinder = require('pathfinder');
 
@@ -29,6 +30,12 @@ describe('Human', function(){
   describe('#isAbleToBite', function(){
     it('is always false', function(){
       expect(human.isAbleToBite()).to.equal(false);
+    });
+  });
+
+  describe('#transform', function(){
+    it('returns an instance of InfectedHuman', function(){
+      expect(human.transform()).to.be.an.instanceOf(InfectedHuman);
     });
   });
 });
