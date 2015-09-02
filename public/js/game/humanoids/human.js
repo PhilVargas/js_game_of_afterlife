@@ -40,6 +40,7 @@ class Human extends Humanoid {
     });
   }
 
+  // TODO refactor into `isZombieNearest` methods, that receive nearestZombie, player, nearestHuman`
   getNextDestination(nearestHuman, nearestZombie, player){
     let playerDistance, humanDistance, zombieDistance;
     playerDistance = Number.POSITIVE_INFINITY;

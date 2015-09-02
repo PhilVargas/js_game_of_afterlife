@@ -84,12 +84,14 @@ describe('Zombie', function(){
     });
   });
 
-  describe('#getNextDestination', function(){
-
+  xdescribe('#getNextDestination', function(){
+    it('tests the refactored method', function(){
+    });
   });
 
-  describe('#handleNextMove', function(){
-
+  xdescribe('#handleNextMove', function(){
+    it('tests the refactored method', function(){
+    });
   });
 });
 

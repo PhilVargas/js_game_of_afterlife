@@ -113,4 +113,9 @@ describe('Human', function(){
       });
     });
   });
+
+  xdescribe('#getNextDestination', function(){
+    it('tests the refactored method', function(){
+    });
+  });
 });
