@@ -4,7 +4,8 @@
   "description": "Conway's game of life - zombie edition",
   "main": "bundle.js",
   "scripts": {
-    "test": "NODE_PATH=./public/js/game:./node_modules mocha --compilers js:mocha-traceur"
+    "test": "NODE_PATH=./public/js/game:./node_modules mocha --compilers js:mocha-traceur",
+    "watch:test": "NODE_PATH=./public/js/game:./node_modules mocha --compilers js:mocha-traceur -wb -R min"
   },
   "repository": {
     "type": "git",
