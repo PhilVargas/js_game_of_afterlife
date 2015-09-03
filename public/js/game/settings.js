@@ -1,4 +1,6 @@
-let gameSettings = {
+let gameSettings;
+
+gameSettings = {
   humanSpeed: 7,
   playerSpeed: 6,
   zombieSpeed: 4,

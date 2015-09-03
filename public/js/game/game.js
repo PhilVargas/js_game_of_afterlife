@@ -61,7 +61,7 @@ class GameOfAfterlife {
   callNextTurn(){
     let delay, nextRequest;
 
-    nextRequest = ()=> {
+    nextRequest = () => {
       this.drawHumanoids();
       if (this.board.isGameActive()){
         document.getElementById('score').innerHTML = this.board.score;
