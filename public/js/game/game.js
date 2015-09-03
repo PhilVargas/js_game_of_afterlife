@@ -1,4 +1,5 @@
 let Board, HumanoidBuilder, gameSettings;
+
 Board = require('board');
 HumanoidBuilder = require('humanoidFactory');
 gameSettings = require('settings');
@@ -6,13 +7,14 @@ gameSettings = require('settings');
 class GameOfAfterlife {
   constructor(){
     let canvas, allHumanoids;
+
     canvas = document.getElementsByTagName('canvas')[0];
-    allHumanoids = HumanoidBuilder.populate(gameSettings.humanCount , gameSettings.zombieCount);
+    allHumanoids = HumanoidBuilder.populate(gameSettings.humanCount, gameSettings.zombieCount);
     this.hasBegun = false;
     this.width = canvas.width;
     this.height = canvas.height;
     this.ctx = canvas.getContext('2d');
-    this.board = new Board({humanoids: allHumanoids, width: this.width, height: this.height});
+    this.board = new Board({ humanoids: allHumanoids, width: this.width, height: this.height });
     this.humanoidColorMap = {
       Human: '#00aaaa',
       Zombie: '#ff0000',
@@ -22,7 +24,7 @@ class GameOfAfterlife {
   }
 
   bindPlayerMovement(){
-    document.addEventListener('keyup', (e) =>{
+    document.addEventListener('keyup', (e) => {
       // s = 83
       // w = 87
       // a = 65
@@ -31,7 +33,7 @@ class GameOfAfterlife {
       if (e.which === 83 || e.which === 87){ this.board.dy = 0; }
     });
 
-    document.addEventListener('keydown', (e) =>{
+    document.addEventListener('keydown', (e) => {
       if (e.which === 65){ this.board.dx = -1; }
       else if (e.which === 68){ this.board.dx = 1; }
       else if (e.which === 87){ this.board.dy = -1; }
@@ -42,13 +44,14 @@ class GameOfAfterlife {
 
   drawHumanoids(){
     let player, x, y;
-    this.ctx.clearRect(0,0,this.width,this.height);
+
+    this.ctx.clearRect(0, 0, this.width, this.height);
     for (let i = 0; i < this.board.humanoids.length; i++){
       this.ctx.beginPath();
       player = this.board.humanoids[i];
       x = player.position.x;
       y = player.position.y;
-      this.ctx.arc(x,y,5,0,2*Math.PI);
+      this.ctx.arc(x, y, 5, 0, 2 * Math.PI);
       this.ctx.fillStyle = this.humanoidColorMap[player.humanType];
       this.ctx.fill();
       this.ctx.stroke();
@@ -57,6 +60,7 @@ class GameOfAfterlife {
 
   callNextTurn(){
     let delay, nextRequest;
+
     nextRequest = ()=> {
       this.drawHumanoids();
       if (this.board.isGameActive()){
