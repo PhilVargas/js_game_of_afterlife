@@ -1,17 +1,16 @@
-let Pathfinder, gameSettings;
+let Pathfinder;
 
 Pathfinder = require('pathfinder');
-gameSettings = require('settings');
 
 class Board {
-  constructor( attributes ){
+  constructor(attributes){
     this.humanoid = null;
     this.score = 0;
     this.dx = 0;
     this.dy = 0;
     this.humanoids = attributes.humanoids || [];
     // TODO extract height and width out to game settings
-    this.width = attributes.width  || 600;
+    this.width = attributes.width || 600;
     this.height = attributes.height || 400;
   }
 
@@ -27,26 +26,27 @@ class Board {
     });
   }
 
-  isPositionEqual( position1, position2 ){
+  isPositionEqual(position1, position2){
     return position1.x === position2.x && position1.y === position2.y;
   }
 
-  isValidDestination( targetPosition ){
+  isValidDestination(targetPosition){
     return !this.humanoids.some((humanoid) => {
       return this.isPositionEqual(humanoid.position, targetPosition);
     });
   }
 
-  nearestHumanoid( humanoidType ){
+  nearestHumanoid(humanoidType){
     let similarHumanoids, closestPos, closestHumanoid;
-    similarHumanoids = this.findSimilarHumanoids( humanoidType );
-    closestPos = this.findClosestPos( similarHumanoids );
-    closestHumanoid = this.findClosestHumanoid( closestPos, similarHumanoids );
+
+    similarHumanoids = this.findSimilarHumanoids(humanoidType);
+    closestPos = this.findClosestPos(similarHumanoids);
+    closestHumanoid = this.findClosestHumanoid(closestPos, similarHumanoids);
     return closestHumanoid;
   }
 
   nextTurn(){
-    for( let i=0; i< this.humanoids.length; i++ ){
+    for(let i = 0; i < this.humanoids.length; i++){
       this.humanoid = this.humanoids[i];
       this.humanoid.handleNextMove({
         nearestHuman: this.nearestHumanoid('Human'),
@@ -63,10 +63,11 @@ class Board {
 
   //TODO extract out to pathfinder, extract width and height to settings
   getRelativePosition(position) {
-    let x,y;
-    x = ( (position.x + this.width) % this.width );
-    y = ( (position.y + this.height) % this.height );
-    return {x, y};
+    let x, y;
+
+    x = ((position.x + this.width) % this.width);
+    y = ((position.y + this.height) % this.height);
+    return { x, y };
   }
 
   incrementScore(){
@@ -79,27 +80,29 @@ class Board {
     });
   }
 
-  findSimilarHumanoids( humanoidType ){
+  findSimilarHumanoids(humanoidType){
     return this.otherHumanoids().filter(function(humanoid){
       return humanoid.humanType === humanoidType;
     });
   }
 
-  findClosestPos( otherHumanoids ){
+  findClosestPos(otherHumanoids){
     let closestPos, dist;
+
     closestPos = [];
-    for( let i=0; i< otherHumanoids.length; i++ ){
-      dist = Pathfinder.distanceTo( otherHumanoids[i].position, this.humanoid.position );
-      closestPos.push( dist );
+    for(let i = 0; i < otherHumanoids.length; i++){
+      dist = Pathfinder.distanceTo(otherHumanoids[i].position, this.humanoid.position);
+      closestPos.push(dist);
     }
     return closestPos;
   }
 
-  findClosestHumanoid( closestPos, otherHumanoids ){
+  findClosestHumanoid(closestPos, otherHumanoids){
     let closestHumanoidValue, closestHumanoid;
-    closestHumanoidValue = Math.min.apply( null, closestPos );
-    for( let i=0; i < closestPos.length; i++ ){
-      if( closestPos[i] === closestHumanoidValue ){ closestHumanoid = otherHumanoids[i];}
+
+    closestHumanoidValue = Math.min.apply(null, closestPos);
+    for(let i = 0; i < closestPos.length; i++){
+      if(closestPos[i] === closestHumanoidValue){ closestHumanoid = otherHumanoids[i]; }
     }
     return closestHumanoid;
   }
