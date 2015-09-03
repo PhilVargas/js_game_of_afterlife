@@ -1,9 +1,8 @@
-let Pathfinder, gameSettings, Humanoid, InfectedHuman;
+let Pathfinder, gameSettings, Humanoid;
 
 gameSettings = require('settings');
 Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
-InfectedHuman = require('humanoids/infectedHuman');
 
 class Zombie extends Humanoid {
   constructor(opts) {
@@ -13,7 +12,7 @@ class Zombie extends Humanoid {
 
   isAbleToBite(human){
     return (
-      human && Pathfinder.distanceTo( human.position, this.position ) < gameSettings.zombieBiteRange
+      human && Pathfinder.distanceTo(human.position, this.position) < gameSettings.zombieBiteRange
     );
   }
 
@@ -29,48 +28,50 @@ class Zombie extends Humanoid {
 
   getNextDestination(nearestHuman, nearestZombie, player){
     let playerDistance, humanDistance, zombieDistance;
+
     playerDistance = Number.POSITIVE_INFINITY;
     humanDistance = Number.POSITIVE_INFINITY;
     zombieDistance = Number.POSITIVE_INFINITY;
     if (nearestZombie){
       zombieDistance = (
-        Pathfinder.distanceTo( nearestZombie.position, this.position ) *
+        Pathfinder.distanceTo(nearestZombie.position, this.position) *
         gameSettings.zombieSpread
       );
     }
     if (player){
-      playerDistance = Pathfinder.distanceTo( player.position, this.position );
+      playerDistance = Pathfinder.distanceTo(player.position, this.position);
     }
     if (nearestHuman){
-      humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.position );
+      humanDistance = Pathfinder.distanceTo(nearestHuman.position, this.position);
     }
 
-    if ( playerDistance < humanDistance ){
-      if ( playerDistance < zombieDistance ){
-        return this.moveNearest( player );
+    if (playerDistance < humanDistance){
+      if (playerDistance < zombieDistance){
+        return this.moveNearest(player);
       } else {
-        return this.moveNearest( nearestZombie );
+        return this.moveNearest(nearestZombie);
       }
-    } else if ( humanDistance < zombieDistance ){
-      return this.moveNearest( nearestHuman );
+    } else if (humanDistance < zombieDistance){
+      return this.moveNearest(nearestHuman);
     } else {
-      return this.moveNearest( nearestZombie );
+      return this.moveNearest(nearestZombie);
     }
   }
 
   handleNextMove(opts){
     let destination;
-    let { nearestHuman, nearestZombie, player, humanoids, getRelativePosition} = opts;
-    if ( this.isAbleToBite( player ) ){
+    let { nearestHuman, nearestZombie, player, humanoids, getRelativePosition } = opts;
+
+    if (this.isAbleToBite(player)){
       humanoids[player.id] = player.transform();
     }
-    if ( this.isAbleToBite( nearestHuman ) ){
+    if (this.isAbleToBite(nearestHuman)){
       humanoids[nearestHuman.id] = nearestHuman.transform();
     }
     destination = getRelativePosition(
       this.getNextDestination(nearestHuman, nearestZombie, player)
     );
-    if ( this.isValidDestination(humanoids, destination) ) {
+    if (this.isValidDestination(humanoids, destination)) {
       this.position = destination;
     }
   }

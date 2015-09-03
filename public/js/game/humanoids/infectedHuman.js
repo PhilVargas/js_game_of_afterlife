@@ -1,7 +1,5 @@
-let Pathfinder, gameSettings, Humanoid, Zombie;
+let Humanoid, Zombie;
 
-gameSettings = require('settings');
-Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
 Zombie = require('humanoids/zombie');
 
@@ -28,6 +26,7 @@ class InfectedHuman extends Humanoid {
 
   handleNextMove(opts){
     let { humanoids } = opts;
+
     this.incrementTimeSinceInfection();
     if (this.timeSinceInfection >= 5){
       humanoids[this.id] = this.transform();

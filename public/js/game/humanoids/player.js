@@ -24,11 +24,12 @@ class Player extends Humanoid {
   handleNextMove(opts){
     let targetLoc, coords;
     let { dx, dy, getRelativePosition } = opts;
+
     targetLoc = {
-      x: this.position.x + dx*this.speed,
-      y: this.position.y + dy*this.speed
+      x: this.position.x + dx * this.speed,
+      y: this.position.y + dy * this.speed
     };
-    coords = ( Pathfinder.moveTowards(this.position, targetLoc, this.speed) );
+    coords = (Pathfinder.moveTowards(this.position, targetLoc, this.speed));
     this.position = getRelativePosition(coords);
   }
 }

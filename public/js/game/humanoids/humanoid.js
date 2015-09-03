@@ -7,7 +7,7 @@ class Humanoid {
   constructor(attributes){
     this.id = attributes.id;
     this.position = attributes.position ||
-      { x: (5+ Math.floor(Math.random()*591)), y: (5+ Math.floor(Math.random()*391)) };
+      { x: (5 + Math.floor(Math.random() * 591)), y: (5 + Math.floor(Math.random() * 391)) };
     this.lastPosition = { x: this.position.x, y: this.position.y };
     this.humanType = this.constructor.name;
   }
@@ -37,7 +37,7 @@ class Humanoid {
   }
 
   storeLastPosition(){
-    this.lastPosition = {x: this.position.x, y: this.position.y};
+    this.lastPosition = { x: this.position.x, y: this.position.y };
   }
 
   isLastMoveRepeated(potentialMove){
@@ -49,6 +49,7 @@ class Humanoid {
 
   moveNearest(nearestObject){
     let potentialMove;
+
     if (this.isAttractedTo(nearestObject)){
       potentialMove = Pathfinder.moveTowards(this.position, nearestObject.position, this.speed);
     } else {

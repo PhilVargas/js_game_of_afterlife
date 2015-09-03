@@ -23,12 +23,13 @@ class Human extends Humanoid {
 
   handleNextMove(opts){
     let destination;
-    let { nearestHuman, nearestZombie, player, humanoids, getRelativePosition} = opts;
+    let { nearestHuman, nearestZombie, player, humanoids, getRelativePosition } = opts;
+
     // TODO extract get relative position to pathfinder, use settings for board width/height
     destination = getRelativePosition(
       this.getNextDestination(nearestHuman, nearestZombie, player)
     );
-    if ( this.isValidDestination(humanoids, destination) ) {
+    if (this.isValidDestination(humanoids, destination)) {
       this.position = destination;
     }
   }
@@ -43,22 +44,23 @@ class Human extends Humanoid {
   // TODO refactor into `isZombieNearest` methods, that receive nearestZombie, player, nearestHuman`
   getNextDestination(nearestHuman, nearestZombie, player){
     let playerDistance, humanDistance, zombieDistance;
+
     playerDistance = Number.POSITIVE_INFINITY;
     humanDistance = Number.POSITIVE_INFINITY;
-    zombieDistance = Pathfinder.distanceTo( nearestZombie.position, this.position );
+    zombieDistance = Pathfinder.distanceTo(nearestZombie.position, this.position);
     if (player){
-      playerDistance = Pathfinder.distanceTo( player.position, this.position );
+      playerDistance = Pathfinder.distanceTo(player.position, this.position);
     }
     if (nearestHuman){
-      humanDistance = Pathfinder.distanceTo( nearestHuman.position, this.position );
+      humanDistance = Pathfinder.distanceTo(nearestHuman.position, this.position);
     }
 
-    if ( zombieDistance < gameSettings.humanFearRange || ( !player && !nearestHuman ) ){
-      return this.moveNearest( nearestZombie );
-    } else if ( playerDistance < humanDistance ){
-      return this.moveNearest( player );
+    if (zombieDistance < gameSettings.humanFearRange || (!player && !nearestHuman)){
+      return this.moveNearest(nearestZombie);
+    } else if (playerDistance < humanDistance){
+      return this.moveNearest(player);
     } else {
-      return this.moveNearest( nearestHuman );
+      return this.moveNearest(nearestHuman);
     }
   }
 }
