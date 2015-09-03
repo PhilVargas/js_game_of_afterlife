@@ -1,25 +1,26 @@
 let chai, sinon, expect;
+
 chai = require('chai');
 chai.use(require('chai-spies'));
 sinon = require('sinon');
 expect = chai.expect;
 
-let Humanoid, gameSettings, Pathfinder;
+let Humanoid, Pathfinder;
 
 Humanoid = require('humanoids/humanoid');
-gameSettings = require('settings');
 Pathfinder = require('pathfinder');
 
 describe('Humanoid', function(){
   let humanoid, humanoid2;
+
   describe('A humanoid', function(){
     beforeEach(function(){
-      humanoid = new Humanoid({id: 0});
-      humanoid2 = new Humanoid({id: 0});
+      humanoid = new Humanoid({ id: 0 });
+      humanoid2 = new Humanoid({ id: 0 });
     });
 
     it('should have a default position', function(){
-      expect(humanoid.position).to.be.defined;
+      expect(humanoid.position).to.not.be.undefined();
     });
 
     it('should have a default lastPosition equal to position', function(){
@@ -29,7 +30,7 @@ describe('Humanoid', function(){
     describe('#closeProps', function(){
       it('returns an object with `id`, `position`, and `lastPosition`', function(){
         expect(humanoid.cloneProps()).to.eql(
-          {id: humanoid.id, position: humanoid.position, lastPosition: humanoid.lastPosition}
+          { id: humanoid.id, position: humanoid.position, lastPosition: humanoid.lastPosition }
         );
       });
     });

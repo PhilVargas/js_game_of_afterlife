@@ -1,22 +1,20 @@
-let chai, sinon, expect;
+let chai, expect;
+
 chai = require('chai');
 chai.use(require('chai-changes'));
 chai.use(require('chai-spies'));
-sinon = require('sinon');
 expect = chai.expect;
 
-let Zombie, Infected, gameSettings, Pathfinder;
+let Zombie, Infected;
 
 Infected = require('humanoids/infectedHuman');
 Zombie = require('humanoids/zombie');
-gameSettings = require('settings');
-Pathfinder = require('pathfinder');
 
 describe('InfectedHuman', function(){
   let infected;
 
   beforeEach(function(){
-    infected = new Infected({id: 0});
+    infected = new Infected({ id: 0 });
   });
 
   describe('An infectedHuman', function(){
@@ -64,15 +62,17 @@ describe('InfectedHuman', function(){
     });
 
     it('calls `incrementTimeSinceInfection`', function(){
-      infected.handleNextMove({humanoids: []});
+      infected.handleNextMove({ humanoids: [] });
       expect(infected.incrementTimeSinceInfection).to.have.been.called();
     });
 
     context('when the `timeSinceInfection` is greater than or equal to `5`', function(){
-      let humanoids = [];
+      let humanoids;
+
       beforeEach(function(){
+        humanoids = [];
         infected.timeSinceInfection = 5;
-        infected.handleNextMove({humanoids: humanoids});
+        infected.handleNextMove({ humanoids });
       });
 
       it('calls `transform`', function(){

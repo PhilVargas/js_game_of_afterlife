@@ -1,4 +1,5 @@
 let chai, sinon, expect;
+
 chai = require('chai');
 sinon = require('sinon');
 expect = chai.expect;
@@ -12,9 +13,10 @@ Pathfinder = require('pathfinder');
 
 describe('Zombie', function(){
   let zombie, human;
+
   describe('A zombie', function(){
     beforeEach(function(){
-      zombie = new Zombie({id: 0, position: {x: 25, y: 25}});
+      zombie = new Zombie({ id: 0, position: { x: 25, y: 25 } });
     });
 
     it('is a Zombie `#humanType`', function(){
@@ -28,7 +30,7 @@ describe('Zombie', function(){
 
   describe('#isAbleToBite', function(){
     beforeEach(function(){
-      human = new Human({id: 1});
+      human = new Human({ id: 1 });
     });
 
     afterEach(function(){
@@ -67,7 +69,7 @@ describe('Zombie', function(){
       it('returns true', function(){
         expect(
           zombie.isValidDestination(
-            [{position: { x: 0, y: 0 }}, {position: {x: 1, y: 1}}], {x: 0, y: 1}
+            [{ position: { x: 0, y: 0 } }, { position: { x: 1, y: 1 } }], { x: 0, y: 1 }
           )
         ).to.equal(true);
       });
@@ -77,7 +79,7 @@ describe('Zombie', function(){
       it('returns false', function(){
         expect(
           zombie.isValidDestination(
-            [{position: { x: 0, y: 0 }}, {position: {x: 1, y: 1}}], {x: 0, y: 0}
+            [{ position: { x: 0, y: 0 } }, { position: { x: 1, y: 1 } }], { x: 0, y: 0 }
           )
         ).to.equal(false);
       });
