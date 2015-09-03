@@ -1,6 +1,7 @@
 class Pathfinder {
   static moveTowards(currentPosition, friendlyLocation, speed){
     let deltaY, deltaX, length;
+
     deltaY = friendlyLocation.y - currentPosition.y;
     deltaX = friendlyLocation.x - currentPosition.x;
     length = this.distanceTo(friendlyLocation, currentPosition);
@@ -20,6 +21,7 @@ class Pathfinder {
 
   static movePerpendicularTo(currentPosition, friendlyLocation, speed){
     let deltaY, deltaX, length;
+
     deltaY = friendlyLocation.y - currentPosition.y;
     deltaX = friendlyLocation.x - currentPosition.x;
     length = this.distanceTo(friendlyLocation, currentPosition);
@@ -35,13 +37,15 @@ class Pathfinder {
 
   static distanceTo(targetLocation, currentPosition){
     let deltaY, deltaX;
+
     deltaY = targetLocation.y - currentPosition.y;
     deltaX = targetLocation.x - currentPosition.x;
-    return Math.sqrt(Math.pow(deltaY,2) + Math.pow(deltaX,2));
+    return Math.sqrt(Math.pow(deltaY, 2) + Math.pow(deltaX, 2));
   }
 
   static moveRandomly(currentPosition, speed){
     let angle;
+
     angle = Math.random() * 2 * Math.PI;
     return {
       x: (currentPosition.x + Math.cos(angle) * speed),
