@@ -36,8 +36,7 @@ class Human extends Humanoid {
 
   isValidDestination(humanoids, targetPosition) {
     return !humanoids.some((humanoid) => {
-      // TODO extract this comparison out to pathfinder
-      return humanoid.position.x === targetPosition.x && humanoid.position.y === targetPosition.y;
+      return Pathfinder.arePositionsEqual(humanoid.position, targetPosition);
     });
   }
 

@@ -76,19 +76,6 @@ describe('Board', function(){
     });
   });
 
-  describe('#isPositionEqual', function(){
-    beforeEach(function(){
-      board = new Board({ humanoids: [], height: 400, width: 600 });
-    });
-    it('returns true for equal positions', function(){
-      expect(board.isPositionEqual({ x: 0, y: 0 }, { x: 0, y: 0 })).to.equal(true);
-    });
-
-    it('returns false for unequal positions', function(){
-      expect(board.isPositionEqual({ x: 0, y: 0 }, { x: 1, y: 1 })).to.equal(false);
-    });
-  });
-
   describe('#getRelativePosition', function(){
     beforeEach(function(){
       board = new Board({ humanoids: [], height: 400, width: 600 });

@@ -21,4 +21,18 @@ describe('Pathfinder', function(){
       expect(Pathfinder.distanceTo(coord1, coord2)).to.equal(Math.sqrt(2));
     });
   });
+
+  describe('::arePositionsEqual', function(){
+    context('comparing two unequal positions', function(){
+      it('returns false', function(){
+        expect(Pathfinder.arePositionsEqual({ x: 10, y: 10 }, { x: 5, y: 5 })).to.equal(false);
+      });
+    });
+
+    context('comparing two equal positions', function(){
+      it('returns true', function(){
+        expect(Pathfinder.arePositionsEqual({ x: 5, y: 5 }, { x: 5, y: 5 })).to.equal(true);
+      });
+    });
+  });
 });

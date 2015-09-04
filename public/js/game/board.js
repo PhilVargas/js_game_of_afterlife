@@ -26,13 +26,9 @@ class Board {
     });
   }
 
-  isPositionEqual(position1, position2){
-    return position1.x === position2.x && position1.y === position2.y;
-  }
-
   isValidDestination(targetPosition){
     return !this.humanoids.some((humanoid) => {
-      return this.isPositionEqual(humanoid.position, targetPosition);
+      return Pathfinder.arePositionsEqual(humanoid.position, targetPosition);
     });
   }
 
