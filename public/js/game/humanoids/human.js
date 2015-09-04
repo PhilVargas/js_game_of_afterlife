@@ -23,10 +23,10 @@ class Human extends Humanoid {
 
   handleNextMove(opts){
     let destination;
-    let { nearestHuman, nearestZombie, player, humanoids } = opts;
+    let { nearestHumanoid, nearestZombie, humanoids } = opts;
 
     destination = Pathfinder.getRelativePosition(
-      this.getNextDestination(nearestHuman, nearestZombie, player)
+      this.getNextDestination(nearestHumanoid, nearestZombie)
     );
     if (this.isValidDestination(humanoids, destination)) {
       this.position = destination;
@@ -39,34 +39,15 @@ class Human extends Humanoid {
     });
   }
 
-  getNextDestination(nearestHuman, nearestZombie, player){
-    if (this.isZombieNearest(nearestZombie, nearestHuman, player)){
+  getNextDestination(nearestHumanoid, nearestZombie){
+    if (this.isZombieNearest(nearestZombie, nearestHumanoid)){
       return this.moveNearest(nearestZombie);
-    } else if (this.isPlayerNearest(player, nearestHuman)){
-      return this.moveNearest(player);
     } else {
-      return this.moveNearest(nearestHuman);
+      return this.moveNearest(nearestHumanoid);
     }
   }
 
-  isPlayerNearest(player, nearestHuman) {
-    let playerDistance, humanDistance;
-
-    playerDistance = Number.POSITIVE_INFINITY;
-    humanDistance = Number.POSITIVE_INFINITY;
-
-    if (player){
-      playerDistance = Pathfinder.distanceTo(player.position, this.position);
-    }
-
-    if (nearestHuman){
-      humanDistance = Pathfinder.distanceTo(nearestHuman.position, this.position);
-    }
-
-    return playerDistance < humanDistance;
-  }
-
-  isZombieNearest(nearestZombie, nearestHuman, player) {
+  isZombieNearest(nearestZombie, nearestHumanoid) {
     let zombieDistance;
 
     if (nearestZombie) {
@@ -74,7 +55,7 @@ class Human extends Humanoid {
     }
 
     // a zombie is within the human fear range, or there are no other living humanoids remaining
-    return (zombieDistance < gameSettings.humanFearRange || (!player && !nearestHuman));
+    return (zombieDistance < gameSettings.humanFearRange || (!nearestHumanoid));
   }
 }
 

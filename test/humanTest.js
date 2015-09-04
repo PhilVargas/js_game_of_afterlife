@@ -119,54 +119,6 @@ describe('Human', function(){
     });
   });
 
-  describe('#isPlayerNearest', function(){
-    let player, otherHuman;
-
-    beforeEach(function(){
-      player = new Player({ id: 2 });
-      otherHuman = new Human({ id: 3 });
-    });
-
-    context('when there is no `nearestHuman` or `player`', function(){
-      it('always returns false', function(){
-        expect(human.isPlayerNearest()).to.equal(false);
-      });
-    });
-
-    context('when the human is closer', function(){
-      beforeEach(function(){
-        sinon.stub(Pathfinder, 'distanceTo');
-        Pathfinder.distanceTo.withArgs(player.position, human.position).returns(10);
-        Pathfinder.distanceTo.withArgs(otherHuman.position, human.position).returns(1);
-      });
-
-      afterEach(function(){
-        Pathfinder.distanceTo.restore();
-      });
-
-      it('returns false', function(){
-        expect(human.isPlayerNearest(player, otherHuman)).to.equal(false);
-      });
-    });
-
-    context('when the player is closer', function(){
-      beforeEach(function(){
-        sinon.stub(Pathfinder, 'distanceTo');
-        Pathfinder.distanceTo.withArgs(player.position, human.position).returns(1);
-        Pathfinder.distanceTo.withArgs(otherHuman.position, human.position).returns(10);
-      });
-
-      afterEach(function(){
-        Pathfinder.distanceTo.restore();
-      });
-
-      it('returns true', function(){
-        expect(human.isPlayerNearest(player, otherHuman)).to.equal(true);
-      });
-    });
-
-  });
-
   describe('#getNextDestination', function(){
     let zombie, player, otherHuman;
 
@@ -179,14 +131,12 @@ describe('Human', function(){
 
     afterEach(function(){
       human.isZombieNearest.restore();
-      human.isPlayerNearest.restore();
     });
 
     context('when a human is closests', function(){
       beforeEach(function(){
         sinon.stub(human, 'isZombieNearest').returns(false);
-        sinon.stub(human, 'isPlayerNearest').returns(false);
-        human.getNextDestination(otherHuman, zombie, player);
+        human.getNextDestination(otherHuman, zombie);
       });
 
       it('calls `moveNearest` with the human', function(){
@@ -197,8 +147,7 @@ describe('Human', function(){
     context('when a player is closests', function(){
       beforeEach(function(){
         sinon.stub(human, 'isZombieNearest').returns(false);
-        sinon.stub(human, 'isPlayerNearest').returns(true);
-        human.getNextDestination(otherHuman, zombie, player);
+        human.getNextDestination(player, zombie);
       });
 
       it('calls `moveNearest` with the player', function(){
@@ -209,8 +158,7 @@ describe('Human', function(){
     context('when a zombie is closests', function(){
       beforeEach(function(){
         sinon.stub(human, 'isZombieNearest').returns(true);
-        sinon.stub(human, 'isPlayerNearest').returns(false);
-        human.getNextDestination(otherHuman, zombie, player);
+        human.getNextDestination(otherHuman, zombie);
       });
 
       it('calls `moveNearest` with the zombie', function(){
@@ -247,21 +195,15 @@ describe('Human', function(){
         sinon.stub(Pathfinder, 'distanceTo').returns(Number.POSITIVE_INFINITY);
       });
 
-      context('when other living humanoids remain', function(){
-        it('returns false', function(){
-          expect(human.isZombieNearest(zombie, otherHuman, player)).to.equal(false);
-        });
-      });
-
       context('when the `nearestHuman` remains', function(){
         it('returns false', function(){
-          expect(human.isZombieNearest(zombie, otherHuman, null)).to.equal(false);
+          expect(human.isZombieNearest(zombie, otherHuman)).to.equal(false);
         });
       });
 
       context('when the `player` remains', function(){
         it('returns false', function(){
-          expect(human.isZombieNearest(zombie, null, player)).to.equal(false);
+          expect(human.isZombieNearest(zombie, player)).to.equal(false);
         });
       });
 
