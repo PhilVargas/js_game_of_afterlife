@@ -35,4 +35,18 @@ describe('Pathfinder', function(){
       });
     });
   });
+
+  describe('::getRelativePosition', function(){
+    context('when not exceeding the board boundries', function(){
+      it('returns the position', function(){
+        expect(Pathfinder.getRelativePosition({ x: 60, y: 40 })).to.eql({ x: 60, y: 40 });
+      });
+    });
+
+    context('when exceeding the board boundries', function(){
+      it('returns the relative board position', function(){
+        expect(Pathfinder.getRelativePosition({ x: 605, y: 410 })).to.eql({ x: 5, y: 10 });
+      });
+    });
+  });
 });

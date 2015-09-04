@@ -1,4 +1,16 @@
+let Settings;
+
+Settings = require('settings');
+
 class Pathfinder {
+  static getRelativePosition(position) {
+    let x, y;
+
+    x = ((position.x + Settings.defaultWidth) % Settings.defaultWidth);
+    y = ((position.y + Settings.defaultHeight) % Settings.defaultHeight);
+    return { x, y };
+  }
+
   static arePositionsEqual(position1, position2){
     return position1.x === position2.x && position1.y === position2.y;
   }

@@ -3,30 +3,20 @@ let chai, expect, Human, Zombie, Player, Board;
 chai = require('chai');
 expect = chai.expect;
 
-Player = require('../public/js/game/humanoids/player');
-Human = require('../public/js/game/humanoids/human');
-Zombie = require('../public/js/game/humanoids/zombie');
-Board = require('../public/js/game/board');
+Player = require('humanoids/player');
+Human = require('humanoids/human');
+Zombie = require('humanoids/zombie');
+Board = require('board');
 
 describe('Board', function(){
   let human, human2, player, zombie, board;
-
-  describe('A board', function(){
-    beforeEach(function(){
-      board = new Board({ humanoids: [], height: 400, width: 600 });
-    });
-    it('should have a standard (600x400px) canvas size', function(){
-      expect(board.height).to.equal(400);
-      expect(board.width).to.equal(600);
-    });
-  });
 
   describe('#isPlayerAlive', function(){
     context('when there is no player remaining', function(){
       beforeEach(function(){
         human = new Human({ id: 0 });
         zombie = new Zombie({ id: 1 });
-        board = new Board({ humanoids: [human, zombie], height: 400, width: 600 });
+        board = new Board({ humanoids: [human, zombie] });
       });
       it('returns false', function(){
         expect(board.isPlayerAlive()).to.equal(false);
@@ -36,7 +26,7 @@ describe('Board', function(){
       beforeEach(function(){
         player = new Player({ id: 0 });
         zombie = new Zombie({ id: 1 });
-        board = new Board({ humanoids: [player, zombie], height: 400, width: 600 });
+        board = new Board({ humanoids: [player, zombie] });
       });
       it('returns true', function(){
         expect(board.isPlayerAlive()).to.equal(true);
@@ -49,7 +39,7 @@ describe('Board', function(){
       beforeEach(function(){
         human = new Human({ id: 0 });
         zombie = new Zombie({ id: 1 });
-        board = new Board({ humanoids: [human, zombie], height: 400, width: 600 });
+        board = new Board({ humanoids: [human, zombie] });
       });
       it('returns true', function(){
         expect(board.isGameActive()).to.equal(true);
@@ -59,7 +49,7 @@ describe('Board', function(){
       beforeEach(function(){
         player = new Player({ id: 0 });
         zombie = new Zombie({ id: 1 });
-        board = new Board({ humanoids: [player, zombie], height: 400, width: 600 });
+        board = new Board({ humanoids: [player, zombie] });
       });
       it('returns true', function(){
         expect(board.isGameActive()).to.equal(true);
@@ -68,7 +58,7 @@ describe('Board', function(){
     context('when there is a human or player remaining', function(){
       beforeEach(function(){
         zombie = new Zombie({ id: 1 });
-        board = new Board({ humanoids: [zombie], height: 400, width: 600 });
+        board = new Board({ humanoids: [zombie] });
       });
       it('returns false', function(){
         expect(board.isGameActive()).to.equal(false);
@@ -76,19 +66,10 @@ describe('Board', function(){
     });
   });
 
-  describe('#getRelativePosition', function(){
-    beforeEach(function(){
-      board = new Board({ humanoids: [], height: 400, width: 600 });
-    });
-    it('returns the relative board position when exceeding the board boundries', function(){
-      expect(board.getRelativePosition({ x: 605, y: 410 })).to.eql({ x: 5, y: 10 });
-    });
-  });
-
   describe('#incrementScore', function(){
     context('when a player is not alive', function(){
       beforeEach(function(){
-        board = new Board({ humanoids: [new Human({ id: 0 })], height: 400, width: 600 });
+        board = new Board({ humanoids: [new Human({ id: 0 })] });
       });
       it('does not increment the score', function(){
         expect(board.score).to.equal(0);
@@ -99,7 +80,7 @@ describe('Board', function(){
 
     context('when a player is alive', function(){
       beforeEach(function(){
-        board = new Board({ humanoids: [new Player({ id: 0 })], height: 400, width: 600 });
+        board = new Board({ humanoids: [new Player({ id: 0 })] });
       });
       it('increments the score by 10', function(){
         expect(board.score).to.equal(0);
@@ -114,7 +95,7 @@ describe('Board', function(){
       human = new Human({ id: 0 });
       zombie = new Zombie({ id: 1 });
       human2 = new Human({ id: 2 });
-      board = new Board({ humanoids: [human, zombie, human2], height: 400, width: 600 });
+      board = new Board({ humanoids: [human, zombie, human2] });
       board.humanoid = human;
     });
     it('retrieves all humanoids excepts the current `board.humanoid`', function(){
@@ -128,7 +109,7 @@ describe('Board', function(){
       human = new Human({ id: 0 });
       zombie = new Zombie({ id: 1 });
       human2 = new Human({ id: 2 });
-      board = new Board({ humanoids: [human, zombie, human2], height: 400, width: 600 });
+      board = new Board({ humanoids: [human, zombie, human2] });
     });
 
     context('when there are no humanoids of the same humanType', function(){
@@ -161,7 +142,7 @@ describe('Board', function(){
     beforeEach(function(){
       human = new Human({ id: 0, position: { x: 0, y: 0 } });
       zombie = new Zombie({ id: 1, position: { x: 1, y: 1 } });
-      board = new Board({ humanoids: [human, zombie], height: 400, width: 600 });
+      board = new Board({ humanoids: [human, zombie] });
       board.humanoid = human;
     });
 
@@ -175,7 +156,7 @@ describe('Board', function(){
       human = new Human({ id: 0, position: { x: 0, y: 0 } });
       zombie = new Zombie({ id: 1, position: { x: 1, y: 1 } });
       player = new Player({ id: 2, position: { x: 5, y: 5 } });
-      board = new Board({ humanoids: [human, zombie, player], height: 400, width: 600 });
+      board = new Board({ humanoids: [human, zombie, player] });
       board.humanoid = human;
     });
 
@@ -190,7 +171,7 @@ describe('Board', function(){
     beforeEach(function(){
       human = new Human({ id: 0, position: { x: 100, y: 100 } });
       zombie = new Zombie({ id: 1, position: { x: 101, y: 104 } });
-      board = new Board({ humanoids: [human, zombie], height: 400, width: 600 });
+      board = new Board({ humanoids: [human, zombie] });
       board.humanoid = null;
     });
 
@@ -212,7 +193,7 @@ describe('Board', function(){
       human = new Human({ id: 0, position: { x: 100, y: 100 } });
       zombie = new Zombie({ id: 1, position: { x: 101, y: 104 } });
       human2 = new Human({ id: 2, position: { x: 101, y: 101 } });
-      board = new Board({ humanoids: [human, zombie, human2], height: 400, width: 600 });
+      board = new Board({ humanoids: [human, zombie, human2] });
       board.humanoid = null;
     });
     context('when the current `board.humanoid` is a human', function(){

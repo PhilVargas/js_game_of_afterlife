@@ -5,11 +5,12 @@ sinon = require('sinon');
 chai.use(require('chai-changes'));
 expect = chai.expect;
 
-let Human, InfectedHuman, gameSettings;
+let Human, InfectedHuman, Settings, Pathfinder;
 
 Human = require('humanoids/human');
 InfectedHuman = require('humanoids/infectedHuman');
-gameSettings = require('settings');
+Settings = require('settings');
+Pathfinder = require('pathfinder');
 
 describe('Human', function(){
   let human;
@@ -24,7 +25,7 @@ describe('Human', function(){
     });
 
     it('has a speed equal to the human speed settings', function(){
-      expect(human.speed).to.equal(gameSettings.humanSpeed);
+      expect(human.speed).to.equal(Settings.humanSpeed);
     });
   });
 
@@ -71,36 +72,37 @@ describe('Human', function(){
   });
 
   describe('#handleNextMove', function(){
-    let opts, destination;
+    let destination;
+
+    beforeEach(function(){
+      destination = { x: 5, y: 5 };
+      sinon.stub(human, 'getNextDestination');
+      sinon.stub(Pathfinder, 'getRelativePosition').returns(destination);
+    });
 
     afterEach(function(){
       human.getNextDestination.restore();
       human.isValidDestination.restore();
+      Pathfinder.getRelativePosition.restore();
     });
 
     context('when the next move is not valid', function(){
       beforeEach(function(){
-        destination = { x: 5, y: 5 };
-        sinon.stub(human, 'getNextDestination');
         sinon.stub(human, 'isValidDestination').returns(false);
-        opts = { getRelativePosition: sinon.stub().returns(destination) };
       });
 
       it('sets the `human.position` to the destination', function(){
         expect(function(){
           return human.position;
         }).to.not.change.when(function(){
-          human.handleNextMove(opts);
+          human.handleNextMove({});
         });
       });
     });
 
     context('when the next move is valid', function(){
       beforeEach(function(){
-        destination = { x: 5, y: 5 };
-        sinon.stub(human, 'getNextDestination');
         sinon.stub(human, 'isValidDestination').returns(true);
-        opts = { getRelativePosition: sinon.stub().returns(destination) };
       });
 
       it('sets the `human.position` to the destination', function(){
@@ -109,7 +111,7 @@ describe('Human', function(){
         }).to.change.to(
           destination
         ).when(function(){
-          human.handleNextMove(opts);
+          human.handleNextMove({});
         });
       });
     });

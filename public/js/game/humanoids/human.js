@@ -23,10 +23,9 @@ class Human extends Humanoid {
 
   handleNextMove(opts){
     let destination;
-    let { nearestHuman, nearestZombie, player, humanoids, getRelativePosition } = opts;
+    let { nearestHuman, nearestZombie, player, humanoids } = opts;
 
-    // TODO extract get relative position to pathfinder, use settings for board width/height
-    destination = getRelativePosition(
+    destination = Pathfinder.getRelativePosition(
       this.getNextDestination(nearestHuman, nearestZombie, player)
     );
     if (this.isValidDestination(humanoids, destination)) {

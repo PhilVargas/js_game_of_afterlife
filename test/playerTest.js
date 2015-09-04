@@ -5,12 +5,12 @@ sinon = require('sinon');
 chai.use(require('chai-changes'));
 expect = chai.expect;
 
-let Player, Infected, gameSettings, Pathfinder;
+let Player, Infected, Settings, Pathfinder;
 
 Player = require('humanoids/player');
 Infected = require('humanoids/infectedHuman');
 Pathfinder = require('pathfinder');
-gameSettings = require('settings');
+Settings = require('settings');
 
 describe('Player', function(){
   let player;
@@ -25,7 +25,7 @@ describe('Player', function(){
     });
 
     it('has a speed equal to the player speed settings', function(){
-      expect(player.speed).to.equal(gameSettings.playerSpeed);
+      expect(player.speed).to.equal(Settings.playerSpeed);
     });
   });
 
@@ -50,12 +50,12 @@ describe('Player', function(){
   });
 
   describe('#handleNextMove', function(){
-    let destination, opts;
+    let destination;
 
     beforeEach(function(){
-      opts = { getRelativePosition: sinon.stub().returnsArg(0) };
       destination = { x: 5, y: 5 };
       sinon.stub(Pathfinder, 'moveTowards').returns(destination);
+      sinon.stub(Pathfinder, 'getRelativePosition').returnsArg(0);
     });
 
     it('changes the player position to the relative destination', function(){
@@ -64,7 +64,7 @@ describe('Player', function(){
       }).to.change.to(
         destination
       ).when(function(){
-        player.handleNextMove(opts);
+        player.handleNextMove({});
       });
     });
   });

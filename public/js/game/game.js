@@ -14,7 +14,7 @@ class GameOfAfterlife {
     this.width = canvas.width;
     this.height = canvas.height;
     this.ctx = canvas.getContext('2d');
-    this.board = new Board({ humanoids: allHumanoids, width: this.width, height: this.height });
+    this.board = new Board({ humanoids: allHumanoids });
     this.humanoidColorMap = {
       Human: '#00aaaa',
       Zombie: '#ff0000',
@@ -40,7 +40,6 @@ class GameOfAfterlife {
       else if (e.which === 83){ this.board.dy = 1; }
     });
   }
-
 
   drawHumanoids(){
     let player, x, y;

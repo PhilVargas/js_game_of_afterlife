@@ -60,7 +60,7 @@ class Zombie extends Humanoid {
 
   handleNextMove(opts){
     let destination;
-    let { nearestHuman, nearestZombie, player, humanoids, getRelativePosition } = opts;
+    let { nearestHuman, nearestZombie, player, humanoids } = opts;
 
     if (this.isAbleToBite(player)){
       humanoids[player.id] = player.transform();
@@ -68,7 +68,7 @@ class Zombie extends Humanoid {
     if (this.isAbleToBite(nearestHuman)){
       humanoids[nearestHuman.id] = nearestHuman.transform();
     }
-    destination = getRelativePosition(
+    destination = Pathfinder.getRelativePosition(
       this.getNextDestination(nearestHuman, nearestZombie, player)
     );
     if (this.isValidDestination(humanoids, destination)) {
