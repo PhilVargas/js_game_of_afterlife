@@ -23,25 +23,20 @@ class Board {
     });
   }
 
-  isValidDestination(targetPosition){
-    return !this.humanoids.some((humanoid) => {
-      return Pathfinder.arePositionsEqual(humanoid.position, targetPosition);
-    });
-  }
-
   nearestLivingHumanoid(){
     let livingHumanoids, closestPos, closestHumanoid;
 
-    livingHumanoids = this.findLivingHumanoids();
+    livingHumanoids = this.findSimilarHumanoids('Player')
+                          .concat(this.findSimilarHumanoids('Human'));
     closestPos = this.findClosestPos(livingHumanoids);
     closestHumanoid = this.findClosestHumanoid(closestPos, livingHumanoids);
     return closestHumanoid;
   }
 
-  nearestHumanoid(humanoidType){
+  nearestZombie(){
     let similarHumanoids, closestPos, closestHumanoid;
 
-    similarHumanoids = this.findSimilarHumanoids(humanoidType);
+    similarHumanoids = this.findSimilarHumanoids('Zombie');
     closestPos = this.findClosestPos(similarHumanoids);
     closestHumanoid = this.findClosestHumanoid(closestPos, similarHumanoids);
     return closestHumanoid;
@@ -52,9 +47,7 @@ class Board {
       this.humanoid = this.humanoids[i];
       this.humanoid.handleNextMove({
         nearestHumanoid: this.nearestLivingHumanoid(),
-        nearestHuman: this.nearestHumanoid('Human'),
-        nearestZombie: this.nearestHumanoid('Zombie'),
-        player: this.nearestHumanoid('Player'),
+        nearestZombie: this.nearestZombie(),
         dx: this.dx,
         dy: this.dy,
         humanoids: this.humanoids,
@@ -70,12 +63,6 @@ class Board {
   otherHumanoids(){
     return this.humanoids.filter((currentHumanoid) => {
       return this.humanoid.id !== currentHumanoid.id;
-    });
-  }
-
-  findLivingHumanoids(){
-    return this.otherHumanoids().filter(function(humanoid){
-      return humanoid.isHuman() || humanoid.isPlayer();
     });
   }
 

@@ -9,7 +9,7 @@ Zombie = require('humanoids/zombie');
 Board = require('board');
 
 describe('Board', function(){
-  let human, human2, player, zombie, board;
+  let human, human2, player, zombie, zombie2, board;
 
   describe('#isPlayerAlive', function(){
     context('when there is no player remaining', function(){
@@ -167,65 +167,61 @@ describe('Board', function(){
     });
   });
 
-  describe('#isValidDestination', function(){
+  describe('#nearestLivingHumanoid', function(){
     beforeEach(function(){
       human = new Human({ id: 0, position: { x: 100, y: 100 } });
       zombie = new Zombie({ id: 1, position: { x: 101, y: 104 } });
-      board = new Board({ humanoids: [human, zombie] });
-      board.humanoid = null;
-    });
-
-    context('when there is a humanoid on target position', function(){
-      it('returns false', function(){
-        expect(board.isValidDestination(human.position)).to.equal(false);
-      });
-    });
-
-    context('when there is no humanoid on target position', function(){
-      it('returns true', function(){
-        expect(board.isValidDestination({ x: 10, y: 20 })).to.equal(true);
-      });
-    });
-  });
-
-  describe('#nearestHumanoid', function(){
-    beforeEach(function(){
-      human = new Human({ id: 0, position: { x: 100, y: 100 } });
-      zombie = new Zombie({ id: 1, position: { x: 101, y: 104 } });
-      human2 = new Human({ id: 2, position: { x: 101, y: 101 } });
-      board = new Board({ humanoids: [human, zombie, human2] });
+      human2 = new Human({ id: 2, position: { x: 100, y: 104 } });
+      player = new Player({ id: 3, position: { x: 101, y: 105 } });
+      zombie2 = new Zombie({ id: 4, position: { x: 101, y: 106 } });
+      board = new Board({ humanoids: [human, zombie, human2, player, zombie2] });
       board.humanoid = null;
     });
     context('when the current `board.humanoid` is a human', function(){
-      beforeEach(function(){
-        board.humanoid = human;
+      context('when the closest living humanoid is a player', function(){
+        beforeEach(function(){
+          board.humanoid = human2;
+        });
+        it('finds the player', function(){
+          expect(board.nearestLivingHumanoid()).to.equal(player);
+        });
       });
-
-      it('finds the nearest human', function(){
-        expect(board.nearestHumanoid('Human')).to.equal(human2);
-      });
-
-      it('finds the nearest zombie', function(){
-        expect(board.nearestHumanoid('Zombie')).to.equal(zombie);
+      context('when the closest living humanoid is a human', function(){
+        beforeEach(function(){
+          board.humanoid = human;
+        });
+        it('finds the nearest human', function(){
+          expect(board.nearestLivingHumanoid()).to.equal(human2);
+        });
       });
     });
 
     context('when the current `board.humanoid` is a zombie', function(){
-      beforeEach(function(){
-        board.humanoid = zombie;
+      context('when the closest living humanoid is a player', function(){
+        beforeEach(function(){
+          board.humanoid = zombie2;
+        });
+        it('finds the player', function(){
+          expect(board.nearestLivingHumanoid()).to.equal(player);
+        });
       });
-
-      it('finds the nearest human', function(){
-        expect(board.nearestHumanoid('Human')).to.equal(human2);
+      context('when the closest living humanoid is a human', function(){
+        beforeEach(function(){
+          board.humanoid = zombie;
+        });
+        it('finds the nearest human', function(){
+          expect(board.nearestLivingHumanoid()).to.equal(human2);
+        });
       });
     });
 
     context('when there is no nearest humanoid', function(){
       beforeEach(function(){
+        board = new Board({ humanoids: [zombie] });
         board.humanoid = zombie;
       });
       it('returns undefined', function(){
-        expect(board.nearestHumanoid('Zombie')).to.be.undefined();
+        expect(board.nearestLivingHumanoid()).to.be.undefined();
       });
     });
   });
