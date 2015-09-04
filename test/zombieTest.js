@@ -86,12 +86,47 @@ describe('Zombie', function(){
     });
   });
 
-  xdescribe('#getNextDestination', function(){
-    it('tests the refactored method', function(){
+  describe('#getNextDestination', function(){
+    let otherZombie;
+
+    beforeEach(function(){
+      chai.spy.on(zombie, 'moveNearest');
+      otherZombie = new Zombie({ id: 2 });
+      human = new Human({ id: 3 });
+    });
+
+    afterEach(function(){
+      Pathfinder.distanceTo.restore();
+    });
+
+    context('a zombie is closer than the nearestHuman', function(){
+      beforeEach(function(){
+        sinon.stub(Pathfinder, 'distanceTo');
+        Pathfinder.distanceTo.withArgs(otherZombie.position, zombie.position).returns(1);
+        Pathfinder.distanceTo.withArgs(human.position, zombie.position).returns(10);
+        zombie.getNextDestination(human, otherZombie);
+      });
+
+      it('calls `zombie.moveNearest`, with the zombie', function(){
+        expect(zombie.moveNearest).to.have.been.called.with(otherZombie);
+      });
+    });
+
+    context('a living humanoid is is closer than the nearest zombie', function(){
+      beforeEach(function(){
+        sinon.stub(Pathfinder, 'distanceTo');
+        Pathfinder.distanceTo.withArgs(otherZombie.position, zombie.position).returns(10);
+        Pathfinder.distanceTo.withArgs(human.position, zombie.position).returns(1);
+        zombie.getNextDestination(human, otherZombie);
+      });
+
+      it('calls `zombie.moveNearest`, with the humanoid', function(){
+        expect(zombie.moveNearest).to.have.been.called.with(human);
+      });
     });
   });
 
-  xdescribe('#handleNextMove', function(){
+  describe('#handleNextMove', function(){
     it('tests the refactored method', function(){
     });
   });

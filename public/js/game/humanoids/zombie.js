@@ -26,33 +26,25 @@ class Zombie extends Humanoid {
     });
   }
 
-  getNextDestination(nearestHuman, nearestZombie, player){
-    let playerDistance, humanDistance, zombieDistance;
+  getNextDestination(nearestLivingHumanoid, nearestZombie){
+    let zombieDistance, livingHumanoidDistance;
 
-    playerDistance = Number.POSITIVE_INFINITY;
-    humanDistance = Number.POSITIVE_INFINITY;
+    livingHumanoidDistance = Number.POSITIVE_INFINITY;
     zombieDistance = Number.POSITIVE_INFINITY;
+
     if (nearestZombie){
       zombieDistance = (
         Pathfinder.distanceTo(nearestZombie.position, this.position) *
         gameSettings.zombieSpread
       );
     }
-    if (player){
-      playerDistance = Pathfinder.distanceTo(player.position, this.position);
-    }
-    if (nearestHuman){
-      humanDistance = Pathfinder.distanceTo(nearestHuman.position, this.position);
+
+    if (nearestLivingHumanoid){
+      livingHumanoidDistance = Pathfinder.distanceTo(nearestLivingHumanoid.position, this.position);
     }
 
-    if (playerDistance < humanDistance){
-      if (playerDistance < zombieDistance){
-        return this.moveNearest(player);
-      } else {
-        return this.moveNearest(nearestZombie);
-      }
-    } else if (humanDistance < zombieDistance){
-      return this.moveNearest(nearestHuman);
+    if (livingHumanoidDistance < zombieDistance) {
+      return this.moveNearest(nearestLivingHumanoid);
     } else {
       return this.moveNearest(nearestZombie);
     }
@@ -60,16 +52,14 @@ class Zombie extends Humanoid {
 
   handleNextMove(opts){
     let destination;
-    let { nearestHuman, nearestZombie, player, humanoids } = opts;
+    let { nearestHumanoid, nearestZombie, humanoids } = opts;
 
-    if (this.isAbleToBite(player)){
-      humanoids[player.id] = player.transform();
+    if (this.isAbleToBite(nearestHumanoid)){
+      humanoids[nearestHumanoid.id] = nearestHumanoid.transform();
     }
-    if (this.isAbleToBite(nearestHuman)){
-      humanoids[nearestHuman.id] = nearestHuman.transform();
-    }
+
     destination = Pathfinder.getRelativePosition(
-      this.getNextDestination(nearestHuman, nearestZombie, player)
+      this.getNextDestination(nearestHumanoid, nearestZombie)
     );
     if (this.isValidDestination(humanoids, destination)) {
       this.position = destination;

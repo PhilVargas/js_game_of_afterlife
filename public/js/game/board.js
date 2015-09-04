@@ -29,6 +29,15 @@ class Board {
     });
   }
 
+  nearestLivingHumanoid(){
+    let livingHumanoids, closestPos, closestHumanoid;
+
+    livingHumanoids = this.findLivingHumanoids();
+    closestPos = this.findClosestPos(livingHumanoids);
+    closestHumanoid = this.findClosestHumanoid(closestPos, livingHumanoids);
+    return closestHumanoid;
+  }
+
   nearestHumanoid(humanoidType){
     let similarHumanoids, closestPos, closestHumanoid;
 
@@ -42,6 +51,7 @@ class Board {
     for(let i = 0; i < this.humanoids.length; i++){
       this.humanoid = this.humanoids[i];
       this.humanoid.handleNextMove({
+        nearestHumanoid: this.nearestLivingHumanoid(),
         nearestHuman: this.nearestHumanoid('Human'),
         nearestZombie: this.nearestHumanoid('Zombie'),
         player: this.nearestHumanoid('Player'),
@@ -60,6 +70,12 @@ class Board {
   otherHumanoids(){
     return this.humanoids.filter((currentHumanoid) => {
       return this.humanoid.id !== currentHumanoid.id;
+    });
+  }
+
+  findLivingHumanoids(){
+    return this.otherHumanoids().filter(function(humanoid){
+      return humanoid.isHuman() || humanoid.isPlayer();
     });
   }
 
