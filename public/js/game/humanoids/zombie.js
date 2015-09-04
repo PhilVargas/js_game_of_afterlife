@@ -61,6 +61,7 @@ class Zombie extends Humanoid {
     destination = Pathfinder.getRelativePosition(
       this.getNextDestination(nearestHumanoid, nearestZombie)
     );
+
     if (this.isValidDestination(humanoids, destination)) {
       this.position = destination;
     }

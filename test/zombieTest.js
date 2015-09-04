@@ -127,7 +127,97 @@ describe('Zombie', function(){
   });
 
   describe('#handleNextMove', function(){
-    it('tests the refactored method', function(){
+    let humanoids, otherZombie, opts;
+
+    beforeEach(function(){
+      otherZombie = new Zombie({ id: 1 });
+      human = new Human({ id: 2 });
+      chai.spy.on(human, 'transform');
+      chai.spy.on(zombie, 'getNextDestination');
+      humanoids = [zombie, otherZombie, human];
+      opts = {
+        nearestHumanoid: human,
+        nearestZombie: otherZombie,
+        humanoids
+      };
+    });
+
+    it('calls getNextDestination with the nearest zombie and humanoid', function(){
+      zombie.handleNextMove(opts);
+      expect(zombie.getNextDestination).to.have.been.called.with(human, otherZombie);
+    });
+
+    context('when the destination is not valid', function(){
+      let destination;
+
+      beforeEach(function(){
+        destination = { x: 5, y: 5 };
+        sinon.stub(Pathfinder, 'getRelativePosition').returns(destination);
+        sinon.stub(zombie, 'isValidDestination').returns(false);
+      });
+
+      afterEach(function(){
+        Pathfinder.getRelativePosition.restore();
+        zombie.isValidDestination.restore();
+      });
+
+      it('does not change the zombie position', function(){
+        expect(function(){
+          return zombie.position;
+        }).to.not.change.when(function(){
+          zombie.handleNextMove(opts);
+        });
+      });
+    });
+
+    context('when the destination is valid', function(){
+      let destination;
+
+      beforeEach(function(){
+        destination = { x: 5, y: 5 };
+        sinon.stub(Pathfinder, 'getRelativePosition').returns(destination);
+        sinon.stub(zombie, 'isValidDestination').returns(true);
+      });
+
+      afterEach(function(){
+        Pathfinder.getRelativePosition.restore();
+        zombie.isValidDestination.restore();
+      });
+
+      it('changes the zombie position to the destination', function(){
+        expect(function(){
+          return zombie.position;
+        }).to.change.to(
+          destination
+        ).when(function(){
+          zombie.handleNextMove(opts);
+        });
+      });
+    });
+
+    context('when a zombie is able to bite the nearest humanoid', function(){
+      beforeEach(function(){
+        sinon.stub(zombie, 'isAbleToBite').returns(true);
+      });
+
+      afterEach(function(){
+        zombie.isAbleToBite.restore();
+      });
+
+      it('calls `nearestHuman.transform`', function(){
+        zombie.handleNextMove(opts);
+        expect(human.transform).to.have.been.called();
+      });
+
+      it('replaces the humanoid with an InfectedHuman', function(){
+        expect(function(){
+          return humanoids[human.id].humanType;
+        }).to.change.to(
+          'InfectedHuman'
+        ).when(function(){
+          zombie.handleNextMove(opts);
+        });
+      });
     });
   });
 });

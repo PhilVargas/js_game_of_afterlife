@@ -58,6 +58,11 @@ describe('Player', function(){
       sinon.stub(Pathfinder, 'getRelativePosition').returnsArg(0);
     });
 
+    afterEach(function(){
+      Pathfinder.moveTowards.restore();
+      Pathfinder.getRelativePosition.restore();
+    });
+
     it('changes the player position to the relative destination', function(){
       expect(function(){
         return player.position;
