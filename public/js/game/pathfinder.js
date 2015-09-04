@@ -1,6 +1,23 @@
+let Settings;
+
+Settings = require('settings');
+
 class Pathfinder {
+  static getRelativePosition(position) {
+    let x, y;
+
+    x = ((position.x + Settings.defaultWidth) % Settings.defaultWidth);
+    y = ((position.y + Settings.defaultHeight) % Settings.defaultHeight);
+    return { x, y };
+  }
+
+  static arePositionsEqual(position1, position2){
+    return position1.x === position2.x && position1.y === position2.y;
+  }
+
   static moveTowards(currentPosition, friendlyLocation, speed){
     let deltaY, deltaX, length;
+
     deltaY = friendlyLocation.y - currentPosition.y;
     deltaX = friendlyLocation.x - currentPosition.x;
     length = this.distanceTo(friendlyLocation, currentPosition);
@@ -20,6 +37,7 @@ class Pathfinder {
 
   static movePerpendicularTo(currentPosition, friendlyLocation, speed){
     let deltaY, deltaX, length;
+
     deltaY = friendlyLocation.y - currentPosition.y;
     deltaX = friendlyLocation.x - currentPosition.x;
     length = this.distanceTo(friendlyLocation, currentPosition);
@@ -35,13 +53,15 @@ class Pathfinder {
 
   static distanceTo(targetLocation, currentPosition){
     let deltaY, deltaX;
+
     deltaY = targetLocation.y - currentPosition.y;
     deltaX = targetLocation.x - currentPosition.x;
-    return Math.sqrt(Math.pow(deltaY,2) + Math.pow(deltaX,2));
+    return Math.sqrt(Math.pow(deltaY, 2) + Math.pow(deltaX, 2));
   }
 
   static moveRandomly(currentPosition, speed){
     let angle;
+
     angle = Math.random() * 2 * Math.PI;
     return {
       x: (currentPosition.x + Math.cos(angle) * speed),

@@ -27,11 +27,14 @@ module.exports = {
   build: JS_BASE_DIR,
   displayError,
   entries: ['game/initialize.js'],
-  includes: ['./', 'game/'],
+  includes: [
+    './',
+    'game/'
+  ],
   stylesRoot: STYLES_BASE_DIR,
   sassFiles: `${SASS_BASE_DIR}/**/*.scss`,
   jsRoot: JS_BASE_DIR,
   jsVendor: VENDOR_ROOT,
   root: JS_BASE_DIR
-}
+};
 

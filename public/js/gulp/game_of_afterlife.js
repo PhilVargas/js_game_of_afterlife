@@ -15,7 +15,7 @@ sass = require('gulp-sass');
 browserify = require('browserify');
 babelify = require('babelify');
 watchify = require('watchify');
-uglify = require('gulp-uglify')
+uglify = require('gulp-uglify');
 buffer = require('vinyl-buffer');
 source = require('vinyl-source-stream');
 paths = require('./filepaths.js');
@@ -30,13 +30,13 @@ browserifyOptions = {
   cache: {},
   packageCache: {},
   fullPaths: true,
-}
+};
 
 function buildJs(){
   let browserBundle, watcher;
   browserBundle = browserify(browserifyOptions);
   browserBundle.transform(babelify);
-  watcher = watchify(browserBundle)
+  watcher = watchify(browserBundle);
   watcher.bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
@@ -54,12 +54,12 @@ function initializeWatcher(bundleToWatch){
     updateStart = Date.now();
     watcher.bundle().on('error', function(e){
       displayError(e);
-      return
+      return;
     }).pipe(source('bundle.js'))
     .pipe(gulp.dest(paths.build));
-    console.log(`Updated! ${Date.now() - updateStart}ms. Complete at ${new Date()}`)
+    console.log(`Updated! ${Date.now() - updateStart}ms. Complete at ${new Date()}`);
   });
-  return watcher
+  return watcher;
 }
 
 function watchJs(){
@@ -69,15 +69,15 @@ function watchJs(){
   watcher = initializeWatcher(browserBundle);
   watcher.bundle().on('error', function(e){
     displayError(e);
-    return
+    return;
   })
   .pipe(source('bundle.js'))
   .pipe(gulp.dest(paths.build));
-  return
+  return;
 }
 
 function buildSass(){
-  console.log(paths.stylesRoot)
+  console.log(paths.stylesRoot);
   gulp.src('public/style/sass/application.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest(paths.stylesRoot));
@@ -93,8 +93,8 @@ function watchSass(){
 module.exports.watch = {
   js: watchJs,
   sass: watchSass
-}
+};
 module.exports.build = {
   js: buildJs,
   sass: buildSass
-}
+};
