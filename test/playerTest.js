@@ -48,5 +48,25 @@ describe('Player', function(){
       expect(player.transform().id).to.equal(player.id);
     });
   });
+
+  describe('#handleNextMove', function(){
+    let destination, opts;
+
+    beforeEach(function(){
+      opts = { getRelativePosition: sinon.stub().returnsArg(0) };
+      destination = { x: 5, y: 5 };
+      sinon.stub(Pathfinder, 'moveTowards').returns(destination);
+    });
+
+    it('changes the player position to the relative destination', function(){
+      expect(function(){
+        return player.position;
+      }).to.change.to(
+        destination
+      ).when(function(){
+        player.handleNextMove(opts);
+      });
+    });
+  });
 });
 
