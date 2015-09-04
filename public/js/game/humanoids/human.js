@@ -73,6 +73,7 @@ class Human extends Humanoid {
       zombieDistance = Pathfinder.distanceTo(nearestZombie.position, this.position);
     }
 
+    // a zombie is within the human fear range, or there are no other living humanoids remaining
     return (zombieDistance < gameSettings.humanFearRange || (!player && !nearestHuman));
   }
 }

@@ -218,4 +218,58 @@ describe('Human', function(){
       });
     });
   });
+
+  describe('#isZombieNearest', function(){
+    let zombie, player, otherHuman;
+
+    beforeEach(function(){
+      zombie = new Zombie({ id: 1 });
+      player = new Player({ id: 2 });
+      otherHuman = new Human({ id: 3 });
+    });
+
+    afterEach(function(){
+      Pathfinder.distanceTo.restore();
+    });
+
+    context('when a zombie is within the `humanFearRange`', function(){
+      beforeEach(function(){
+        sinon.stub(Pathfinder, 'distanceTo').returns(Number.NEGATIVE_INFINITY);
+      });
+
+      it('returns true', function(){
+        expect(human.isZombieNearest(zombie)).to.equal(true);
+      });
+    });
+
+    context('when a zombie is not within the `humanFearRange`', function(){
+      beforeEach(function(){
+        sinon.stub(Pathfinder, 'distanceTo').returns(Number.POSITIVE_INFINITY);
+      });
+
+      context('when other living humanoids remain', function(){
+        it('returns false', function(){
+          expect(human.isZombieNearest(zombie, otherHuman, player)).to.equal(false);
+        });
+      });
+
+      context('when the `nearestHuman` remains', function(){
+        it('returns false', function(){
+          expect(human.isZombieNearest(zombie, otherHuman, null)).to.equal(false);
+        });
+      });
+
+      context('when the `player` remains', function(){
+        it('returns false', function(){
+          expect(human.isZombieNearest(zombie, null, player)).to.equal(false);
+        });
+      });
+
+      context('when the current humanoid is the only human remaining', function(){
+        it('returns true', function(){
+          expect(human.isZombieNearest(zombie)).to.equal(true);
+        });
+      });
+    });
+  });
 });
