@@ -39,27 +39,41 @@ class Human extends Humanoid {
     });
   }
 
-  // TODO refactor into `isZombieNearest` methods, that receive nearestZombie, player, nearestHuman`
   getNextDestination(nearestHuman, nearestZombie, player){
-    let playerDistance, humanDistance, zombieDistance;
-
-    playerDistance = Number.POSITIVE_INFINITY;
-    humanDistance = Number.POSITIVE_INFINITY;
-    zombieDistance = Pathfinder.distanceTo(nearestZombie.position, this.position);
-    if (player){
-      playerDistance = Pathfinder.distanceTo(player.position, this.position);
-    }
-    if (nearestHuman){
-      humanDistance = Pathfinder.distanceTo(nearestHuman.position, this.position);
-    }
-
-    if (zombieDistance < gameSettings.humanFearRange || (!player && !nearestHuman)){
+    if (this.isZombieNearest(nearestZombie, nearestHuman, player)){
       return this.moveNearest(nearestZombie);
-    } else if (playerDistance < humanDistance){
+    } else if (this.isPlayerNearest(player, nearestHuman)){
       return this.moveNearest(player);
     } else {
       return this.moveNearest(nearestHuman);
     }
+  }
+
+  isPlayerNearest(player, nearestHuman) {
+    let playerDistance, humanDistance;
+
+    playerDistance = Number.POSITIVE_INFINITY;
+    humanDistance = Number.POSITIVE_INFINITY;
+
+    if (player){
+      playerDistance = Pathfinder.distanceTo(player.position, this.position);
+    }
+
+    if (nearestHuman){
+      humanDistance = Pathfinder.distanceTo(nearestHuman.position, this.position);
+    }
+
+    return playerDistance < humanDistance;
+  }
+
+  isZombieNearest(nearestZombie, nearestHuman, player) {
+    let zombieDistance;
+
+    if (nearestZombie) {
+      zombieDistance = Pathfinder.distanceTo(nearestZombie.position, this.position);
+    }
+
+    return (zombieDistance < gameSettings.humanFearRange || (!player && !nearestHuman));
   }
 }
 
