@@ -5,9 +5,11 @@ sinon = require('sinon');
 chai.use(require('chai-changes'));
 expect = chai.expect;
 
-let Human, InfectedHuman, Settings, Pathfinder;
+let Human, InfectedHuman, Zombie, Player, Settings, Pathfinder;
 
 Human = require('humanoids/human');
+Player = require('humanoids/player');
+Zombie = require('humanoids/zombie');
 InfectedHuman = require('humanoids/infectedHuman');
 Settings = require('settings');
 Pathfinder = require('pathfinder');
@@ -117,8 +119,103 @@ describe('Human', function(){
     });
   });
 
-  xdescribe('#getNextDestination', function(){
-    it('tests the refactored method', function(){
+  describe('#isPlayerNearest', function(){
+    let player, otherHuman;
+
+    beforeEach(function(){
+      player = new Player({ id: 2 });
+      otherHuman = new Human({ id: 3 });
+    });
+
+    context('when there is no `nearestHuman` or `player`', function(){
+      it('always returns false', function(){
+        expect(human.isPlayerNearest()).to.equal(false);
+      });
+    });
+
+    context('when the human is closer', function(){
+      beforeEach(function(){
+        sinon.stub(Pathfinder, 'distanceTo');
+        Pathfinder.distanceTo.withArgs(player.position, human.position).returns(10);
+        Pathfinder.distanceTo.withArgs(otherHuman.position, human.position).returns(1);
+      });
+
+      afterEach(function(){
+        Pathfinder.distanceTo.restore();
+      });
+
+      it('returns false', function(){
+        expect(human.isPlayerNearest(player, otherHuman)).to.equal(false);
+      });
+    });
+
+    context('when the player is closer', function(){
+      beforeEach(function(){
+        sinon.stub(Pathfinder, 'distanceTo');
+        Pathfinder.distanceTo.withArgs(player.position, human.position).returns(1);
+        Pathfinder.distanceTo.withArgs(otherHuman.position, human.position).returns(10);
+      });
+
+      afterEach(function(){
+        Pathfinder.distanceTo.restore();
+      });
+
+      it('returns true', function(){
+        expect(human.isPlayerNearest(player, otherHuman)).to.equal(true);
+      });
+    });
+
+  });
+
+  describe('#getNextDestination', function(){
+    let zombie, player, otherHuman;
+
+    beforeEach(function(){
+      chai.spy.on(human, 'moveNearest');
+      zombie = new Zombie({ id: 1 });
+      player = new Player({ id: 2 });
+      otherHuman = new Human({ id: 3 });
+    });
+
+    afterEach(function(){
+      human.isZombieNearest.restore();
+      human.isPlayerNearest.restore();
+    });
+
+    context('when a human is closests', function(){
+      beforeEach(function(){
+        sinon.stub(human, 'isZombieNearest').returns(false);
+        sinon.stub(human, 'isPlayerNearest').returns(false);
+        human.getNextDestination(otherHuman, zombie, player);
+      });
+
+      it('calls `moveNearest` with the human', function(){
+        expect(human.moveNearest).to.have.been.called.with(otherHuman);
+      });
+    });
+
+    context('when a player is closests', function(){
+      beforeEach(function(){
+        sinon.stub(human, 'isZombieNearest').returns(false);
+        sinon.stub(human, 'isPlayerNearest').returns(true);
+        human.getNextDestination(otherHuman, zombie, player);
+      });
+
+      it('calls `moveNearest` with the player', function(){
+        expect(human.moveNearest).to.have.been.called.with(player);
+      });
+    });
+
+    context('when a zombie is closests', function(){
+      beforeEach(function(){
+        sinon.stub(human, 'isZombieNearest').returns(true);
+        sinon.stub(human, 'isPlayerNearest').returns(false);
+        human.getNextDestination(otherHuman, zombie, player);
+      });
+
+      it('calls `moveNearest` with the zombie', function(){
+        expect(human.moveNearest).to.have.been.called.with(zombie);
+      });
     });
   });
 });
