@@ -6,6 +6,8 @@ gameSettings = {
   zombieSpeed: 4,
   humanCount: 30,
   zombieCount: 3,
+  infectionIncubationTime: 5, // turn delay until infected become zombies. higher numbers take
+                              // longer to transform
   turnDelay: { normal: 100, fast: 25 }, // sets the timeout between turns
   repitionTolerance: 1, // the range in which a move is considered repetitive
                         // lower values will reduce the size of the range.

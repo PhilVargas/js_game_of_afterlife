@@ -1,7 +1,8 @@
-let Humanoid, Zombie;
+let Humanoid, Zombie, Settings;
 
 Humanoid = require('humanoids/humanoid');
 Zombie = require('humanoids/zombie');
+Settings = require('settings');
 
 class InfectedHuman extends Humanoid {
   constructor(opts) {
@@ -28,7 +29,7 @@ class InfectedHuman extends Humanoid {
     let { humanoids } = opts;
 
     this.incrementTimeSinceInfection();
-    if (this.timeSinceInfection >= 5){
+    if (this.timeSinceInfection >= Settings.infectionIncubationTime){
       humanoids[this.id] = this.transform();
     }
   }
