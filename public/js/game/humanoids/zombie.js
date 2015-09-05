@@ -1,18 +1,18 @@
-let Pathfinder, gameSettings, Humanoid;
+let Pathfinder, Settings, Humanoid;
 
-gameSettings = require('settings');
+Settings = require('settings');
 Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
 
 class Zombie extends Humanoid {
   constructor(opts) {
     super(opts);
-    this.speed = gameSettings.zombieSpeed;
+    this.speed = Settings.zombieSpeed;
   }
 
   isAbleToBite(human){
     return (
-      human && Pathfinder.distanceTo(human.position, this.position) < gameSettings.zombieBiteRange
+      human && Pathfinder.distanceTo(human.position, this.position) < Settings.zombieBiteRange
     );
   }
 
@@ -35,7 +35,7 @@ class Zombie extends Humanoid {
     if (nearestZombie){
       zombieDistance = (
         Pathfinder.distanceTo(nearestZombie.position, this.position) *
-        gameSettings.zombieSpread
+        Settings.zombieSpread
       );
     }
 

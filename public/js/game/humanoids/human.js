@@ -1,6 +1,6 @@
-let Pathfinder, gameSettings, Humanoid, InfectedHuman;
+let Pathfinder, Settings, Humanoid, InfectedHuman;
 
-gameSettings = require('settings');
+Settings = require('settings');
 Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
 InfectedHuman = require('humanoids/infectedHuman');
@@ -8,7 +8,7 @@ InfectedHuman = require('humanoids/infectedHuman');
 class Human extends Humanoid {
   constructor(opts) {
     super(opts);
-    this.speed = gameSettings.humanSpeed;
+    this.speed = Settings.humanSpeed;
   }
 
   isAbleToBite() {
@@ -55,7 +55,7 @@ class Human extends Humanoid {
     }
 
     // a zombie is within the human fear range, or there are no other living humanoids remaining
-    return (zombieDistance < gameSettings.humanFearRange || (!nearestHumanoid));
+    return (zombieDistance < Settings.humanFearRange || (!nearestHumanoid));
   }
 }
 
