@@ -4,11 +4,11 @@ chai = require('chai');
 sinon = require('sinon');
 expect = chai.expect;
 
-let Zombie, Human, gameSettings, Pathfinder;
+let Zombie, Human, Settings, Pathfinder;
 
 Human = require('humanoids/human');
 Zombie = require('humanoids/zombie');
-gameSettings = require('settings');
+Settings = require('settings');
 Pathfinder = require('pathfinder');
 
 describe('Zombie', function(){
@@ -24,7 +24,7 @@ describe('Zombie', function(){
     });
 
     it('has a speed equal to the zombie speed settings', function(){
-      expect(zombie.speed).to.equal(gameSettings.zombieSpeed);
+      expect(zombie.speed).to.equal(Settings.zombieSpeed);
     });
   });
 
@@ -39,7 +39,7 @@ describe('Zombie', function(){
 
     context('when target is within the `zombieBiteRange`', function(){
       beforeEach(function(){
-        sinon.stub(Pathfinder, 'distanceTo').returns(gameSettings.zombieBiteRange - 1);
+        sinon.stub(Pathfinder, 'distanceTo').returns(Settings.zombieBiteRange - 1);
       });
       it('returns true', function(){
         expect(zombie.isAbleToBite(human)).to.equal(true);
@@ -48,7 +48,7 @@ describe('Zombie', function(){
 
     context('when target is within the `zombieBiteRange`', function(){
       beforeEach(function(){
-        sinon.stub(Pathfinder, 'distanceTo').returns(gameSettings.zombieBiteRange + 1);
+        sinon.stub(Pathfinder, 'distanceTo').returns(Settings.zombieBiteRange + 1);
       });
       it('returns false', function(){
         expect(zombie.isAbleToBite(human)).to.equal(false);

@@ -1,6 +1,6 @@
-let Pathfinder, gameSettings, Humanoid, InfectedHuman;
+let Pathfinder, Settings, Humanoid, InfectedHuman;
 
-gameSettings = require('settings');
+Settings = require('settings');
 Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
 InfectedHuman = require('humanoids/infectedHuman');
@@ -8,7 +8,7 @@ InfectedHuman = require('humanoids/infectedHuman');
 class Player extends Humanoid {
   constructor(opts) {
     super(opts);
-    this.speed = gameSettings.playerSpeed;
+    this.speed = Settings.playerSpeed;
   }
 
   isAbleToBite() {

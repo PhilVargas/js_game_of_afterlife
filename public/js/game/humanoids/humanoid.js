@@ -1,7 +1,7 @@
-let Pathfinder, gameSettings;
+let Pathfinder, Settings;
 
 Pathfinder = require('pathfinder');
-gameSettings = require('settings');
+Settings = require('settings');
 
 class Humanoid {
   constructor(attributes){
@@ -42,8 +42,8 @@ class Humanoid {
 
   isLastMoveRepeated(potentialMove){
     return (
-      (Math.abs(potentialMove.x - this.lastPosition.x) < gameSettings.repitionTolerance) &&
-        (Math.abs(potentialMove.y - this.lastPosition.y) < gameSettings.repitionTolerance)
+      (Math.abs(potentialMove.x - this.lastPosition.x) < Settings.repitionTolerance) &&
+        (Math.abs(potentialMove.y - this.lastPosition.y) < Settings.repitionTolerance)
     );
   }
 

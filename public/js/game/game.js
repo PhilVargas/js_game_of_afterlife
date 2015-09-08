@@ -1,15 +1,15 @@
-let Board, HumanoidBuilder, gameSettings;
+let Board, HumanoidBuilder, Settings;
 
 Board = require('board');
 HumanoidBuilder = require('humanoidFactory');
-gameSettings = require('settings');
+Settings = require('settings');
 
 class GameOfAfterlife {
   constructor(){
     let canvas, allHumanoids;
 
     canvas = document.getElementsByTagName('canvas')[0];
-    allHumanoids = HumanoidBuilder.populate(gameSettings.humanCount, gameSettings.zombieCount);
+    allHumanoids = HumanoidBuilder.populate(Settings.humanCount, Settings.zombieCount);
     this.hasBegun = false;
     this.width = canvas.width;
     this.height = canvas.height;
@@ -65,7 +65,7 @@ class GameOfAfterlife {
       if (this.board.isGameActive()){
         document.getElementById('score').innerHTML = this.board.score;
         this.board.nextTurn();
-        delay = (this.board.isPlayerAlive() ? gameSettings.turnDelay.normal : gameSettings.turnDelay.fast);
+        delay = (this.board.isPlayerAlive() ? Settings.turnDelay.normal : Settings.turnDelay.fast);
         setTimeout(nextRequest, delay);
       } else {
         document.getElementById('overlay-message')
@@ -73,7 +73,7 @@ class GameOfAfterlife {
         document.getElementById('overlay').className = '';
       }
     };
-    setTimeout(nextRequest, gameSettings.turnDelay.normal);
+    setTimeout(nextRequest, Settings.turnDelay.normal);
   }
 
   init(){
