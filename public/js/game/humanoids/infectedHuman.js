@@ -16,7 +16,7 @@ class InfectedHuman extends Humanoid {
   }
 
   transform() {
-    return(
+    return (
       new Zombie(this.cloneProps())
     );
   }
@@ -26,7 +26,7 @@ class InfectedHuman extends Humanoid {
   }
 
   handleNextMove(opts){
-    let { humanoids } = opts;
+    const { humanoids } = opts;
 
     this.incrementTimeSinceInfection();
     if (this.timeSinceInfection >= Settings.infectionIncubationTime){

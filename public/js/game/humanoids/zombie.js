@@ -17,7 +17,7 @@ class Zombie extends Humanoid {
   }
 
   transform() {
-    return(this);
+    return (this);
   }
 
   isValidDestination(humanoids, targetPosition) {
@@ -52,7 +52,7 @@ class Zombie extends Humanoid {
 
   handleNextMove(opts){
     let destination;
-    let { nearestHumanoid, nearestZombie, humanoids } = opts;
+    const { nearestHumanoid, nearestZombie, humanoids } = opts;
 
     if (this.isAbleToBite(nearestHumanoid)){
       humanoids[nearestHumanoid.id] = nearestHumanoid.transform();

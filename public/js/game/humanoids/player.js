@@ -16,14 +16,14 @@ class Player extends Humanoid {
   }
 
   transform() {
-    return(
+    return (
       new InfectedHuman(this.cloneProps())
     );
   }
 
   handleNextMove(opts){
     let targetLoc, coords;
-    let { dx, dy } = opts;
+    const { dx, dy } = opts;
 
     targetLoc = {
       x: this.position.x + dx * this.speed,

@@ -16,14 +16,14 @@ class Human extends Humanoid {
   }
 
   transform() {
-    return(
+    return (
       new InfectedHuman(this.cloneProps())
     );
   }
 
   handleNextMove(opts){
     let destination;
-    let { nearestHumanoid, nearestZombie, humanoids } = opts;
+    const { nearestHumanoid, nearestZombie, humanoids } = opts;
 
     destination = Pathfinder.getRelativePosition(
       this.getNextDestination(nearestHumanoid, nearestZombie)
