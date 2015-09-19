@@ -17,7 +17,7 @@ Settings = {
 
   // TODO: Sync canvas with this value
   defaultWidth: 600, // default canvas width
-  defaultHeight: 400, // default canvas height
+  defaultHeight: 400 // default canvas height
 };
 
 module.exports = Settings;
