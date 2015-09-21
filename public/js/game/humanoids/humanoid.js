@@ -24,7 +24,7 @@ class Humanoid {
     return this.humanType === 'Human';
   }
 
-  cloneProps() {
+  cloneProps(){
     return {
       id: this.id,
       position: this.position,
@@ -50,15 +50,15 @@ class Humanoid {
   moveNearest(nearestObject){
     let potentialMove;
 
-    if (this.isAttractedTo(nearestObject)){
+    if (this.isAttractedTo(nearestObject)) {
       potentialMove = Pathfinder.moveTowards(this.position, nearestObject.position, this.speed);
     } else {
       potentialMove = Pathfinder.moveAwayFrom(this.position, nearestObject.position, this.speed);
     }
-    if (this.lastPosition.x === this.position.x && this.lastPosition.y === this.position.y){
+    if (this.lastPosition.x === this.position.x && this.lastPosition.y === this.position.y) {
       this.storeLastPosition();
       return Pathfinder.moveRandomly(this.position, this.speed);
-    } else if (this.isLastMoveRepeated(potentialMove)){
+    } else if (this.isLastMoveRepeated(potentialMove)) {
       this.storeLastPosition();
       return Pathfinder.movePerpendicularTo(this.position, nearestObject.position, this.speed);
     } else {

@@ -174,7 +174,7 @@
     "sort-vars": 0,
     "space-after-keywords": [1, "always"],
     "space-before-keywords": [1, "always"],
-    "space-before-blocks": [0, "always"],
+    "space-before-blocks": [1, { "functions": "never", "keywords": "always" }],
     "space-before-function-paren": [1, "never"],
     "space-in-parens": [1, "never"],
     "space-infix-ops": 1,

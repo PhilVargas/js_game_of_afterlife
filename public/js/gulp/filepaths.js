@@ -12,10 +12,10 @@ function displayError(error){
   let errorMessage;
 
   errorMessage = `[${error.plugin}] ${error.message.replace('\n', '')}`;
-  if (error.fileName){
+  if (error.fileName) {
     errorMessage += ` in ${error.fileName}`;
   }
-  if (error.lineNumber){
+  if (error.lineNumber) {
     errorMessage += ` on line ${error.lineNumber}`;
   }
   console.error(errorMessage);

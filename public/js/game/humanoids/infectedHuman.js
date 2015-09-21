@@ -5,7 +5,7 @@ Zombie = require('humanoids/zombie');
 Settings = require('settings');
 
 class InfectedHuman extends Humanoid {
-  constructor(opts) {
+  constructor(opts){
     super(opts);
     this.speed = 0;
     this.timeSinceInfection = 0;
@@ -15,7 +15,7 @@ class InfectedHuman extends Humanoid {
     return false;
   }
 
-  transform() {
+  transform(){
     return (
       new Zombie(this.cloneProps())
     );
@@ -29,7 +29,7 @@ class InfectedHuman extends Humanoid {
     const { humanoids } = opts;
 
     this.incrementTimeSinceInfection();
-    if (this.timeSinceInfection >= Settings.infectionIncubationTime){
+    if (this.timeSinceInfection >= Settings.infectionIncubationTime) {
       humanoids[this.id] = this.transform();
     }
   }

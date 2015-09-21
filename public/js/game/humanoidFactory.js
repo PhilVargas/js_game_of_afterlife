@@ -32,7 +32,7 @@ class HumanoidBuilder {
 
     map = this.humanoidMap();
     population = [];
-    for (let i = 0; i < number; i++){
+    for (let i = 0; i < number; i++) {
       H = map[type];
       newHumanoid = new H({ id: baseId + i });
       population.push(newHumanoid);
