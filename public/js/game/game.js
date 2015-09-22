@@ -29,15 +29,15 @@ class GameOfAfterlife {
       // w = 87
       // a = 65
       // d = 68
-      if (e.which === 68 || e.which === 65){ this.board.dx = 0; }
-      if (e.which === 83 || e.which === 87){ this.board.dy = 0; }
+      if (e.which === 68 || e.which === 65) { this.board.dx = 0; }
+      if (e.which === 83 || e.which === 87) { this.board.dy = 0; }
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.which === 65){ this.board.dx = -1; }
-      else if (e.which === 68){ this.board.dx = 1; }
-      else if (e.which === 87){ this.board.dy = -1; }
-      else if (e.which === 83){ this.board.dy = 1; }
+      if (e.which === 65) { this.board.dx = -1; }
+      else if (e.which === 68) { this.board.dx = 1; }
+      else if (e.which === 87) { this.board.dy = -1; }
+      else if (e.which === 83) { this.board.dy = 1; }
     });
   }
 
@@ -45,7 +45,7 @@ class GameOfAfterlife {
     let player, x, y;
 
     this.ctx.clearRect(0, 0, this.width, this.height);
-    for (let i = 0; i < this.board.humanoids.length; i++){
+    for (let i = 0; i < this.board.humanoids.length; i++) {
       this.ctx.beginPath();
       player = this.board.humanoids[i];
       x = player.position.x;
@@ -62,7 +62,7 @@ class GameOfAfterlife {
 
     nextRequest = () => {
       this.drawHumanoids();
-      if (this.board.isGameActive()){
+      if (this.board.isGameActive()) {
         document.getElementById('score').innerHTML = this.board.score;
         this.board.nextTurn();
         delay = (this.board.isPlayerAlive() ? Settings.turnDelay.normal : Settings.turnDelay.fast);

@@ -6,24 +6,24 @@ Humanoid = require('humanoids/humanoid');
 InfectedHuman = require('humanoids/infectedHuman');
 
 class Player extends Humanoid {
-  constructor(opts) {
+  constructor(opts){
     super(opts);
     this.speed = Settings.playerSpeed;
   }
 
-  isAbleToBite() {
+  isAbleToBite(){
     return false;
   }
 
-  transform() {
-    return(
+  transform(){
+    return (
       new InfectedHuman(this.cloneProps())
     );
   }
 
   handleNextMove(opts){
     let targetLoc, coords;
-    let { dx, dy } = opts;
+    const { dx, dy } = opts;
 
     targetLoc = {
       x: this.position.x + dx * this.speed,

@@ -5,7 +5,7 @@ Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
 
 class Zombie extends Humanoid {
-  constructor(opts) {
+  constructor(opts){
     super(opts);
     this.speed = Settings.zombieSpeed;
   }
@@ -16,11 +16,11 @@ class Zombie extends Humanoid {
     );
   }
 
-  transform() {
-    return(this);
+  transform(){
+    return (this);
   }
 
-  isValidDestination(humanoids, targetPosition) {
+  isValidDestination(humanoids, targetPosition){
     return !humanoids.some((humanoid) => {
       return Pathfinder.arePositionsEqual(humanoid.position, targetPosition);
     });
@@ -32,14 +32,14 @@ class Zombie extends Humanoid {
     livingHumanoidDistance = Number.POSITIVE_INFINITY;
     zombieDistance = Number.POSITIVE_INFINITY;
 
-    if (nearestZombie){
+    if (nearestZombie) {
       zombieDistance = (
         Pathfinder.distanceTo(nearestZombie.position, this.position) *
         Settings.zombieSpread
       );
     }
 
-    if (nearestLivingHumanoid){
+    if (nearestLivingHumanoid) {
       livingHumanoidDistance = Pathfinder.distanceTo(nearestLivingHumanoid.position, this.position);
     }
 
@@ -52,9 +52,9 @@ class Zombie extends Humanoid {
 
   handleNextMove(opts){
     let destination;
-    let { nearestHumanoid, nearestZombie, humanoids } = opts;
+    const { nearestHumanoid, nearestZombie, humanoids } = opts;
 
-    if (this.isAbleToBite(nearestHumanoid)){
+    if (this.isAbleToBite(nearestHumanoid)) {
       humanoids[nearestHumanoid.id] = nearestHumanoid.transform();
     }
 

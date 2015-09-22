@@ -29,11 +29,12 @@ browserifyOptions = {
   debug: true,
   cache: {},
   packageCache: {},
-  fullPaths: true,
+  fullPaths: true
 };
 
 function buildJs(){
   let browserBundle, watcher;
+
   browserBundle = browserify(browserifyOptions);
   browserBundle.transform(babelify);
   watcher = watchify(browserBundle);
@@ -49,6 +50,7 @@ function buildJs(){
 
 function initializeWatcher(bundleToWatch){
   let watcher, updateStart;
+
   watcher = watchify(bundleToWatch);
   watcher.on('update', function(){
     updateStart = Date.now();
@@ -64,6 +66,7 @@ function initializeWatcher(bundleToWatch){
 
 function watchJs(){
   let browserBundle, watcher;
+
   browserBundle = browserify(browserifyOptions);
   browserBundle.transform(babelify);
   watcher = initializeWatcher(browserBundle);
@@ -79,14 +82,14 @@ function watchJs(){
 function buildSass(){
   console.log(paths.stylesRoot);
   gulp.src('public/style/sass/application.scss')
-    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest(paths.stylesRoot));
 }
 
 function watchSass(){
   gulp.watch(paths.sassFiles, ['build:sass'])
   .on('change', function(e){
-    console.log(`[watcher] File ${e.path.replace(/.*(?=sass)/,'')} was ${e.type} at ${new Date()}, compiling...`);
+    console.log(`[watcher] File ${e.path.replace(/.*(?=sass)/, '')} was ${e.type} at ${new Date()}, compiling...`);
   });
 }
 

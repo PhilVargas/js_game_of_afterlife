@@ -12,13 +12,13 @@ class Board {
   }
 
   isGameActive(){
-    return this.humanoids.some(function(humanoid) {
+    return this.humanoids.some(function(humanoid){
       return humanoid.isHuman() || humanoid.isPlayer();
     });
   }
 
   isPlayerAlive(){
-    return this.humanoids.some(function(humanoid) {
+    return this.humanoids.some(function(humanoid){
       return humanoid.isPlayer();
     });
   }
@@ -43,14 +43,14 @@ class Board {
   }
 
   nextTurn(){
-    for(let i = 0; i < this.humanoids.length; i++){
+    for (let i = 0; i < this.humanoids.length; i++) {
       this.humanoid = this.humanoids[i];
       this.humanoid.handleNextMove({
         nearestHumanoid: this.nearestLivingHumanoid(),
         nearestZombie: this.nearestZombie(),
         dx: this.dx,
         dy: this.dy,
-        humanoids: this.humanoids,
+        humanoids: this.humanoids
       });
     }
     this.incrementScore();
@@ -76,7 +76,7 @@ class Board {
     let closestPos, dist;
 
     closestPos = [];
-    for(let i = 0; i < otherHumanoids.length; i++){
+    for (let i = 0; i < otherHumanoids.length; i++) {
       dist = Pathfinder.distanceTo(otherHumanoids[i].position, this.humanoid.position);
       closestPos.push(dist);
     }
@@ -87,8 +87,8 @@ class Board {
     let closestHumanoidValue, closestHumanoid;
 
     closestHumanoidValue = Math.min.apply(null, closestPos);
-    for(let i = 0; i < closestPos.length; i++){
-      if(closestPos[i] === closestHumanoidValue){ closestHumanoid = otherHumanoids[i]; }
+    for (let i = 0; i < closestPos.length; i++) {
+      if (closestPos[i] === closestHumanoidValue) { closestHumanoid = otherHumanoids[i]; }
     }
     return closestHumanoid;
   }

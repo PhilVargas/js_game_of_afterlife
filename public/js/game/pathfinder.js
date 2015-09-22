@@ -3,7 +3,7 @@ let Settings;
 Settings = require('settings');
 
 class Pathfinder {
-  static getRelativePosition(position) {
+  static getRelativePosition(position){
     let x, y;
 
     x = ((position.x + Settings.defaultWidth) % Settings.defaultWidth);
@@ -21,7 +21,7 @@ class Pathfinder {
     deltaY = friendlyLocation.y - currentPosition.y;
     deltaX = friendlyLocation.x - currentPosition.x;
     length = this.distanceTo(friendlyLocation, currentPosition);
-    if (speed !== 0 && length < speed){
+    if (speed !== 0 && length < speed) {
       return friendlyLocation;
     } else {
       return {
@@ -41,7 +41,7 @@ class Pathfinder {
     deltaY = friendlyLocation.y - currentPosition.y;
     deltaX = friendlyLocation.x - currentPosition.x;
     length = this.distanceTo(friendlyLocation, currentPosition);
-    if (speed !== 0 && length < speed){
+    if (speed !== 0 && length < speed) {
       return friendlyLocation;
     } else {
       return {

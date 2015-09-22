@@ -6,24 +6,24 @@ Humanoid = require('humanoids/humanoid');
 InfectedHuman = require('humanoids/infectedHuman');
 
 class Human extends Humanoid {
-  constructor(opts) {
+  constructor(opts){
     super(opts);
     this.speed = Settings.humanSpeed;
   }
 
-  isAbleToBite() {
+  isAbleToBite(){
     return false;
   }
 
-  transform() {
-    return(
+  transform(){
+    return (
       new InfectedHuman(this.cloneProps())
     );
   }
 
   handleNextMove(opts){
     let destination;
-    let { nearestHumanoid, nearestZombie, humanoids } = opts;
+    const { nearestHumanoid, nearestZombie, humanoids } = opts;
 
     destination = Pathfinder.getRelativePosition(
       this.getNextDestination(nearestHumanoid, nearestZombie)
@@ -33,21 +33,21 @@ class Human extends Humanoid {
     }
   }
 
-  isValidDestination(humanoids, targetPosition) {
+  isValidDestination(humanoids, targetPosition){
     return !humanoids.some((humanoid) => {
       return Pathfinder.arePositionsEqual(humanoid.position, targetPosition);
     });
   }
 
   getNextDestination(nearestHumanoid, nearestZombie){
-    if (this.isZombieNearest(nearestZombie, nearestHumanoid)){
+    if (this.isZombieNearest(nearestZombie, nearestHumanoid)) {
       return this.moveNearest(nearestZombie);
     } else {
       return this.moveNearest(nearestHumanoid);
     }
   }
 
-  isZombieNearest(nearestZombie, nearestHumanoid) {
+  isZombieNearest(nearestZombie, nearestHumanoid){
     let zombieDistance;
 
     if (nearestZombie) {
