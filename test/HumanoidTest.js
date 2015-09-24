@@ -62,7 +62,10 @@ describe('Humanoid', function(){
     });
 
     describe('#storeLastPosition', function(){
-      let newPosition = {x: 15, y: 10};
+      let newPosition;
+
+      newPosition = { x: 15, y: 10 };
+
       beforeEach(function(){
         humanoid.position = newPosition;
         humanoid.storeLastPosition();
@@ -75,12 +78,16 @@ describe('Humanoid', function(){
 
     describe('#isLastMoveRepeated', function(){
       it('should return true for close positions', function(){
-        let closePosition = {x: humanoid.position.x + 0.01, y: humanoid.position.y + 0.01};
+        let closePosition;
+
+        closePosition = { x: humanoid.position.x + 0.01, y: humanoid.position.y + 0.01 };
         expect(humanoid.isLastMoveRepeated(closePosition)).to.equal(true);
       });
 
       it('should return false for distant positions', function(){
-        let distantPosition = {x: 10, y: 20};
+        let distantPosition;
+
+        distantPosition = { x: 10, y: 20 };
         expect(humanoid.isLastMoveRepeated(distantPosition)).to.equal(false);
       });
     });
