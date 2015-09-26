@@ -8,7 +8,6 @@ let Pathfinder;
 Pathfinder = require('pathfinder');
 
 describe('Pathfinder', function(){
-
   describe('#distanceTo', function(){
     let coord1, coord2;
 
