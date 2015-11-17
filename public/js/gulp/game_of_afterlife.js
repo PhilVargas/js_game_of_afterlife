@@ -133,6 +133,13 @@ function watchSass(){
   });
 }
 
+/**
+ * @name cleanScripts
+ * @function
+ * @requires del
+ * @return {Function} stream used for gulp tasks
+ * @summary gulp task used to clear out listed directories or files
+ */
 function cleanScripts(){
   return clean([
     './dist'
