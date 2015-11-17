@@ -1,4 +1,6 @@
 let gulp,
+    merge,
+    ghPages,
     sass,
     browserify,
     babelify,
@@ -11,6 +13,8 @@ let gulp,
     browserifyOptions;
 
 gulp = require('gulp');
+merge = require('merge-stream');
+ghPages = require('gulp-gh-pages');
 sass = require('gulp-sass');
 browserify = require('browserify');
 babelify = require('babelify');
@@ -36,13 +40,11 @@ function buildJs(destination){
   let browserBundle;
 
   browserBundle = browserify(browserifyOptions);
-  browserBundle.transform(babelify, {
+  return browserBundle.transform(babelify, {
     presets: ['es2015']
   })
     .bundle()
     .pipe(source('bundle.js'))
-    .pipe(buffer())
-    .pipe(uglify())
     .pipe(gulp.dest(destination));
 }
 function initializeWatcher(bundleToWatch){
@@ -76,11 +78,10 @@ function watchJs(){
   return;
 }
 
-function buildSass(){
-  console.log(paths.stylesRoot);
-  gulp.src('public/style/sass/application.scss')
+function buildSass(destination){
+  return gulp.src('public/style/sass/application.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-    .pipe(gulp.dest(paths.stylesRoot));
+    .pipe(gulp.dest(destination));
 }
 
 function watchSass(){
@@ -90,11 +91,30 @@ function watchSass(){
   });
 }
 
+function deployPrep(){
+  return merge(
+  buildSass(paths.stylesDeployRoot),
+  buildJs(paths.jsDeployRoot),
+  gulp.src('README.md').pipe(gulp.dest('./dist/')),
+  gulp.src('favicon.ico').pipe(gulp.dest('./dist/')),
+  gulp.src('public/img/*').pipe(gulp.dest('./dist/img')),
+  gulp.src('index.html').pipe(gulp.dest('./dist/'))
+  );
+}
+
+function deployProd(){
+  return gulp.src('./dist/**/*').pipe(ghPages({ force: true }));
+}
+
 module.exports.watch = {
   js: watchJs,
   sass: watchSass
 };
 module.exports.build = {
   js: buildJs.bind(null, paths.build),
-  sass: buildSass
+  sass: buildSass.bind(null, paths.stylesRoot)
 };
+module.exports.deploy = {
+  prep: deployPrep,
+  prod: deployProd
+}
