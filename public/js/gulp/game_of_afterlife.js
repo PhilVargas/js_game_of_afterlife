@@ -40,7 +40,7 @@ browserifyOptions = {
 
 /**
  * @name buildJs
- * @param destination {String} path to the output destination. This value changes based on
+ * @param {String} destination path to the output destination. This value changes based on
  * production / development deploy and should be set (using bind) in the export of this file.
  * @return {Function} stream object used for gulp tasks
  * @summary Function responsible for building the javascript bundle using babelify (babel 6).
@@ -59,7 +59,7 @@ function buildJs(destination){
 
 /**
  * @name initializeWatcher
- * @param bundleToWatch {Function} output of `browserify#transform` that is to be prepped for
+ * @param {Function} bundleToWatch output of `browserify#transform` that is to be prepped for
  * watching.
  * @return {Function} stream watcher to be used by gulp tasks / event listening
  * @listens {event:update} gulp event emmitted when an update has occurred
@@ -90,6 +90,7 @@ function initializeWatcher(bundleToWatch){
  * @listens {event:error} gulp event error emmitted when a bundle compilation fails
  * @summary responsible for watching the javascript bundle. This is the end function for the
  * watching gulp task. invoke the watcher function and additionally build the bundle immediately
+ * @returns null
  */
 function watchJs(){
   let browserBundle, watcher;
