@@ -38,6 +38,13 @@ browserifyOptions = {
   fullPaths: true
 };
 
+/**
+ * @name buildJs
+ * @param destination {String} path to the output destination. This value changes based on
+ * production / development deploy and should be set (using bind) in the export of this file.
+ * @return {Function} stream object used for gulp tasks
+ * @summary Function responsible for building the javascript bundle using babelify (babel 6).
+ */
 function buildJs(destination){
   let browserBundle;
 
