@@ -1,33 +1,15 @@
-let gulp,
-    clean,
-    merge,
-    ghPages,
-    sass,
-    browserify,
-    babelify,
-    watchify,
-    uglify,
-    buffer,
-    source,
-    paths,
-    displayError,
-    browserifyOptions;
+const gulp = require('gulp');
+const clean = require('del');
+const merge = require('merge-stream');
+const ghPages = require('gulp-gh-pages');
+const sass = require('gulp-sass');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream');
+const paths = require('./filepaths.js');
+const displayError = paths.displayError;
 
-gulp = require('gulp');
-clean = require('del');
-merge = require('merge-stream');
-ghPages = require('gulp-gh-pages');
-sass = require('gulp-sass');
-browserify = require('browserify');
-babelify = require('babelify');
-watchify = require('watchify');
-uglify = require('gulp-uglify');
-buffer = require('vinyl-buffer');
-source = require('vinyl-source-stream');
-paths = require('./filepaths.js');
-displayError = paths.displayError;
-
-browserifyOptions = {
+const browserifyOptions = {
   entries: paths.entries,
   basedir: paths.jsRoot,
   paths: paths.includes,
@@ -64,8 +46,8 @@ function buildJs(destination){
 /**
  * @name watchJs
  * @borrows buildJs
- * @summary responsible for watching the javascript bundle. This is the end function for the
- * watching gulp task. invoke the watcher function and additionally build the bundle immediately
+ * @summary gulp task responsible for watching the javascript bundle. invoke the build task and
+ * set up a watcher on the JS files
  * @return {void}
  */
 function watchJs(){
