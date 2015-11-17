@@ -42,69 +42,39 @@ browserifyOptions = {
  * @name buildJs
  * @param {String} destination path to the output destination. This value changes based on
  * production / development deploy and should be set (using bind) in the export of this file.
+ * @listens {event:error} gulp event error emmitted when a bundle compilation fails. logs a custom
+ * error message from `displayError`
  * @summary Function responsible for building the javascript bundle using babelify (babel 6).
  * @return {Function} stream object used for gulp tasks
  */
 function buildJs(destination){
-  let browserBundle;
-
-  browserBundle = browserify(browserifyOptions);
-  return browserBundle.transform(babelify, {
-    presets: ['es2015']
-  })
+  return browserify(browserifyOptions)
+    .transform(babelify, {
+      presets: ['es2015']
+    })
     .bundle()
+    .on('error', function(e){
+      displayError(e);
+      return;
+    })
     .pipe(source('bundle.js'))
     .pipe(gulp.dest(destination));
 }
 
 /**
- * @name initializeWatcher
- * @param {Function} bundleToWatch output of `browserify#transform` that is to be prepped for
- * watching.
- * @listens {event:update} gulp event emmitted when an update has occurred
- * @listens {event:error} gulp event error emmitted when a bundle compilation fails
- * @description define the update event to initialize a bundle and display the error should one
- * occur. outputs a `bundle.js` file to the build path. additionally, output a timestamp notifying
- * completion of the build
- * @return {Function} stream watcher to be used by gulp tasks / event listening
- */
-function initializeWatcher(bundleToWatch){
-  let watcher, updateStart;
-
-  watcher = watchify(bundleToWatch);
-  watcher.on('update', function(){
-    updateStart = Date.now();
-    watcher.bundle().on('error', function(e){
-      displayError(e);
-      return;
-    }).pipe(source('bundle.js'))
-    .pipe(gulp.dest(paths.build));
-    console.log(`Updated! ${Date.now() - updateStart}ms. Complete at ${new Date()}`);
-  });
-  return watcher;
-}
-
-/**
  * @name watchJs
- * @borrows initializeWatcher
- * @listens {event:error} gulp event error emmitted when a bundle compilation fails
+ * @borrows buildJs
  * @summary responsible for watching the javascript bundle. This is the end function for the
  * watching gulp task. invoke the watcher function and additionally build the bundle immediately
  * @return {void}
  */
 function watchJs(){
-  let browserBundle, watcher;
-
-  browserBundle = browserify(browserifyOptions);
-  browserBundle.transform(babelify);
-  watcher = initializeWatcher(browserBundle);
-  watcher.bundle().on('error', function(e){
-    displayError(e);
-    return;
-  })
-  .pipe(source('bundle.js'))
-  .pipe(gulp.dest(paths.build));
-  return;
+  buildJs(paths.build);
+  console.log(`[watcher] Bundle initialized at ${new Date()}`);
+  gulp.watch(paths.jsFiles, function(e){
+    buildJs(paths.build);
+    console.log(`[watcher] File ${e.path.replace(/.*(?=js)/, '')} was ${e.type} at ${new Date()}, compiling...`);
+  });
 }
 
 /**
