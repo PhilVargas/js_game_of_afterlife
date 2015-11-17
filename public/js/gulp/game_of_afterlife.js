@@ -106,6 +106,14 @@ function watchJs(){
   return;
 }
 
+/**
+ * @name buildSass
+ * @function
+ * @param destination {String} path to the output destination. This value changes based on
+ * production / development deploy and should be set (using bind) in the export of this file.
+ * @return {Function} stream object used for gulp tasks
+ * @summary build task used to build minified css sheets.
+ */
 function buildSass(destination){
   return gulp.src('public/style/sass/application.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
