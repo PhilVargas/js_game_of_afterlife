@@ -32,22 +32,19 @@ browserifyOptions = {
   fullPaths: true
 };
 
-function buildJs(){
-  let browserBundle, watcher;
+function buildJs(destination){
+  let browserBundle;
 
   browserBundle = browserify(browserifyOptions);
-  browserBundle.transform(babelify);
-  watcher = watchify(browserBundle);
-  watcher.bundle()
+  browserBundle.transform(babelify, {
+    presets: ['es2015']
+  })
+    .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(uglify())
-    .pipe(gulp.dest(paths.build))
-    .on('end', function(){
-      watcher.close();
-    });
+    .pipe(gulp.dest(destination));
 }
-
 function initializeWatcher(bundleToWatch){
   let watcher, updateStart;
 
@@ -98,6 +95,6 @@ module.exports.watch = {
   sass: watchSass
 };
 module.exports.build = {
-  js: buildJs,
+  js: buildJs.bind(null, paths.build),
   sass: buildSass
 };
