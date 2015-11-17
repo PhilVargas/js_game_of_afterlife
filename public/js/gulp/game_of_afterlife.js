@@ -145,6 +145,17 @@ function cleanScripts(){
     './dist'
   ]);
 }
+
+/**
+ * @name deployPrep
+ * @function
+ * @borrows buildSass
+ * @borrows buildJs
+ * @return {Function} stream used for gulp tasks
+ * @summary executes a set of gulp tasks. These tasks must all be asyncronous (must not depend on a
+ * previous task in order to run) and must all return gulp streams. Its primary use is to build the
+ * `dist` directory for deployment
+ */
 function deployPrep(){
   return merge(
     buildSass(paths.stylesDeployRoot),
