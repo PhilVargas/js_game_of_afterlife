@@ -19,3 +19,7 @@
 
 dist
 .publish/
+
+**/*/bundle.js
+**/*/application.css
+
