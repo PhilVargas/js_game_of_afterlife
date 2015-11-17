@@ -101,7 +101,7 @@
     "yoda": [1, "never", { "exceptRange": true }],
 
   // Variables
-    "init-declarations": [1, "never"],
+    "init-declarations": [1, "never", { "ignoreForLoopInit": true }],
     "no-catch-shadow": 0,
     "no-delete-var": 1,
     "no-label-var": 0,
