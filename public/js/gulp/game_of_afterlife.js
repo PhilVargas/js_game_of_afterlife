@@ -111,12 +111,13 @@ function watchJs(){
  * @function
  * @param destination {String} path to the output destination. This value changes based on
  * production / development deploy and should be set (using bind) in the export of this file.
+ * @param {String} outputStyle `node-sass` config option for the outputStyle
  * @return {Function} stream object used for gulp tasks
  * @summary build task used to build minified css sheets.
  */
-function buildSass(destination){
+function buildSass(destination, outputStyle){
   return gulp.src('public/style/sass/application.scss')
-    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(sass({ outputStyle: outputStyle }).on('error', sass.logError))
     .pipe(gulp.dest(destination));
 }
 
@@ -127,8 +128,10 @@ function buildSass(destination){
  * @summary watch task used to build minified css sheets on change.
  */
 function watchSass(){
-  gulp.watch(paths.sassFiles, ['build:sass'])
-  .on('change', function(e){
+  buildSass(paths.stylesRoot, 'nested');
+  console.log(`[watcher] Bundle initialized at ${new Date()}`);
+  gulp.watch(paths.sassFiles, function(e){
+    buildSass(paths.stylesRoot, 'nested');
     console.log(`[watcher] File ${e.path.replace(/.*(?=sass)/, '')} was ${e.type} at ${new Date()}, compiling...`);
   });
 }
@@ -158,7 +161,7 @@ function cleanScripts(){
  */
 function deployPrep(){
   return merge(
-    buildSass(paths.stylesDeployRoot),
+    buildSass(paths.stylesDeployRoot, 'compressed'),
     buildJs(paths.jsDeployRoot),
     gulp.src('README.md').pipe(gulp.dest('./dist/')),
     gulp.src('favicon.ico').pipe(gulp.dest('./dist/')),
@@ -183,7 +186,7 @@ module.exports.watch = {
 };
 module.exports.build = {
   js: buildJs.bind(null, paths.build),
-  sass: buildSass.bind(null, paths.stylesRoot)
+  sass: buildSass.bind(null, paths.stylesRoot, 'compressed')
 };
 module.exports.deploy = {
   clean: cleanScripts,
