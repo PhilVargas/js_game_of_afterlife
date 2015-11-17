@@ -1,5 +1,7 @@
+'use strict';
+
 require('babel-core/register');
-var gulp, gulpTasks;
+let gulp, gulpTasks;
 
 gulp = require('gulp');
 gulpTasks = require('./public/js/gulp/tasks.js');
@@ -22,4 +24,4 @@ gulp.task('watch:assets', ['watch:js', 'watch:sass']);
 gulp.task('deploy:clean', gulpTasks.deploy.clean);
 gulp.task('deploy:build', gulpTasks.deploy.prep);
 gulp.task('deploy:prep', ['deploy:clean'], gulpTasks.deploy.prep);
-gulp.task('deploy', ['deploy:prep'], gulpTasks.deploy.prod)
+gulp.task('deploy', ['deploy:prep'], gulpTasks.deploy.prod);
