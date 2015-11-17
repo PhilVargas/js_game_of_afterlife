@@ -19,6 +19,7 @@ gulp.task('assets:watch', ['watch:js', 'watch:sass']);
 gulp.task('build:assets', ['build:js', 'build:sass']);
 gulp.task('watch:assets', ['watch:js', 'watch:sass']);
 
-gulp.task('deploy:prep', gulpTasks.deploy.prep);
-
+gulp.task('deploy:clean', gulpTasks.deploy.clean);
+gulp.task('deploy:build', gulpTasks.deploy.prep);
+gulp.task('deploy:prep', ['deploy:clean'], gulpTasks.deploy.prep);
 gulp.task('deploy', ['deploy:prep'], gulpTasks.deploy.prod)

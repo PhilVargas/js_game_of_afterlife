@@ -1,4 +1,5 @@
 let gulp,
+    clean,
     merge,
     ghPages,
     sass,
@@ -13,6 +14,7 @@ let gulp,
     browserifyOptions;
 
 gulp = require('gulp');
+clean = require('del');
 merge = require('merge-stream');
 ghPages = require('gulp-gh-pages');
 sass = require('gulp-sass');
@@ -91,14 +93,19 @@ function watchSass(){
   });
 }
 
+function cleanScripts(){
+  return clean([
+    './dist'
+  ]);
+}
 function deployPrep(){
   return merge(
-  buildSass(paths.stylesDeployRoot),
-  buildJs(paths.jsDeployRoot),
-  gulp.src('README.md').pipe(gulp.dest('./dist/')),
-  gulp.src('favicon.ico').pipe(gulp.dest('./dist/')),
-  gulp.src('public/img/*').pipe(gulp.dest('./dist/img')),
-  gulp.src('index.html').pipe(gulp.dest('./dist/'))
+    buildSass(paths.stylesDeployRoot),
+    buildJs(paths.jsDeployRoot),
+    gulp.src('README.md').pipe(gulp.dest('./dist/')),
+    gulp.src('favicon.ico').pipe(gulp.dest('./dist/')),
+    gulp.src('public/img/*').pipe(gulp.dest('./dist/img')),
+    gulp.src('index.html').pipe(gulp.dest('./dist/'))
   );
 }
 
@@ -115,6 +122,7 @@ module.exports.build = {
   sass: buildSass.bind(null, paths.stylesRoot)
 };
 module.exports.deploy = {
+  clean: cleanScripts,
   prep: deployPrep,
   prod: deployProd
 }
