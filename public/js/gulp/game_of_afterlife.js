@@ -42,8 +42,8 @@ browserifyOptions = {
  * @name buildJs
  * @param {String} destination path to the output destination. This value changes based on
  * production / development deploy and should be set (using bind) in the export of this file.
- * @return {Function} stream object used for gulp tasks
  * @summary Function responsible for building the javascript bundle using babelify (babel 6).
+ * @return {Function} stream object used for gulp tasks
  */
 function buildJs(destination){
   let browserBundle;
@@ -61,12 +61,12 @@ function buildJs(destination){
  * @name initializeWatcher
  * @param {Function} bundleToWatch output of `browserify#transform` that is to be prepped for
  * watching.
- * @return {Function} stream watcher to be used by gulp tasks / event listening
  * @listens {event:update} gulp event emmitted when an update has occurred
  * @listens {event:error} gulp event error emmitted when a bundle compilation fails
  * @description define the update event to initialize a bundle and display the error should one
  * occur. outputs a `bundle.js` file to the build path. additionally, output a timestamp notifying
  * completion of the build
+ * @return {Function} stream watcher to be used by gulp tasks / event listening
  */
 function initializeWatcher(bundleToWatch){
   let watcher, updateStart;
@@ -90,7 +90,7 @@ function initializeWatcher(bundleToWatch){
  * @listens {event:error} gulp event error emmitted when a bundle compilation fails
  * @summary responsible for watching the javascript bundle. This is the end function for the
  * watching gulp task. invoke the watcher function and additionally build the bundle immediately
- * @returns null
+ * @return {void}
  */
 function watchJs(){
   let browserBundle, watcher;
@@ -110,15 +110,15 @@ function watchJs(){
 /**
  * @name buildSass
  * @function
- * @param destination {String} path to the output destination. This value changes based on
+ * @param {String} destination path to the output destination. This value changes based on
  * production / development deploy and should be set (using bind) in the export of this file.
  * @param {String} outputStyle `node-sass` config option for the outputStyle
- * @return {Function} stream object used for gulp tasks
  * @summary build task used to build minified css sheets.
+ * @return {Function} stream object used for gulp tasks
  */
 function buildSass(destination, outputStyle){
   return gulp.src('public/style/sass/application.scss')
-    .pipe(sass({ outputStyle: outputStyle }).on('error', sass.logError))
+    .pipe(sass({ outputStyle }).on('error', sass.logError))
     .pipe(gulp.dest(destination));
 }
 
@@ -127,6 +127,7 @@ function buildSass(destination, outputStyle){
  * @function
  * @listens {event:change} gulp event emmitted on a changed scss file
  * @summary watch task used to build minified css sheets on change.
+ * @return {void}
  */
 function watchSass(){
   buildSass(paths.stylesRoot, 'nested');
@@ -141,8 +142,8 @@ function watchSass(){
  * @name cleanScripts
  * @function
  * @requires del
- * @return {Function} stream used for gulp tasks
  * @summary gulp task used to clear out listed directories or files
+ * @return {Function} stream used for gulp tasks
  */
 function cleanScripts(){
   return clean([
@@ -155,10 +156,10 @@ function cleanScripts(){
  * @function
  * @borrows buildSass
  * @borrows buildJs
- * @return {Function} stream used for gulp tasks
  * @summary executes a set of gulp tasks. These tasks must all be asyncronous (must not depend on a
  * previous task in order to run) and must all return gulp streams. Its primary use is to build the
  * `dist` directory for deployment
+ * @return {Function} stream used for gulp tasks
  */
 function deployPrep(){
   return merge(
@@ -174,8 +175,8 @@ function deployPrep(){
 /**
  * @name deployProd
  * @function
- * @return {Function} stream used for gulp tasks
  * @summary Task used to deploy everything in the dist folder to gh-pages
+ * @return {Function} stream used for gulp tasks
  */
 function deployProd(){
   return gulp.src('./dist/**/*').pipe(ghPages({ force: true }));
@@ -193,4 +194,4 @@ module.exports.deploy = {
   clean: cleanScripts,
   prep: deployPrep,
   prod: deployProd
-}
+};
