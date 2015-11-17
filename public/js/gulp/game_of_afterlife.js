@@ -167,6 +167,12 @@ function deployPrep(){
   );
 }
 
+/**
+ * @name deployProd
+ * @function
+ * @return {Function} stream used for gulp tasks
+ * @summary Task used to deploy everything in the dist folder to gh-pages
+ */
 function deployProd(){
   return gulp.src('./dist/**/*').pipe(ghPages({ force: true }));
 }
