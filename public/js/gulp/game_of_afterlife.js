@@ -84,6 +84,13 @@ function initializeWatcher(bundleToWatch){
   return watcher;
 }
 
+/**
+ * @name watchJs
+ * @borrows initializeWatcher
+ * @listens {event:error} gulp event error emmitted when a bundle compilation fails
+ * @summary responsible for watching the javascript bundle. This is the end function for the
+ * watching gulp task. invoke the watcher function and additionally build the bundle immediately
+ */
 function watchJs(){
   let browserBundle, watcher;
 
