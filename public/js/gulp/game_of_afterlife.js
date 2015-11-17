@@ -56,6 +56,18 @@ function buildJs(destination){
     .pipe(source('bundle.js'))
     .pipe(gulp.dest(destination));
 }
+
+/**
+ * @name initializeWatcher
+ * @param bundleToWatch {Function} output of `browserify#transform` that is to be prepped for
+ * watching.
+ * @return {Function} stream watcher to be used by gulp tasks / event listening
+ * @listens {event:update} gulp event emmitted when an update has occurred
+ * @listens {event:error} gulp event error emmitted when a bundle compilation fails
+ * @description define the update event to initialize a bundle and display the error should one
+ * occur. outputs a `bundle.js` file to the build path. additionally, output a timestamp notifying
+ * completion of the build
+ */
 function initializeWatcher(bundleToWatch){
   let watcher, updateStart;
 
