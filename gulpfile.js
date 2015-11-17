@@ -2,7 +2,7 @@ require('babel-core/register');
 var gulp, gulpTasks;
 
 gulp = require('gulp');
-gulpTasks = require('./public/js/gulp/game_of_afterlife.js');
+gulpTasks = require('./public/js/gulp/tasks.js');
 
 gulp.task('js:build', gulpTasks.build.js);
 gulp.task('js:watch', gulpTasks.watch.js);
