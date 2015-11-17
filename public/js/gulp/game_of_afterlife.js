@@ -120,6 +120,12 @@ function buildSass(destination){
     .pipe(gulp.dest(destination));
 }
 
+/**
+ * @name watchSass
+ * @function
+ * @listens {event:change} gulp event emmitted on a changed scss file
+ * @summary watch task used to build minified css sheets on change.
+ */
 function watchSass(){
   gulp.watch(paths.sassFiles, ['build:sass'])
   .on('change', function(e){
