@@ -7,8 +7,8 @@ let JS_BASE_DIR,
 
 JS_BASE_DIR = 'public/js';
 STYLES_BASE_DIR = 'public/style';
-JS_DEPLOY_DIR = 'dist/js';
-STYLES_DEPLOY_DIR = 'dist/style';
+JS_DEPLOY_DIR = 'dist/public/js';
+STYLES_DEPLOY_DIR = 'dist/public/style';
 SASS_BASE_DIR = 'public/style/sass';
 VENDOR_ROOT = 'node_modules';
 
