@@ -119,7 +119,7 @@ function deployPrep(){
     buildJs(paths.jsDeployRoot),
     gulp.src('README.md').pipe(gulp.dest('./dist/')),
     gulp.src('favicon.ico').pipe(gulp.dest('./dist/')),
-    gulp.src('public/img/*').pipe(gulp.dest('./dist/img')),
+    gulp.src('public/img/*').pipe(gulp.dest('./dist/public/img')),
     gulp.src('index.html').pipe(gulp.dest('./dist/'))
   );
 }
