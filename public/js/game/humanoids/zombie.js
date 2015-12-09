@@ -1,6 +1,6 @@
-let Pathfinder, Settings, Humanoid;
+let Pathfinder, Humanoid;
 
-Settings = require('settings');
+import { default as Settings } from 'settings';
 Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
 

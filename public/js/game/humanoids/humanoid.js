@@ -1,7 +1,7 @@
-let Pathfinder, Settings;
+let Pathfinder;
 
 Pathfinder = require('pathfinder');
-Settings = require('settings');
+import { default as Settings } from 'settings';
 
 class Humanoid {
   constructor(attributes){

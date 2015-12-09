@@ -1,8 +1,8 @@
-let Humanoid, Zombie, Settings;
+let Humanoid, Zombie;
 
 Humanoid = require('humanoids/humanoid');
 Zombie = require('humanoids/zombie');
-Settings = require('settings');
+import { default as Settings } from 'settings';
 
 class InfectedHuman extends Humanoid {
   constructor(opts){

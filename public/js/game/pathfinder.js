@@ -1,6 +1,4 @@
-let Settings;
-
-Settings = require('settings');
+import { default as Settings } from 'settings';
 
 class Pathfinder {
   static getRelativePosition(position){

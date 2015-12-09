@@ -1,6 +1,4 @@
-let Settings;
-
-Settings = {
+const Settings = {
   humanSpeed: 7,
   playerSpeed: 6,
   zombieSpeed: 4,
@@ -20,4 +18,4 @@ Settings = {
   defaultHeight: 400 // default canvas height
 };
 
-module.exports = Settings;
+export { Settings as default };

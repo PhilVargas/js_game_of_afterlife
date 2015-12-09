@@ -1,16 +1,9 @@
-let JS_BASE_DIR,
-    STYLES_BASE_DIR,
-    STYLES_DEPLOY_DIR,
-    JS_DEPLOY_DIR,
-    SASS_BASE_DIR,
-    VENDOR_ROOT;
-
-JS_BASE_DIR = 'public/js';
-STYLES_BASE_DIR = 'public/style';
-JS_DEPLOY_DIR = 'dist/public/js';
-STYLES_DEPLOY_DIR = 'dist/public/style';
-SASS_BASE_DIR = 'public/style/sass';
-VENDOR_ROOT = 'node_modules';
+const JS_BASE_DIR = 'public/js';
+const STYLES_BASE_DIR = 'public/style';
+const JS_DEPLOY_DIR = 'dist/public/js';
+const STYLES_DEPLOY_DIR = 'dist/public/style';
+const SASS_BASE_DIR = 'public/style/sass';
+const VENDOR_ROOT = 'node_modules';
 
 function displayError(error){
   let errorMessage;
@@ -19,9 +12,8 @@ function displayError(error){
   console.error(errorMessage);
 }
 
-module.exports = {
+const config = {
   build: JS_BASE_DIR,
-  displayError,
   entries: ['game/initialize.js'],
   includes: [
     './',
@@ -40,3 +32,4 @@ module.exports = {
   root: JS_BASE_DIR
 };
 
+export { config as default, displayError };

@@ -1,8 +1,9 @@
-let Board, HumanoidBuilder, Settings;
+let Board, HumanoidBuilder;
 
 Board = require('board');
 HumanoidBuilder = require('humanoidFactory');
-Settings = require('settings');
+
+import { default as Settings } from 'settings';
 
 class GameOfAfterlife {
   constructor(){
