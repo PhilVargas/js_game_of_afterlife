@@ -1,11 +1,10 @@
-let chai, expect, spies, HumanoidBuilder;
+import { default as chai } from 'chai';
+import { default as spies } from 'chai-spies';
 
-chai = require('chai');
-spies = require('chai-spies');
 chai.use(spies);
-expect = chai.expect;
+const expect = chai.expect;
 
-HumanoidBuilder = require('humanoidFactory');
+import { default as HumanoidBuilder } from 'humanoidFactory';
 
 describe('HumanoidBuilder', function(){
   describe('::creation', function(){

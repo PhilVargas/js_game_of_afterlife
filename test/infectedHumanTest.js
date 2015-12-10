@@ -1,14 +1,11 @@
-let chai, expect;
+import { default as chai } from 'chai';
 
-chai = require('chai');
 chai.use(require('chai-changes'));
 chai.use(require('chai-spies'));
-expect = chai.expect;
+const expect = chai.expect;
 
-let Zombie, Infected;
-
-Infected = require('humanoids/infectedHuman');
-Zombie = require('humanoids/zombie');
+import { default as Infected } from 'humanoids/infectedHuman';
+import { default as Zombie } from 'humanoids/zombie';
 
 describe('InfectedHuman', function(){
   let infected;

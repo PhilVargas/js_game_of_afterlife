@@ -1,15 +1,11 @@
-let chai, sinon, expect;
+import { default as chai } from 'chai';
+import { default as sinon } from 'sinon';
+const expect = chai.expect;
 
-chai = require('chai');
-sinon = require('sinon');
-expect = chai.expect;
-
-let Zombie, Human, Settings, Pathfinder;
-
-Human = require('humanoids/human');
-Zombie = require('humanoids/zombie');
-Settings = require('settings');
-Pathfinder = require('pathfinder');
+import { default as Human } from 'humanoids/human';
+import { default as Zombie } from 'humanoids/zombie';
+import { default as Settings } from 'settings';
+import { default as Pathfinder } from 'pathfinder';
 
 describe('Zombie', function(){
   let zombie, human;
