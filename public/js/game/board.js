@@ -1,6 +1,5 @@
 import { default as Pathfinder } from 'pathfinder';
 
-
 class Board {
   constructor(attributes){
     this.humanoid = null;
@@ -93,4 +92,4 @@ class Board {
   }
 }
 
-module.exports = Board;
+export { Board as default };

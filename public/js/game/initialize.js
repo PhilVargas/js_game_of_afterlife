@@ -1,6 +1,6 @@
-let GameOfAfterlife, gameOfAfterlife;
+let gameOfAfterlife;
 
-GameOfAfterlife = require('game');
+import { default as GameOfAfterlife } from 'game';
 
 document.getElementById('initialize-game').addEventListener('click', function(){
   document.getElementById('overlay').className = 'hide';
