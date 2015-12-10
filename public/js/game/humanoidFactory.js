@@ -39,4 +39,4 @@ class HumanoidBuilder {
   }
 }
 
-module.exports = HumanoidBuilder;
+export { HumanoidBuilder as default };
