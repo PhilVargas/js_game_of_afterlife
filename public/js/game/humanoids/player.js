@@ -1,9 +1,7 @@
-let Pathfinder, Settings, Humanoid, InfectedHuman;
-
-Settings = require('settings');
-Pathfinder = require('pathfinder');
-Humanoid = require('humanoids/humanoid');
-InfectedHuman = require('humanoids/infectedHuman');
+import { default as Pathfinder } from 'pathfinder';
+import { default as Settings } from 'settings';
+import { default as Humanoid } from 'humanoids/humanoid';
+import { default as InfectedHuman } from 'humanoids/infectedHuman';
 
 class Player extends Humanoid {
   constructor(opts){
@@ -34,5 +32,4 @@ class Player extends Humanoid {
   }
 }
 
-module.exports = Player;
-
+export { Player as default };

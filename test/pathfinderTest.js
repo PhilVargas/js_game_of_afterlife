@@ -1,11 +1,7 @@
-let chai, expect;
+import { default as chai } from 'chai';
+const expect = chai.expect;
 
-chai = require('chai');
-expect = chai.expect;
-
-let Pathfinder;
-
-Pathfinder = require('pathfinder');
+import { default as Pathfinder } from 'pathfinder';
 
 describe('Pathfinder', function(){
   describe('#distanceTo', function(){

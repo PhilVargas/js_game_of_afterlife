@@ -1,8 +1,6 @@
-let Board, HumanoidBuilder, Settings;
-
-Board = require('board');
-HumanoidBuilder = require('humanoidFactory');
-Settings = require('settings');
+import { default as Settings } from 'settings';
+import { default as HumanoidBuilder } from 'humanoidFactory';
+import { default as Board } from 'board';
 
 class GameOfAfterlife {
   constructor(){
@@ -82,4 +80,4 @@ class GameOfAfterlife {
   }
 }
 
-module.exports = GameOfAfterlife;
+export { GameOfAfterlife as default };

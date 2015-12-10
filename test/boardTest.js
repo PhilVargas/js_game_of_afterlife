@@ -1,12 +1,11 @@
-let chai, expect, Human, Zombie, Player, Board;
+import { default as chai } from 'chai';
 
-chai = require('chai');
-expect = chai.expect;
+const expect = chai.expect;
 
-Player = require('humanoids/player');
-Human = require('humanoids/human');
-Zombie = require('humanoids/zombie');
-Board = require('board');
+import { default as Player } from 'humanoids/player';
+import { default as Human } from 'humanoids/human';
+import { default as Zombie } from 'humanoids/zombie';
+import { default as Board } from 'board';
 
 describe('Board', function(){
   let human, human2, player, zombie, zombie2, board;

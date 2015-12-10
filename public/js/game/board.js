@@ -1,6 +1,4 @@
-let Pathfinder;
-
-Pathfinder = require('pathfinder');
+import { default as Pathfinder } from 'pathfinder';
 
 class Board {
   constructor(attributes){
@@ -94,4 +92,4 @@ class Board {
   }
 }
 
-module.exports = Board;
+export { Board as default };

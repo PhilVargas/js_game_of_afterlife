@@ -1,18 +1,15 @@
-let chai, sinon, expect;
+import { default as chai } from 'chai';
+import { default as sinon } from 'sinon';
 
-chai = require('chai');
-sinon = require('sinon');
 chai.use(require('chai-changes'));
-expect = chai.expect;
+const expect = chai.expect;
 
-let Human, InfectedHuman, Zombie, Player, Settings, Pathfinder;
-
-Human = require('humanoids/human');
-Player = require('humanoids/player');
-Zombie = require('humanoids/zombie');
-InfectedHuman = require('humanoids/infectedHuman');
-Settings = require('settings');
-Pathfinder = require('pathfinder');
+import { default as Human } from 'humanoids/human';
+import { default as Player } from 'humanoids/player';
+import { default as Zombie } from 'humanoids/zombie';
+import { default as InfectedHuman } from 'humanoids/infectedHuman';
+import { default as Settings } from 'settings';
+import { default as Pathfinder } from 'pathfinder';
 
 describe('Human', function(){
   let human;

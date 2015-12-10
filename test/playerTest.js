@@ -1,16 +1,13 @@
-let chai, sinon, expect;
+import { default as chai } from 'chai';
+import { default as sinon } from 'sinon';
 
-chai = require('chai');
-sinon = require('sinon');
 chai.use(require('chai-changes'));
-expect = chai.expect;
+const expect = chai.expect;
 
-let Player, Infected, Settings, Pathfinder;
-
-Player = require('humanoids/player');
-Infected = require('humanoids/infectedHuman');
-Pathfinder = require('pathfinder');
-Settings = require('settings');
+import { default as Player } from 'humanoids/player';
+import { default as Infected } from 'humanoids/infectedHuman';
+import { default as Pathfinder } from 'pathfinder';
+import { default as Settings } from 'settings';
 
 describe('Player', function(){
   let player;

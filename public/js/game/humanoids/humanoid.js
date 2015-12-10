@@ -1,7 +1,5 @@
-let Pathfinder, Settings;
-
-Pathfinder = require('pathfinder');
-Settings = require('settings');
+import { default as Pathfinder } from 'pathfinder';
+import { default as Settings } from 'settings';
 
 class Humanoid {
   constructor(attributes){
@@ -68,4 +66,4 @@ class Humanoid {
   }
 }
 
-module.exports = Humanoid;
+export { Humanoid as default };

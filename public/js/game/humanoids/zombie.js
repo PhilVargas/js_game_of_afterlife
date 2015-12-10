@@ -1,8 +1,6 @@
-let Pathfinder, Settings, Humanoid;
-
-Settings = require('settings');
-Pathfinder = require('pathfinder');
-Humanoid = require('humanoids/humanoid');
+import { default as Pathfinder } from 'pathfinder';
+import { default as Settings } from 'settings';
+import { default as Humanoid } from 'humanoids/humanoid';
 
 class Zombie extends Humanoid {
   constructor(opts){
@@ -68,4 +66,4 @@ class Zombie extends Humanoid {
   }
 }
 
-module.exports = Zombie;
+export { Zombie as default };

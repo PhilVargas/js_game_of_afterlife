@@ -1,8 +1,6 @@
-let Humanoid, Zombie, Settings;
-
-Humanoid = require('humanoids/humanoid');
-Zombie = require('humanoids/zombie');
-Settings = require('settings');
+import { default as Settings } from 'settings';
+import { default as Humanoid } from 'humanoids/humanoid';
+import { default as Zombie } from 'humanoids/zombie';
 
 class InfectedHuman extends Humanoid {
   constructor(opts){
@@ -35,4 +33,4 @@ class InfectedHuman extends Humanoid {
   }
 }
 
-module.exports = InfectedHuman;
+export { InfectedHuman as default };
