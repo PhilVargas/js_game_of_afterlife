@@ -66,4 +66,4 @@ class Humanoid {
   }
 }
 
-module.exports = Humanoid;
+export { Humanoid as default };

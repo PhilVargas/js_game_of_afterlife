@@ -1,8 +1,8 @@
-let Humanoid, InfectedHuman;
+let InfectedHuman;
 
 import { default as Pathfinder } from 'pathfinder';
 import { default as Settings } from 'settings';
-Humanoid = require('humanoids/humanoid');
+import { default as Humanoid } from 'humanoids/humanoid';
 InfectedHuman = require('humanoids/infectedHuman');
 
 class Human extends Humanoid {
