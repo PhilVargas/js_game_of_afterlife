@@ -1,8 +1,6 @@
-let Human, Zombie, Player;
-
-Human = require('humanoids/human');
-Zombie = require('humanoids/zombie');
-Player = require('humanoids/player');
+import { default as Human } from 'humanoids/human';
+import { default as Zombie } from 'humanoids/zombie';
+import { default as Player } from 'humanoids/player';
 
 class HumanoidBuilder {
   static humanoidMap(){

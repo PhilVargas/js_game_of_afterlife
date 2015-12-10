@@ -66,4 +66,4 @@ class Zombie extends Humanoid {
   }
 }
 
-module.exports = Zombie;
+export { Zombie as default };
