@@ -68,4 +68,4 @@ class Pathfinder {
   }
 }
 
-module.exports = Pathfinder;
+export { Pathfinder as default };

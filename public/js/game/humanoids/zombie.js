@@ -1,7 +1,7 @@
-let Pathfinder, Humanoid;
+let Humanoid;
 
+import { default as Pathfinder } from 'pathfinder';
 import { default as Settings } from 'settings';
-Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
 
 class Zombie extends Humanoid {

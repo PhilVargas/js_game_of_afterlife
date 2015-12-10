@@ -1,6 +1,4 @@
-let Pathfinder;
-
-Pathfinder = require('pathfinder');
+import { default as Pathfinder } from 'pathfinder';
 import { default as Settings } from 'settings';
 
 class Humanoid {

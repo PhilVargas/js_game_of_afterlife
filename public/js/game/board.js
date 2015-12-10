@@ -1,6 +1,5 @@
-let Pathfinder;
+import { default as Pathfinder } from 'pathfinder';
 
-Pathfinder = require('pathfinder');
 
 class Board {
   constructor(attributes){

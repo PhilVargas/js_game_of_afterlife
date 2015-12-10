@@ -1,7 +1,7 @@
-let Pathfinder, Humanoid, InfectedHuman;
+let Humanoid, InfectedHuman;
 
+import { default as Pathfinder } from 'pathfinder';
 import { default as Settings } from 'settings';
-Pathfinder = require('pathfinder');
 Humanoid = require('humanoids/humanoid');
 InfectedHuman = require('humanoids/infectedHuman');
 
