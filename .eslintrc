@@ -172,13 +172,12 @@
     "semi-spacing": [1, { "before": false, "after": true }],
     "semi": [1, "always"],
     "sort-vars": 0,
-    "space-after-keywords": [1, "always"],
-    "space-before-keywords": [1, "always"],
+    "keyword-spacing": [1, { "before": true, "after": true, "overrides": {
+    }}],
     "space-before-blocks": [1, { "functions": "never", "keywords": "always" }],
     "space-before-function-paren": [1, "never"],
     "space-in-parens": [1, "never"],
     "space-infix-ops": 1,
-    "space-return-throw-case": 1,
     "space-unary-ops": 0,
     "spaced-comment": 0,
     "wrap-regex": 0,
@@ -202,33 +201,15 @@
     "require-yield": 0
   },
 
+  "parserOptions": {
   // Whitelisted ES Features
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "binaryLiterals": true,
-    "blockBindings": true,
-    "classes": true,
-    "defaultParams": true,
-    "destructuring": true,
-    "forOf": true,
-    "generators": true,
-    "modules": true,
-    "objectLiteralComputedProperties": true,
-    "objectLiteralDuplicateProperties": true,
-    "objectLiteralShorthandMethods": true,
-    "objectLiteralShorthandProperties": true,
-    "octalLiterals": true,
-    "regexUFlag": true,
-    "regexYFlag": true,
-    "restParams": true,
-    "spread": true,
-    "superInFunctions": true,
-    "templateStrings": true,
-    "unicodeCodePointEscapes": false,
-    "globalReturn": false,
-    "jsx": true,
-    "experimentalObjetRestSpread": false
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "globalReturn": false,
+      "jsx": true,
+      "experimentalObjetRestSpread": false
+    }
   }
-
 }
 
