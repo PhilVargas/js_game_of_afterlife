@@ -22,21 +22,19 @@ class Board {
   }
 
   nearestLivingHumanoid(){
-    let livingHumanoids, closestPos, closestHumanoid;
+    const livingHumanoids = this.findSimilarHumanoids('Player')
+                                .concat(this.findSimilarHumanoids('Human'));
+    const closestPos = this.findClosestPos(livingHumanoids);
+    const closestHumanoid = this.findClosestHumanoid(closestPos, livingHumanoids);
 
-    livingHumanoids = this.findSimilarHumanoids('Player')
-                          .concat(this.findSimilarHumanoids('Human'));
-    closestPos = this.findClosestPos(livingHumanoids);
-    closestHumanoid = this.findClosestHumanoid(closestPos, livingHumanoids);
     return closestHumanoid;
   }
 
   nearestZombie(){
-    let similarHumanoids, closestPos, closestHumanoid;
+    const similarHumanoids = this.findSimilarHumanoids('Zombie');
+    const closestPos = this.findClosestPos(similarHumanoids);
+    const closestHumanoid = this.findClosestHumanoid(closestPos, similarHumanoids);
 
-    similarHumanoids = this.findSimilarHumanoids('Zombie');
-    closestPos = this.findClosestPos(similarHumanoids);
-    closestHumanoid = this.findClosestHumanoid(closestPos, similarHumanoids);
     return closestHumanoid;
   }
 
@@ -71,20 +69,20 @@ class Board {
   }
 
   findClosestPos(otherHumanoids){
-    let closestPos, dist;
+    const closestPos = [];
 
-    closestPos = [];
     for (let i = 0; i < otherHumanoids.length; i++) {
-      dist = Pathfinder.distanceTo(otherHumanoids[i].position, this.humanoid.position);
+      const dist = Pathfinder.distanceTo(otherHumanoids[i].position, this.humanoid.position);
+
       closestPos.push(dist);
     }
     return closestPos;
   }
 
   findClosestHumanoid(closestPos, otherHumanoids){
-    let closestHumanoidValue, closestHumanoid;
+    let closestHumanoid;
+    const closestHumanoidValue = Math.min.apply(null, closestPos);
 
-    closestHumanoidValue = Math.min.apply(null, closestPos);
     for (let i = 0; i < closestPos.length; i++) {
       if (closestPos[i] === closestHumanoidValue) { closestHumanoid = otherHumanoids[i]; }
     }
