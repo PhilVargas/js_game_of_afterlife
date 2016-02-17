@@ -144,10 +144,9 @@ describe('Zombie', function(){
     });
 
     context('when the destination is not valid', function(){
-      let destination;
-
       beforeEach(function(){
-        destination = { x: 5, y: 5 };
+        const destination = { x: 5, y: 5 };
+
         sinon.stub(Pathfinder, 'getRelativePosition').returns(destination);
         sinon.stub(zombie, 'isValidDestination').returns(false);
       });
