@@ -20,12 +20,11 @@ class Human extends Humanoid {
   }
 
   handleNextMove(opts){
-    let destination;
     const { nearestHumanoid, nearestZombie, humanoids } = opts;
-
-    destination = Pathfinder.getRelativePosition(
+    const destination = Pathfinder.getRelativePosition(
       this.getNextDestination(nearestHumanoid, nearestZombie)
     );
+
     if (this.isValidDestination(humanoids, destination)) {
       this.position = destination;
     }

@@ -2,10 +2,9 @@ import { default as Settings } from 'settings';
 
 class Pathfinder {
   static getRelativePosition(position){
-    let x, y;
+    const x = ((position.x + Settings.defaultWidth) % Settings.defaultWidth);
+    const y = ((position.y + Settings.defaultHeight) % Settings.defaultHeight);
 
-    x = ((position.x + Settings.defaultWidth) % Settings.defaultWidth);
-    y = ((position.y + Settings.defaultHeight) % Settings.defaultHeight);
     return { x, y };
   }
 
@@ -14,11 +13,10 @@ class Pathfinder {
   }
 
   static moveTowards(currentPosition, friendlyLocation, speed){
-    let deltaY, deltaX, length;
+    const deltaY = friendlyLocation.y - currentPosition.y;
+    const deltaX = friendlyLocation.x - currentPosition.x;
+    const length = this.distanceTo(friendlyLocation, currentPosition);
 
-    deltaY = friendlyLocation.y - currentPosition.y;
-    deltaX = friendlyLocation.x - currentPosition.x;
-    length = this.distanceTo(friendlyLocation, currentPosition);
     if (speed !== 0 && length < speed) {
       return friendlyLocation;
     } else {
@@ -34,11 +32,10 @@ class Pathfinder {
   }
 
   static movePerpendicularTo(currentPosition, friendlyLocation, speed){
-    let deltaY, deltaX, length;
+    const deltaY = friendlyLocation.y - currentPosition.y;
+    const deltaX = friendlyLocation.x - currentPosition.x;
+    const length = this.distanceTo(friendlyLocation, currentPosition);
 
-    deltaY = friendlyLocation.y - currentPosition.y;
-    deltaX = friendlyLocation.x - currentPosition.x;
-    length = this.distanceTo(friendlyLocation, currentPosition);
     if (speed !== 0 && length < speed) {
       return friendlyLocation;
     } else {
@@ -50,17 +47,15 @@ class Pathfinder {
   }
 
   static distanceTo(targetLocation, currentPosition){
-    let deltaY, deltaX;
+    const deltaY = targetLocation.y - currentPosition.y;
+    const deltaX = targetLocation.x - currentPosition.x;
 
-    deltaY = targetLocation.y - currentPosition.y;
-    deltaX = targetLocation.x - currentPosition.x;
     return Math.sqrt(Math.pow(deltaY, 2) + Math.pow(deltaX, 2));
   }
 
   static moveRandomly(currentPosition, speed){
-    let angle;
+    const angle = Math.random() * 2 * Math.PI;
 
-    angle = Math.random() * 2 * Math.PI;
     return {
       x: (currentPosition.x + Math.cos(angle) * speed),
       y: (currentPosition.y + Math.sin(angle) * speed)

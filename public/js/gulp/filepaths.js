@@ -6,9 +6,8 @@ const SASS_BASE_DIR = 'public/style/sass';
 const VENDOR_ROOT = 'node_modules';
 
 function displayError(error){
-  let errorMessage;
+  const errorMessage = `[${error.constructor.name}] ${error.message}\n${error.codeFrame}`;
 
-  errorMessage = `[${error.constructor.name}] ${error.message}\n${error.codeFrame}`;
   console.error(errorMessage);
 }
 

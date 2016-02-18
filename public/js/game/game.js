@@ -4,10 +4,9 @@ import { default as Board } from 'board';
 
 class GameOfAfterlife {
   constructor(){
-    let canvas, allHumanoids;
+    const canvas = document.getElementsByTagName('canvas')[0];
+    const allHumanoids = HumanoidBuilder.populate(Settings.humanCount, Settings.zombieCount);
 
-    canvas = document.getElementsByTagName('canvas')[0];
-    allHumanoids = HumanoidBuilder.populate(Settings.humanCount, Settings.zombieCount);
     this.hasBegun = false;
     this.width = canvas.width;
     this.height = canvas.height;
@@ -32,22 +31,31 @@ class GameOfAfterlife {
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.which === 65) { this.board.dx = -1; }
-      else if (e.which === 68) { this.board.dx = 1; }
-      else if (e.which === 87) { this.board.dy = -1; }
-      else if (e.which === 83) { this.board.dy = 1; }
+      switch (e.which) {
+        case 65:
+          this.board.dx = -1;
+          break;
+        case 68:
+          this.board.dx = 1;
+          break;
+        case 87:
+          this.board.dy = -1;
+          break;
+        case 83:
+          this.board.dy = 1;
+          break;
+      }
     });
   }
 
   drawHumanoids(){
-    let player, x, y;
-
     this.ctx.clearRect(0, 0, this.width, this.height);
     for (let i = 0; i < this.board.humanoids.length; i++) {
+      const player = this.board.humanoids[i];
+      const x = player.position.x;
+      const y = player.position.y;
+
       this.ctx.beginPath();
-      player = this.board.humanoids[i];
-      x = player.position.x;
-      y = player.position.y;
       this.ctx.arc(x, y, 5, 0, 2 * Math.PI);
       this.ctx.fillStyle = this.humanoidColorMap[player.humanType];
       this.ctx.fill();
@@ -56,14 +64,15 @@ class GameOfAfterlife {
   }
 
   callNextTurn(){
-    let delay, nextRequest;
+    let nextRequest;
 
     nextRequest = () => {
       this.drawHumanoids();
       if (this.board.isGameActive()) {
         document.getElementById('score').innerHTML = this.board.score;
         this.board.nextTurn();
-        delay = (this.board.isPlayerAlive() ? Settings.turnDelay.normal : Settings.turnDelay.fast);
+        const delay = (this.board.isPlayerAlive() ? Settings.turnDelay.normal : Settings.turnDelay.fast);
+
         setTimeout(nextRequest, delay);
       } else {
         document.getElementById('overlay-message')

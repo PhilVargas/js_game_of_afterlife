@@ -26,13 +26,13 @@ class HumanoidBuilder {
   }
 
   static creation(number, type, baseId = 0){
-    let population, newHumanoid, map, H;
+    const map = this.humanoidMap();
+    const H = map[type];
+    const population = [];
 
-    map = this.humanoidMap();
-    population = [];
     for (let i = 0; i < number; i++) {
-      H = map[type];
-      newHumanoid = new H({ id: baseId + i });
+      const newHumanoid = new H({ id: baseId + i });
+
       population.push(newHumanoid);
     }
     return population;
