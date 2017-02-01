@@ -17,6 +17,7 @@
 #### New Features
   - Add game overlay that allows the user to start and restart the game
   - Deprecate alert on game end in favor of displaying the game over message on the overlay
+  
 #### Bugfixes
   - Fix issue with humanoid ids: humanoid ids now properly correspond to the number of humanoids
       created
