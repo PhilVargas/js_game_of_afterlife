@@ -20,6 +20,6 @@
 dist
 .publish/
 
-**/*/bundle.js
+**/*/*bundle.js
 **/*/application.css
 
