@@ -5,12 +5,6 @@ const STYLES_DEPLOY_DIR = 'dist/public/style';
 const SASS_BASE_DIR = 'public/style/sass';
 const VENDOR_ROOT = 'node_modules';
 
-function displayError(error){
-  const errorMessage = `[${error.constructor.name}] ${error.message}\n${error.codeFrame}`;
-
-  console.error(errorMessage);
-}
-
 const config = {
   build: JS_BASE_DIR,
   entries: ['game/initialize.js'],
@@ -22,8 +16,8 @@ const config = {
   stylesDeployRoot: STYLES_DEPLOY_DIR,
   sassFiles: `${SASS_BASE_DIR}/**/*.scss`,
   jsFiles: [
-    `${JS_BASE_DIR}/**/*.js`,
-    `!${JS_BASE_DIR}/bundle.js`
+    `${JS_BASE_DIR}/game/**/*.js`,
+    `!${JS_BASE_DIR}/*bundle.js`
   ],
   jsRoot: JS_BASE_DIR,
   jsDeployRoot: JS_DEPLOY_DIR,
@@ -31,4 +25,4 @@ const config = {
   root: JS_BASE_DIR
 };
 
-export { config as default, displayError };
+export { config as default };

@@ -1,46 +1,23 @@
 import gulp from 'gulp';
+import gutil from 'gulp-util';
 import clean from 'del';
 import merge from 'merge-stream';
 import ghPages from 'gulp-gh-pages';
 import sass from 'gulp-sass';
-import browserify from 'browserify';
-import babelify from 'babelify';
-import source from 'vinyl-source-stream';
-
-import { default as paths, displayError } from './filepaths';
-
-const browserifyOptions = {
-  entries: paths.entries,
-  basedir: paths.jsRoot,
-  paths: paths.includes,
-  extensions: ['.js'],
-  debug: true,
-  cache: {},
-  packageCache: {},
-  fullPaths: true
-};
+import webpack from 'webpack';
+import paths from './filepaths';
+import config from '../../../webpack.config';
 
 /**
  * @name buildJs
- * @param {String} destination path to the output destination. This value changes based on
- * production / development deploy and should be set (using bind) in the export of this file.
- * @listens {event:error} gulp event error emmitted when a bundle compilation fails. logs a custom
- * error message from `displayError`
- * @summary Function responsible for building the javascript bundle using babelify (babel 6).
- * @return {Function} stream object used for gulp tasks
+ * @summary Function responsible for building the javascript bundle using webpack.
+ * @return {void}
  */
-function buildJs(destination){
-  return browserify(browserifyOptions)
-    .transform(babelify, {
-      presets: ['es2015']
-    })
-    .bundle()
-    .on('error', function(e){
-      displayError(e);
-      return;
-    })
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest(destination));
+function buildJs({ shouldDisplayLog = true }){
+  webpack(config, function(err, stats){
+    if (err) { throw new gutil.PluginError('webpack', err); }
+    if (shouldDisplayLog) { gutil.log(`[${gutil.colors.blue('webpack')}]`, stats.toString({ })); }
+  });
 }
 
 /**
@@ -51,11 +28,14 @@ function buildJs(destination){
  * @return {void}
  */
 function watchJs(){
-  buildJs(paths.build);
-  console.log(`[watcher] Bundle initialized at ${new Date()}`);
+  gutil.log('Bundle initialized. compiling...');
+  buildJs({ shouldDisplayLog: false });
+  gutil.log('Bundle initialized. complete.');
   gulp.watch(paths.jsFiles, function(e){
-    buildJs(paths.build);
-    console.log(`[watcher] File ${e.path.replace(/.*(?=js)/, '')} was ${e.type} at ${new Date()}, compiling...`);
+    const fileName = e.path.replace(/.*\/(?=.*\.js)/, '');
+
+    buildJs({ shouldDisplayLog: false });
+    gutil.log(`[${gutil.colors.blue('watcher')}]`, `File \`${fileName}\` was ${e.type}. Compilation complete.`);
   });
 }
 
@@ -114,9 +94,11 @@ function cleanScripts(){
  * @return {Function} stream used for gulp tasks
  */
 function deployPrep(){
+  buildJs();
+
   return merge(
     buildSass(paths.stylesDeployRoot, 'compressed'),
-    buildJs(paths.jsDeployRoot),
+    gulp.src('public/js/app.bundle.js').pipe(gulp.dest('./dist/public/js/')),
     gulp.src('README.md').pipe(gulp.dest('./dist/')),
     gulp.src('favicon.ico').pipe(gulp.dest('./dist/')),
     gulp.src('public/img/*').pipe(gulp.dest('./dist/public/img')),
@@ -139,7 +121,7 @@ const watch = {
   sass: watchSass
 };
 const build = {
-  js: buildJs.bind(null, paths.build),
+  js: buildJs,
   sass: buildSass.bind(null, paths.stylesRoot, 'compressed')
 };
 const deploy = {
