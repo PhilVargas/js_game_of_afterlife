@@ -5,21 +5,20 @@ import merge from 'merge-stream';
 import ghPages from 'gulp-gh-pages';
 import sass from 'gulp-sass';
 import webpack from 'webpack';
-import config from '../../../webpack.config';
 import paths from './filepaths';
+import config from '../../../webpack.config';
 
 /**
  * @name buildJs
  * @summary Function responsible for building the javascript bundle using webpack.
  * @return {void}
  */
-function buildJs(){
+function buildJs({ shouldDisplayLog = true }){
   webpack(config, function(err, stats){
     if (err) { throw new gutil.PluginError('webpack', err); }
-    gutil.log('[webpack]', stats.toString({ }));
+    if (shouldDisplayLog) { gutil.log(`[${gutil.colors.blue('webpack')}]`, stats.toString({ })); }
   });
 }
-
 
 /**
  * @name watchJs
@@ -29,11 +28,14 @@ function buildJs(){
  * @return {void}
  */
 function watchJs(){
-  buildJs();
-  console.log(`[watcher] Bundle initialized at ${new Date()}`);
+  gutil.log('Bundle initialized. compiling...');
+  buildJs({ shouldDisplayLog: false });
+  gutil.log('Bundle initialized. complete.');
   gulp.watch(paths.jsFiles, function(e){
-    buildJs();
-    console.log(`[watcher] File ${e.path.replace(/.*(?=js)/, '')} was ${e.type} at ${new Date()}, compiling...`);
+    const fileName = e.path.replace(/.*\/(?=.*\.js)/, '');
+
+    buildJs({ shouldDisplayLog: false });
+    gutil.log(`[${gutil.colors.blue('watcher')}]`, `File \`${fileName}\` was ${e.type}. Compilation complete.`);
   });
 }
 
