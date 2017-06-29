@@ -1,10 +1,11 @@
+/* globals __dirname */
+
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
   entry: {
-    app: path.resolve(__dirname, './public/js/game/initialize.js')
+    app: path.resolve(__dirname, './public/js/game/initialize')
   },
   resolve: {
     modules: ['node_modules', path.resolve(__dirname, './public/js/game')],
@@ -15,12 +16,10 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: [/node_modules/],
-        use: [{
-          loader: 'babel-loader',
-          options: { presets: ['es2015'] }
-        }]
+        loader: 'babel-loader',
+        options: { presets: ['es2015'] }
       }
-    ],
+    ]
   },
   output: {
     path: path.resolve(__dirname, './public/js'),
