@@ -16,8 +16,8 @@ const config = {
   stylesDeployRoot: STYLES_DEPLOY_DIR,
   sassFiles: `${SASS_BASE_DIR}/**/*.scss`,
   jsFiles: [
-    `${JS_BASE_DIR}/**/*.js`,
-    `!${JS_BASE_DIR}/bundle.js`
+    `${JS_BASE_DIR}/game/**/*.js`,
+    `!${JS_BASE_DIR}/*bundle.js`
   ],
   jsRoot: JS_BASE_DIR,
   jsDeployRoot: JS_DEPLOY_DIR,
