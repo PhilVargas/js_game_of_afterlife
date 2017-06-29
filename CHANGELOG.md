@@ -1,4 +1,13 @@
-#ChangeLog
+# ChangeLog
+
+## v2.0.3 (06/29/2017)
+#### Non-User-Facing Features
+  - Remove browserify and integrate webpack for javascript transpiling  
+  - remove npm and integrate yarn  
+  
+#### New Features
+  
+#### Bugfixes
 ## v2.0.2 (09/04/2015)
 #### Non-User-Facing Features
   - Convert `humanoid.js` into a super class from which all other `humanType`'s inherit.

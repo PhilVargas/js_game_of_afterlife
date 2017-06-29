@@ -20,11 +20,19 @@ View it here: [philvargas.github.io/js_game_of_afterlife](http://philvargas.gith
  - Score - the longer you live, the higher the score.
  - Delay - the game will speedup dramatically after the player has been bitten.
 
-### Version v2.0.2  
+### Version v2.0.3  
 ---
-Node v0.10.38  
-npm v2.13.3  
+Node v7.6.0  
+yarn 0.21.3  
 JavaScript ES6  
+
+### Development
+---
+```
+yarn install
+gulp assets:build
+open index.html
+```
 
 ### About  
 ---
