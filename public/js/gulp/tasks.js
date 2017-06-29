@@ -13,7 +13,7 @@ import config from '../../../webpack.config';
  * @summary Function responsible for building the javascript bundle using webpack.
  * @return {void}
  */
-function buildJs({ shouldDisplayLog = true }){
+function buildJs({ shouldDisplayLog = true } = {}){
   webpack(config, function(err, stats){
     if (err) { throw new gutil.PluginError('webpack', err); }
     if (shouldDisplayLog) { gutil.log(`[${gutil.colors.blue('webpack')}]`, stats.toString({ })); }
