@@ -47,7 +47,7 @@ the game is seeded with random conditions and loaded with humans and just a few
 
  - Written in JavaScript (ES6)
  - Styled with Sass
- - Compiled with Gulp
+ - Compiled with Webpack and Gulp
  - Tested with Mocha and Chai
 
 ---
